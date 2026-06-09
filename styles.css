@@ -1275,6 +1275,25 @@ footer {
         gap: 16px;
     }
     
+    .footer-contact {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    .footer-contact p {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
+    /* Reduce font size on small screens */
+    @media (max-width: 600px) {
+        .footer-contact p {
+            font-size: 0.8rem;
+        }
+    }
+    
     .modal-body {
         grid-template-columns: 1fr;
     }
