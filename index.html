@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENDURE | Streetwear & Urban Archives</title>
+    <!-- Google Fonts: Space Grotesk (headings) and Inter (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAV BAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand-logo"><img src="assets/ENDURE_LOGO.png" alt="ENDURE Logo"></a>
+            <nav class="nav-menu">
+                <a href="#productos" class="nav-link">Colección</a>
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#faq" class="nav-link">Ayuda</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="cart-trigger" id="cartBtn" aria-label="Ver carrito">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="badge">NUEVA COLECCIÓN / 2026</div>
+            <h1>URBAN ARCHIVE</h1>
+            <p>Diseño utilitario y siluetas oversized pensadas para la calle. Edición limitada.</p>
+            <div class="hero-actions">
+                <a href="#productos" class="btn btn-primary">Ver Catálogo</a>
+                <a href="#nosotros" class="btn btn-outline">Nuestra Filosofía</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <i class="fa-solid fa-arrow-down"></i>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section class="catalog-section" id="productos">
+        <div class="section-header">
+            <h2 class="section-title">PRODUCTOS</h2>
+            <!-- Filter Categories -->
+            <div class="filter-container">
+                <button class="filter-btn active" data-category="all">Todos</button>
+                <button class="filter-btn" data-category="sudaderas">Sudaderas</button>
+                <button class="filter-btn" data-category="camisetas">Camisetas</button>
+                <button class="filter-btn" data-category="pantalones">Pantalones</button>
+                <button class="filter-btn" data-category="accesorios">Accesorios</button>
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be generated dynamically by JS -->
+        </div>
+    </section>
+
+    <!-- BRAND PHILOSOPHY / ABOUT -->
+    <section class="about-section" id="nosotros">
+        <div class="about-grid">
+            <div class="about-image-container">
+                <div class="about-img-placeholder">
+                    <i class="fa-solid fa-city"></i>
+                </div>
+            </div>
+            <div class="about-info">
+                <div class="badge">FILOSOFÍA</div>
+                <h2>DISEÑADO PARA DURAR, CREADO PARA DESTACAR</h2>
+                <p>En ENDURE no seguimos tendencias efímeras. Creamos piezas de streetwear de alta calidad, utilizando algodones de alto gramaje (heavyweight) y cortes oversized que combinan comodidad con una estética urbana cruda y limpia.</p>
+                <div class="about-features">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <div>
+                            <h4>Calidad Heavyweight</h4>
+                            <p>Telas premium de 300g+ para máxima durabilidad y caída perfecta.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-leaf"></i>
+                        <div>
+                            <h4>Sostenibilidad Urbana</h4>
+                            <p>Producimos en lotes pequeños para evitar el desperdicio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section" id="faq">
+        <div class="faq-container">
+            <div class="badge text-center">FAQ</div>
+            <h2 class="section-title text-center">PREGUNTAS FRECUENTES</h2>
+            
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cómo realizo una compra?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Agrega los productos que te gusten a tu carrito, selecciona la talla y haz clic en "Confirmar Pedido". Esto generará automáticamente un mensaje detallado para enviarnos por WhatsApp, donde concretaremos el método de pago (transferencia, depósito o tarjeta) y los datos de envío.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuáles son los tiempos de envío?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Los envíos nacionales tardan entre 2 a 5 días hábiles una vez confirmado el pago. Te proporcionaremos un código de seguimiento de la paquetería para que puedas rastrear tu orden en tiempo real.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Puedo realizar cambios de talla?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, aceptamos cambios de talla dentro de los primeros 7 días de haber recibido tu paquete, siempre y cuando las prendas no hayan sido usadas, lavadas y conserven sus etiquetas originales. Los costos de envío por cambio corren por cuenta del cliente.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>¿Cuáles son los métodos de pago?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Aceptamos transferencias bancarias, depósitos en efectivo (en corresponsales bancarios autorizados) y pagos con tarjeta de crédito/débito a través de links de pago seguros (Clip / Mercado Pago) que te enviaremos al confirmar tu compra en WhatsApp.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOPPING CART SIDE DRAWER -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-overlay" id="cartOverlay"></div>
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>TU CARRITO</h3>
+                <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cartItemsContainer">
+                <!-- Items will be generated by JS -->
+                <div class="cart-empty-state">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <p>Tu carrito está vacío.</p>
+                    <a href="#productos" class="btn btn-primary btn-sm" id="emptyCartAction">Ver catálogo</a>
+                </div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-totals">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotal">$0.00</span>
+                </div>
+                <p class="cart-note">* El envío y métodos de pago se coordinarán por WhatsApp.</p>
+                <button class="btn btn-primary btn-block" id="checkoutBtn">
+                    <i class="fa-brands fa-whatsapp"></i> Confirmar Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div class="product-modal" id="productModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Cerrar modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img src="" alt="Producto" id="modalImg">
+                </div>
+                <div class="modal-info">
+                    <span class="modal-category" id="modalCategory">CATEGORÍA</span>
+                    <h3 class="modal-title" id="modalTitle">Nombre del Producto</h3>
+                    <div class="modal-price" id="modalPrice">$0.00</div>
+                    <p class="modal-description" id="modalDescription">Descripción detallada del producto...</p>
+                    
+                    <div class="selector-group">
+                        <label>Talla:</label>
+                        <div class="size-selector" id="modalSizes">
+                            <!-- Sizes will be generated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="selector-group">
+                        <label>Cantidad:</label>
+                        <div class="qty-selector">
+                            <button id="qtyMinus"><i class="fa-solid fa-minus"></i></button>
+                            <span id="qtyVal">1</span>
+                            <button id="qtyPlus"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" id="modalAddBtn">
+                        <i class="fa-solid fa-bag-shopping"></i> Añadir al Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="#" class="brand-logo"><img src="assets/ENDURE_LOGO.png" alt="ENDURE Logo"></a>
+                <p>Estilo urbano atemporal. Diseñado con carácter.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Enlaces</h4>
+                <a href="#productos">Catálogo</a>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#faq">Preguntas Frecuentes</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contacto</h4>
+                <p><i class="fa-solid fa-envelope"></i> info@endurestore.com</p>
+                <p><i class="fa-solid fa-phone"></i> +51 996 440 579</p>
+                <p><i class="fa-solid fa-location-dot"></i> Perú</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ENDURE. Todos los derechos reservados. Creado para GitHub Pages.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="app.js"></script>
+</body>
+</html>
