@@ -833,8 +833,8 @@ img {
 .cart-item-img {
     width: 80px;
     aspect-ratio: 3/4;
-    background-color: var(--gray-100);
-    object-fit: cover;
+    background-color: transparent;
+    object-fit: contain;
     border-radius: 2px;
 }
 

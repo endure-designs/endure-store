@@ -3,51 +3,63 @@
 const PRODUCTS = [
     {
         id: 1,
-        name: "Camiseta Oversized Chainsaw Man",
+        name: "Chainsaw",
         category: "camisetas",
         price: 120.00,
-        description: "Camiseta de corte boxy oversized confeccionada en algodón heavyweight de 280g. Estampado serigráfico de alta definición inspirado en Chainsaw Man. Costuras reforzadas para máxima durabilidad.",
-        image: "assets/chainsaw.png",
+        description: "Camiseta con diseño de Chainsaw Man.",
+        image: "https://lh3.googleusercontent.com/d/1OxgFXihUUrw7c-h60yteXvr8rpOSYzkz",
         sizes: ["S", "M", "L", "XL"],
-        tag: "Best Seller"
+        tag: "Nuevo"
     },
     {
         id: 2,
-        name: "Polo Street Majin Boo",
+        name: "Vegeto SSJ",
         category: "camisetas",
-        price: 60.00,
-        description: "Polo urbano de corte regular y suave al tacto. Estampado premium de Majin Boo en la parte delantera. Ideal para el día a día combinando confort y diseño anime.",
-        image: "assets/majin_boo.png",
+        price: 120.00,
+        description: "Camiseta con diseño de Vegeto en forma Super Saiyan.",
+        image: "https://lh3.googleusercontent.com/d/17L17Y8Nc8ZE4ysBPGgVAr527RYQSzQ4y",
         sizes: ["S", "M", "L", "XL"],
-        tag: "Popular"
+        tag: "Nuevo"
     },
     {
         id: 3,
-        name: "Camiseta Oversized Luffy Gear 5",
+        name: "Vegeto SSJB",
         category: "camisetas",
         price: 120.00,
-        description: "Camiseta heavyweight corte oversized premium. Ilustración artística en contraste de Luffy Gear 5 en la espalda. Tela de alta durabilidad preencogida.",
-        image: "assets/luffy_gear5.png",
+        description: "Camiseta con diseño de Vegeto en forma Super Saiyan Blue",
+        image: "https://lh3.googleusercontent.com/d/1B111DBTP3CDyXW5BGURDhDsIFdljouRS",
         sizes: ["S", "M", "L", "XL"],
         tag: "Nuevo"
     },
     {
         id: 4,
-        name: "Camiseta Oversized Power Chainsaw",
+        name: "Gogeta SSJB",
         category: "camisetas",
         price: 120.00,
-        description: "Camiseta streetwear premium inspirada en Power de Chainsaw Man. Estampado resistente y diseño exclusivo con hombros caídos.",
-        image: "assets/power_chainsaw.png",
+        description: "Camiseta con diseño de Gogeta en forma Super Saiyan Blue",
+        image: "https://lh3.googleusercontent.com/d/1LqG5PGm9XVbz8vo8rQvaQy70laFwCOI7",
         sizes: ["S", "M", "L", "XL"],
-        tag: "Destacado"
+        tag: "Nuevo"
+    },
+    {
+        id: 5,
+        name: "Garfield 6",
+        category: "camisetas",
+        price: 120.00,
+        description: "Camiseta con diseño de Garfield",
+        image: "https://lh3.googleusercontent.com/d/1gwlNQQ24nM8SyyGfduClwwqAPzJ4QGHG",
+        sizes: ["S", "M", "L", "XL"],
+        tag: "Nuevo"
     }
 ];
+
 
 // Configuración de WhatsApp
 const WHATSAPP_PHONE = "51996440579"; // Reemplaza con tu número de teléfono de WhatsApp (incluyendo código de país sin el + ni espacios, ej: 5215512345678)
 
 // ESTADO DE LA APLICACIÓN
-let cart = JSON.parse(localStorage.getItem('endure_cart')) || [];
+let cart = [];
+localStorage.removeItem('endure_cart');
 let selectedProduct = null;
 let selectedSize = '';
 let selectedQty = 1;
@@ -88,6 +100,14 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartUI();
     setupEventListeners();
     setupFAQAccordion();
+
+    // Disable right-click on product images and quick view overlay
+    document.addEventListener('contextmenu', function(e) {
+        if (e.target.closest('.product-img-wrapper') || e.target.closest('.product-img') || e.target.closest('#modalImg') || e.target.closest('.modal-image-container') || e.target.closest('.cart-item-img')) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    });
 });
 
 // --- RENDERIZACIÓN DE PRODUCTOS ---
@@ -118,7 +138,7 @@ function renderProducts(categoryFilter = 'all') {
             <div class="product-details">
                 <span class="product-category">${product.category}</span>
                 <h3 class="product-name" onclick="openProductModal(${product.id})">${product.name}</h3>
-                <div class="product-price">$${product.price.toFixed(2)}</div>
+                <div class="product-price">S/${product.price.toFixed(2)}</div>
                 <button class="product-add-btn" onclick="quickAdd(${product.id})">
                     <i class="fa-solid fa-bag-shopping"></i> Añadir
                 </button>
@@ -190,7 +210,7 @@ window.openProductModal = function(productId) {
     modalImg.alt = product.name;
     modalCategory.textContent = product.category;
     modalTitle.textContent = product.name;
-    modalPrice.textContent = `$${product.price.toFixed(2)}`;
+    modalPrice.textContent = `S/${product.price.toFixed(2)}`;
     modalDescription.textContent = product.description;
 
     // Generar botones de tallas
@@ -322,7 +342,7 @@ function updateCartUI() {
             <div class="cart-item-info">
                 <h4 class="cart-item-title">${item.name}</h4>
                 <div class="cart-item-meta">Talla: ${item.size}</div>
-                <div class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</div>
+                <div class="cart-item-price">S/${(item.price * item.qty).toFixed(2)}</div>
                 <div class="cart-item-actions">
                     <div class="cart-item-qty">
                         <button onclick="updateCartQty(${index}, -1)"><i class="fa-solid fa-minus"></i></button>
@@ -336,7 +356,7 @@ function updateCartUI() {
         cartItemsContainer.appendChild(cartItemEl);
     });
 
-    cartSubtotal.textContent = `$${total.toFixed(2)}`;
+    cartSubtotal.textContent = `S/${total.toFixed(2)}`;
     cartCountBadges.forEach(badge => badge.textContent = itemCount);
 }
 
@@ -360,10 +380,10 @@ function sendOrderToWhatsApp() {
     cart.forEach(item => {
         const itemTotal = item.price * item.qty;
         subtotal += itemTotal;
-        productsText += `- *${item.name}* (Talla: ${item.size}) x${item.qty} -> $${itemTotal.toFixed(2)}\n`;
+        productsText += `- *${item.name}* (Talla: ${item.size}) x${item.qty} -> S/${itemTotal.toFixed(2)}\n`;
     });
 
-    const totalText = `$${subtotal.toFixed(2)}`;
+    const totalText = `S/${subtotal.toFixed(2)}`;
 
     // Construcción del mensaje para enviar
     const message = `⚡ *NUEVO PEDIDO - ENDURE*\n\n` +
