@@ -70,13 +70,16 @@ img {
 ::-webkit-scrollbar {
     width: 8px;
 }
+
 ::-webkit-scrollbar-track {
     background: var(--light-bg);
 }
+
 ::-webkit-scrollbar-thumb {
     background: var(--royal-blue);
     border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
     background: var(--sapphire);
 }
@@ -155,11 +158,13 @@ img {
     left: 0;
     width: 100%;
     height: var(--header-height);
-    background-color: rgba(17, 34, 80, 0.85); /* Royal Blue with opacity */
+    background-color: rgba(17, 34, 80, 0.85);
+    /* Royal Blue with opacity */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     z-index: 1000;
-    border-bottom: 1px solid rgba(224, 197, 143, 0.15); /* Quicksand border */
+    border-bottom: 1px solid rgba(224, 197, 143, 0.15);
+    /* Quicksand border */
     transition: var(--transition-smooth);
 }
 
@@ -275,7 +280,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(rgba(9, 14, 26, 0.7), rgba(9, 14, 26, 0.9)), url('assets/BANNER.png');
+    background-image: linear-gradient(rgba(9, 14, 26, 0.7), rgba(9, 14, 26, 0.9)), url('assets/BANNER.webp');
     background-size: cover;
     background-position: center;
     z-index: 1;
@@ -284,8 +289,13 @@ img {
 }
 
 @keyframes zoomHero {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.1); }
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
 }
 
 .hero-overlay {
@@ -350,9 +360,22 @@ img {
 }
 
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
-    40% { transform: translate(-50%, -10px); }
-    60% { transform: translate(-50%, -5px); }
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translate(-50%, 0);
+    }
+
+    40% {
+        transform: translate(-50%, -10px);
+    }
+
+    60% {
+        transform: translate(-50%, -5px);
+    }
 }
 
 /* CATALOG / PRODUCTS SECTION */
@@ -400,7 +423,8 @@ img {
     transition: var(--transition-smooth);
 }
 
-.filter-btn:hover, .filter-btn.active {
+.filter-btn:hover,
+.filter-btn.active {
     color: var(--royal-blue);
     border-color: var(--royal-blue);
     background-color: var(--gray-100);
@@ -415,8 +439,111 @@ img {
 /* PRODUCTS GRID */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 40px 30px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Pagination tabs */
+.pagination-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid var(--gray-200);
+    border-radius: 20px;
+    background-color: var(--gray-100);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+    background-color: var(--royal-blue);
+    color: var(--swan-wing);
+    border-color: var(--royal-blue);
+}
+
+/* Fade animation */
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+}
+
+.fade-in {
+    opacity: 1;
+    transition: var(--transition-smooth);
+}
+
+/* Mobile Zoom Overlay */
+.mobile-zoom-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    /* will be toggled via JS */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.mobile-zoom-overlay.visible {
+    display: flex;
+}
+
+.mobile-zoom-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    /* Allow native pinch‑zoom on mobile */
+    touch-action: pinch-zoom;
+    /* Prevent overscaling via CSS – native zoom respects these limits */
+}
+
+/* Adjust existing zoomed image rule – we now control scaling via JS */
+.modal-image-container img.zoomed {
+    /* No forced scale here; JS sets transform */
+    cursor: zoom-out;
+}
+
+/* Zoom button */
+.zoom-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: var(--royal-blue);
+    color: var(--swan-wing);
+    border: none;
+    border-radius: 50%;
+    padding: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.zoom-btn:hover {
+    background-color: var(--quicksand);
+    color: var(--royal-blue);
 }
 
 .product-card {
@@ -472,7 +599,7 @@ img {
 
 .product-quick-view {
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     width: 100%;
     background-color: rgba(17, 34, 80, 0.9);
@@ -490,6 +617,8 @@ img {
 .product-img-wrapper:hover .product-quick-view {
     transform: translateY(0);
 }
+
+
 
 .product-details {
     padding: 20px;
@@ -923,7 +1052,8 @@ img {
 }
 
 #checkoutBtn {
-    background-color: #25d366; /* WhatsApp Green */
+    background-color: #25d366;
+    /* WhatsApp Green */
     border-color: #25d366;
     color: var(--white);
 }
@@ -1189,7 +1319,8 @@ footer {
     transform: translateY(-3px);
 }
 
-.footer-links h4, .footer-contact h4 {
+.footer-links h4,
+.footer-contact h4 {
     font-family: var(--font-heading);
     font-size: 1.1rem;
     font-weight: 600;
@@ -1249,12 +1380,12 @@ footer {
         grid-template-columns: 1fr;
         gap: 40px;
     }
-    
+
     .footer-container {
         grid-template-columns: 1fr 1fr;
         gap: 40px;
     }
-    
+
     .footer-brand {
         grid-column: 1 / -1;
     }
@@ -1264,49 +1395,54 @@ footer {
     .navbar {
         height: 70px;
     }
-    
+
     .nav-menu {
-        display: none; /* In a production, we'd add a burger menu, but for single page navigation, simple icons or visible links work best. Let's make it look clean */
+        display: none;
+        /* In a production, we'd add a burger menu, but for single page navigation, simple icons or visible links work best. Let's make it look clean */
     }
-    
+
     .section-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
     }
-    
+
     .footer-contact {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: 4px;
     }
+
     .footer-contact p {
         word-break: break-word;
         overflow-wrap: anywhere;
         font-size: 0.9rem;
         max-width: 100%;
     }
+
     /* Reduce font size on small screens */
     @media (max-width: 600px) {
         .footer-contact p {
             font-size: 0.8rem;
         }
     }
-    
+
     .modal-body {
         grid-template-columns: 1fr;
     }
-    
+
     .modal-info {
         padding: 24px;
     }
-    
+
     .hero h1 {
         font-size: 3rem;
     }
-    
-    .catalog-section, .about-section, .faq-section {
+
+    .catalog-section,
+    .about-section,
+    .faq-section {
         padding: 60px 16px;
     }
 }

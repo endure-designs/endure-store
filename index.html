@@ -68,6 +68,8 @@
         <div class="products-grid" id="productsGrid">
             <!-- Products will be generated dynamically by JS -->
         </div>
+        <!-- Pagination tabs -->
+        <div id="paginationTabs" class="pagination-tabs"></div>
     </section>
 
     <!-- BRAND PHILOSOPHY / ABOUT -->
@@ -189,8 +191,8 @@
             </button>
             <div class="modal-body">
                 <div class="modal-image-container">
-                    <img src="" alt="Producto" id="modalImg">
-                </div>
+                <img src="" alt="Producto" id="modalImg">
+            </div>
                 <div class="modal-info">
                     <span class="modal-category" id="modalCategory">CATEGORÍA</span>
                     <h3 class="modal-title" id="modalTitle">Nombre del Producto</h3>
@@ -251,6 +253,10 @@
         </div>
     </footer>
 
+    <!-- Mobile Zoom Overlay (for touch devices) -->
+    <div id="mobileZoomOverlay" class="mobile-zoom-overlay">
+        <img id="mobileZoomImg" src="" alt="Imagen ampliada" />
+    </div>
     <!-- Custom JS -->
     <script src="app.js"></script>
 </body>
