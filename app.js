@@ -506,10 +506,24 @@ function renderProducts(categoryFilter = 'all') {
 }
 
 // Re‑render on window resize to adjust per‑page count
+// window.addEventListener('resize', () => {
+//     renderCurrentProducts();
+// });
+
+
+// --- OPTIMIZACIÓN DEL REDIMENSIONAMIENTO ---
+let resizeTimer;
 window.addEventListener('resize', () => {
-    renderCurrentProducts();
-    //scrollToProducts();
+    // Esto cancela cualquier renderizado previo si el evento se dispara muy rápido
+    clearTimeout(resizeTimer);
+
+    // Solo espera 250ms después de que el usuario deja de mover la ventana
+    resizeTimer = setTimeout(() => {
+        renderCurrentProducts();
+    }, 250);
 });
+
+
 
 // Zoom functionality for product modal image (desktop hover zoom 300% with bounded drag, mobile click-to-open overlay)
 
