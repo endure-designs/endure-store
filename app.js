@@ -1,3 +1,26 @@
+
+// // --- RASTREADOR DE CULPABLES DEL SCROLL ---
+// window.addEventListener('scroll', () => {
+//     // Si el scroll ocurre durante la carga inicial o es un salto extraño al inicio (0)
+//     if (window.scrollY === 0) {
+//         console.log("Scroll detectado al inicio (0). Rastreando origen...");
+//     }
+// }, { capture: true });
+
+// // Esto detecta si algo está llamando a scrollIntoView o scrollTo
+// const originalScrollTo = window.scrollTo;
+// window.scrollTo = function (...args) {
+//     console.warn("¡ALERTA! Alguien llamó a window.scrollTo con:", args);
+//     console.trace("Culpable:");
+//     originalScrollTo.apply(this, args);
+// };
+
+// // Esto detecta si se está forzando un scroll mediante un ID en la URL
+// window.addEventListener('load', () => {
+//     console.log("Carga completada. Posición final:", window.scrollY);
+// });
+
+
 // CONFIGURACIÓN Y BASE DE DATOS DE PRODUCTOS
 // Puedes reemplazar las URLs de Unsplash con las rutas locales de tus fotos (ej. 'assets/sudadera.jpg')
 const PRODUCTS = [
@@ -437,65 +460,42 @@ function renderCurrentProducts() {
         // Update pagination UI
         updatePaginationTabs(totalPages);
         // Scroll to grid start
-        window.scrollTo({ top: productsGrid.offsetTop - 100, behavior: 'smooth' });
+        //window.scrollTo({ top: productsGrid.offsetTop - 100, behavior: 'smooth' });
     }, 300);
 }
 
-// // Update pagination tabs UI
-// function updatePaginationTabs(totalPages) {
-//     const paginationContainer = document.getElementById('paginationTabs');
-//     paginationContainer.innerHTML = '';
-//     if (totalPages <= 1) return; // No tabs needed
-//     for (let i = 1; i <= totalPages; i++) {
-//         const btn = document.createElement('button');
-//         btn.classList.add('tab-btn');
-//         if (i === currentPage) btn.classList.add('active');
-//         btn.textContent = i;
-//         btn.addEventListener('click', () => {
-//             if (i === currentPage) return;
-//             currentPage = i;
-//             renderCurrentProducts();
-//         });
-//         paginationContainer.appendChild(btn);
-//     }
-// }
+
+function scrollToProducts() {
+    const headerOffset = 100; // Ajusta según la altura de tu navbar
+    const elementPosition = productsGrid.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+    });
+}
 
 
-// Actualiza la función así:
+// Update pagination tabs UI
 function updatePaginationTabs(totalPages) {
     const paginationContainer = document.getElementById('paginationTabs');
     paginationContainer.innerHTML = '';
-    if (totalPages <= 1) return;
-
+    if (totalPages <= 1) return; // No tabs needed
     for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('button');
         btn.classList.add('tab-btn');
         if (i === currentPage) btn.classList.add('active');
         btn.textContent = i;
-
-        // --- AQUÍ ESTÁ LA CORRECCIÓN ---
-        btn.addEventListener('click', (e) => {
-            e.preventDefault(); // Evita cualquier comportamiento de salto del navegador
-
+        btn.addEventListener('click', () => {
             if (i === currentPage) return;
-
-            // Guardamos la posición actual para asegurarnos de no movernos
-            const scrollPos = window.scrollY;
-
             currentPage = i;
             renderCurrentProducts();
-
-            // Opcional: Si notas que aún hay un micro-salto, 
-            // esto fuerza al navegador a quedarse donde estaba exactamente
-            requestAnimationFrame(() => {
-                window.scrollTo(0, scrollPos);
-            });
+            scrollToProducts();
         });
-
         paginationContainer.appendChild(btn);
-    }
+    };
 }
-
 
 
 // --- RENDERIZACIÓN DE PRODUCTOS (original call) ---
@@ -508,6 +508,7 @@ function renderProducts(categoryFilter = 'all') {
 // Re‑render on window resize to adjust per‑page count
 window.addEventListener('resize', () => {
     renderCurrentProducts();
+    //scrollToProducts();
 });
 
 // Zoom functionality for product modal image (desktop hover zoom 300% with bounded drag, mobile click-to-open overlay)
