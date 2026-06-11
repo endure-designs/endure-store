@@ -511,17 +511,17 @@ function renderProducts(categoryFilter = 'all') {
 // });
 
 
-// --- OPTIMIZACIÓN DEL REDIMENSIONAMIENTO ---
-let resizeTimer;
-window.addEventListener('resize', () => {
-    // Esto cancela cualquier renderizado previo si el evento se dispara muy rápido
-    clearTimeout(resizeTimer);
 
-    // Solo espera 250ms después de que el usuario deja de mover la ventana
-    resizeTimer = setTimeout(() => {
+// En lugar de usar window.addEventListener('resize', ...)
+const resizeObserver = new ResizeObserver(entries => {
+    for (let entry of entries) {
+        // Solo renderiza cuando el contenedor de productos cambie de tamaño real
         renderCurrentProducts();
-    }, 250);
+    }
 });
+
+// Observamos el contenedor principal de tu grid
+resizeObserver.observe(document.querySelector('.products-grid'));
 
 
 
