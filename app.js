@@ -441,24 +441,62 @@ function renderCurrentProducts() {
     }, 300);
 }
 
-// Update pagination tabs UI
+// // Update pagination tabs UI
+// function updatePaginationTabs(totalPages) {
+//     const paginationContainer = document.getElementById('paginationTabs');
+//     paginationContainer.innerHTML = '';
+//     if (totalPages <= 1) return; // No tabs needed
+//     for (let i = 1; i <= totalPages; i++) {
+//         const btn = document.createElement('button');
+//         btn.classList.add('tab-btn');
+//         if (i === currentPage) btn.classList.add('active');
+//         btn.textContent = i;
+//         btn.addEventListener('click', () => {
+//             if (i === currentPage) return;
+//             currentPage = i;
+//             renderCurrentProducts();
+//         });
+//         paginationContainer.appendChild(btn);
+//     }
+// }
+
+
+// Actualiza la función así:
 function updatePaginationTabs(totalPages) {
     const paginationContainer = document.getElementById('paginationTabs');
     paginationContainer.innerHTML = '';
-    if (totalPages <= 1) return; // No tabs needed
+    if (totalPages <= 1) return;
+
     for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('button');
         btn.classList.add('tab-btn');
         if (i === currentPage) btn.classList.add('active');
         btn.textContent = i;
-        btn.addEventListener('click', () => {
+
+        // --- AQUÍ ESTÁ LA CORRECCIÓN ---
+        btn.addEventListener('click', (e) => {
+            e.preventDefault(); // Evita cualquier comportamiento de salto del navegador
+
             if (i === currentPage) return;
+
+            // Guardamos la posición actual para asegurarnos de no movernos
+            const scrollPos = window.scrollY;
+
             currentPage = i;
             renderCurrentProducts();
+
+            // Opcional: Si notas que aún hay un micro-salto, 
+            // esto fuerza al navegador a quedarse donde estaba exactamente
+            requestAnimationFrame(() => {
+                window.scrollTo(0, scrollPos);
+            });
         });
+
         paginationContainer.appendChild(btn);
     }
 }
+
+
 
 // --- RENDERIZACIÓN DE PRODUCTOS (original call) ---
 function renderProducts(categoryFilter = 'all') {
