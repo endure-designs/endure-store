@@ -1,350 +1,49 @@
+let PRODUCTS = [];
 
-// // --- RASTREADOR DE CULPABLES DEL SCROLL ---
-// window.addEventListener('scroll', () => {
-//     // Si el scroll ocurre durante la carga inicial o es un salto extraño al inicio (0)
-//     if (window.scrollY === 0) {
-//         console.log("Scroll detectado al inicio (0). Rastreando origen...");
-//     }
-// }, { capture: true });
-
-// // Esto detecta si algo está llamando a scrollIntoView o scrollTo
-// const originalScrollTo = window.scrollTo;
-// window.scrollTo = function (...args) {
-//     console.warn("¡ALERTA! Alguien llamó a window.scrollTo con:", args);
-//     console.trace("Culpable:");
-//     originalScrollTo.apply(this, args);
-// };
-
-// // Esto detecta si se está forzando un scroll mediante un ID en la URL
-// window.addEventListener('load', () => {
-//     console.log("Carga completada. Posición final:", window.scrollY);
-// });
-
-
-// CONFIGURACIÓN Y BASE DE DATOS DE PRODUCTOS
-// Puedes reemplazar las URLs de Unsplash con las rutas locales de tus fotos (ej. 'assets/sudadera.jpg')
-const PRODUCTS = [
-    {
-        id: 1,
-        name: "Chainsaw",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Chainsaw Man.",
-        image: "./assets/chainsaw.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 2,
-        name: "Vegeto SSJ",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Vegeto en forma Super Saiyan.",
-        image: "./assets/vegeto_ssj.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 3,
-        name: "Vegeto SSJB",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Vegeto en forma Super Saiyan Blue",
-        image: "./assets/vegeto_ssjb.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 4,
-        name: "Gogeta SSJB",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Gogeta en forma Super Saiyan Blue",
-        image: "./assets/gogeta_ssjb.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 5,
-        name: "Garfield",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Garfield",
-        image: "./assets/garfield6.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 6,
-        name: "Baki Hanma",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Baki Hanma.",
-        image: "./assets/baki_hanma.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 7,
-        name: "Chainsawman Denji",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Chainsaw Man.",
-        image: "./assets/chainsawman2.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 8,
-        name: "Doflamingo",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Doflamingo.",
-        image: "./assets/doflamingo_one_piece.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 9,
-        name: "Goku, Roshi & Krilin",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Goku, Roshi & Krilin.",
-        image: "./assets/dragon_ball_goku_roshi_krilin.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 10,
-        name: "Goku, Roshi & Krilin saludo",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Goku, Roshi & Krilin.",
-        image: "./assets/dragon_ball_goku_roshi_krilin2.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 11,
-        name: "Gogeta SSJ4",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Gogeta SSJ4.",
-        image: "./assets/gogeta_ssj4.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 12,
-        name: "Luffy saludo",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Luffy.",
-        image: "./assets/luffy_puno_arriba.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 13,
-        name: "Luffy",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Luffy.",
-        image: "./assets/luffy_straw_hat.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 14,
-        name: "Majin Boo malvado",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Majin Boo malvado.",
-        image: "./assets/majin_boo_2da_forma.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 15,
-        name: "Deku, Bakugo & Todoroki",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Deku, Bakugo & Todoroki.",
-        image: "./assets/mha_deku_bakugo_todoroki.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 16,
-        name: "Mugiwara One Piece",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Mugiwara One Piece.",
-        image: "./assets/mugiwara_one_piece.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 17,
-        name: "Meliodas",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Meliodas.",
-        image: "./assets/nnt_meliodas.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 18,
-        name: "One Piece Luffy Gear 5",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de One Piece Luffy Gear 5.",
-        image: "./assets/one_piece_luffy_gear_5.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 19,
-        name: "Solo Leveling Sung Jin-Woo",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Solo Leveling Sung Jin-Woo.",
-        image: "./assets/solo_leveling_sung_jin_woo.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 20,
-        name: "Verano Bulma & Roshi",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Verano Bulma & Roshi.",
-        image: "./assets/verano_bulma_roshi.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 21,
-        name: "Ace One Piece",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Ace One Piece.",
-        image: "./assets/ace_one_piece.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 22,
-        name: "Chopper One Piece",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Chopper One Piece.",
-        image: "./assets/chopper_one_piece.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 23,
-        name: "Fusión Goku y Vegeta",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Fusión Goku y Vegeta.",
-        image: "./assets/goku_vegeta_vegeto.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 24,
-        name: "Itachi Genjutsu",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Itachi.",
-        image: "./assets/itachi_genjutsu.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 25,
-        name: "Kenjaku Culling Game",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Kenjaku.",
-        image: "./assets/jujutsu_kaisen_kenjaku.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 26,
-        name: "Okarun Dandadan",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Okarun Dandadan.",
-        image: "./assets/okarun_dandadan.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 27,
-        name: "Parque titánico",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Parque titánico.",
-        image: "./assets/parque_titanico.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 28,
-        name: "Picoro",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Picoro.",
-        image: "./assets/picoro_dragon_ball.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 29,
-        name: "Saitama One Punch Man",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Saitama One Punch Man.",
-        image: "./assets/saitama_one_punch_man.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 30,
-        name: "Profesor Gojo",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Satoru Gojo.",
-        image: "./assets/satoru_gojo.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 31,
-        name: "Satoru Gojo Estudiante",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Satoru Gojo.",
-        image: "./assets/satoru_gojo_joven.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
-    },
-    {
-        id: 32,
-        name: "Primera Forma Cell",
-        category: "camisetas",
-        price: 35.00,
-        description: "Camiseta con diseño de Primera Forma Cell.",
-        image: "./assets/cell_1era_forma.webp",
-        sizes: ["S", "M", "L", "XL"],
-        tag: "Nuevo"
+async function loadProducts() {
+    try {
+        const response = await fetch('./products.json');
+        PRODUCTS = await response.json(); // Se rellena automáticamente
+        populateCollectionSelect();
+    } catch (error) {
+        console.error("Error al cargar el JSON:", error);
     }
-];
+}
+
+// Ejecutar al cargar la página
+loadProducts();
+
+// Populate collection (theme) dropdown based on product data
+function populateCollectionSelect() {
+    if (!collectionSelect) return;
+    // Clear existing options except the default 'all'
+    const currentValue = collectionSelect.value;
+    collectionSelect.innerHTML = '';
+    const allOption = document.createElement('option');
+    allOption.value = 'all';
+    allOption.textContent = 'Todas las colecciones';
+    collectionSelect.appendChild(allOption);
+    const themes = new Set();
+    PRODUCTS.forEach(p => {
+        if (p.theme) themes.add(p.theme);
+    });
+    themes.forEach(theme => {
+        const opt = document.createElement('option');
+        opt.value = theme;
+        opt.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+        collectionSelect.appendChild(opt);
+    });
+    // Restore previous selection if still valid
+    if ([...collectionSelect.options].some(o => o.value === currentValue)) {
+        collectionSelect.value = currentValue;
+    } else {
+        collectionSelect.value = 'all';
+    }
+    // Refresh the custom dropdown UI for collection filter
+    rebuildCustomDropdown('collectionSelect');
+}
+
+
 
 
 // Configuración de WhatsApp
@@ -360,6 +59,9 @@ let selectedQty = 1;
 // VARIABLES DEL DOM
 const productsGrid = document.getElementById('productsGrid');
 const filterBtns = document.querySelectorAll('.filter-btn');
+const categorySelect = document.getElementById('categorySelect');
+const collectionSelect = document.getElementById('collectionSelect');
+const sortSelect = document.getElementById('sortSelect');
 
 // Modal
 const productModal = document.getElementById('productModal');
@@ -387,21 +89,7 @@ const checkoutBtn = document.getElementById('checkoutBtn');
 const cartCountBadges = document.querySelectorAll('.cart-count');
 const emptyCartAction = document.getElementById('emptyCartAction');
 
-// --- INICIALIZACIÓN ---
-document.addEventListener('DOMContentLoaded', () => {
-    renderProducts('all');
-    updateCartUI();
-    setupEventListeners();
-    setupFAQAccordion();
-
-    // Disable right-click on product images and quick view overlay
-    document.addEventListener('contextmenu', function (e) {
-        if (e.target.closest('.product-img-wrapper') || e.target.closest('.product-img') || e.target.closest('#modalImg') || e.target.closest('.modal-image-container') || e.target.closest('.cart-item-img')) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    });
-});
+// La inicialización ahora se concentra en initApp()
 
 // --- RENDERIZACIÓN DE PRODUCTOS ---
 // Pagination constants
@@ -409,6 +97,7 @@ const PRODUCTS_PER_TAB_DESKTOP = 15;
 const PRODUCTS_PER_TAB_MOBILE = 10;
 let currentPage = 1;
 let currentFilter = 'all';
+let currentCollection = 'all'; // collection (theme) filter
 
 // Determine products per page based on screen width
 function getProductsPerPage() {
@@ -418,7 +107,24 @@ function getProductsPerPage() {
 // Render products for current filter and page
 function renderCurrentProducts() {
     const perPage = getProductsPerPage();
-    const filtered = currentFilter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === currentFilter);
+    // Apply category filter
+    let filtered = currentFilter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === currentFilter);
+    // Apply collection (theme) filter
+    if (currentCollection && currentCollection !== 'all') {
+        filtered = filtered.filter(p => p.theme === currentCollection);
+    }
+    // Apply sorting
+    if (currentSort) {
+        if (currentSort === 'date-asc') {
+            filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+        } else if (currentSort === 'date-desc') {
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+        } else if (currentSort === 'price-asc') {
+            filtered.sort((a, b) => a.price - b.price);
+        } else if (currentSort === 'price-desc') {
+            filtered.sort((a, b) => b.price - a.price);
+        }
+    }
     const totalPages = Math.ceil(filtered.length / perPage);
     // Ensure current page is within bounds
     if (currentPage > totalPages) currentPage = totalPages;
@@ -465,6 +171,7 @@ function renderCurrentProducts() {
 }
 
 
+
 function scrollToProducts() {
     const headerOffset = 100; // Ajusta según la altura de tu navbar
     const elementPosition = productsGrid.getBoundingClientRect().top;
@@ -499,11 +206,167 @@ function updatePaginationTabs(totalPages) {
 
 
 // --- RENDERIZACIÓN DE PRODUCTOS (original call) ---
+// Global sort variable
+let currentSort = 'date-asc'; // default sorting
+
+// Render products (category filter update)
 function renderProducts(categoryFilter = 'all') {
+    // Update global filter and sync select UI
     currentFilter = categoryFilter;
-    currentPage = 1; // Reset to first page on filter change
+    if (typeof categorySelect !== 'undefined') {
+        categorySelect.value = currentFilter;
+    }
+    // Reset to first page on filter change
+    currentPage = 1;
     renderCurrentProducts();
 }
+
+// Setup event listeners for new dropdown filters
+function setupSelectListeners() {
+    if (categorySelect) {
+        categorySelect.addEventListener('change', () => {
+            currentFilter = categorySelect.value;
+            currentPage = 1;
+            renderCurrentProducts();
+        });
+    }
+    if (sortSelect) {
+        sortSelect.addEventListener('change', () => {
+            currentSort = sortSelect.value;
+            // For now, just re-render; sorting logic to be implemented later
+            renderCurrentProducts();
+        });
+    }
+    if (collectionSelect) {
+        collectionSelect.addEventListener('change', () => {
+            currentCollection = collectionSelect.value;
+            currentPage = 1;
+            renderCurrentProducts();
+        });
+    }
+}
+
+// Call setupSelectListeners during initialization
+function initApp() {
+    updateCartUI();
+    setupEventListeners();
+    setupFAQAccordion();
+    setupSelectListeners();
+    initCustomDropdowns(); // Initialize custom dropdown UI
+    renderProducts('all');
+    // Existing zoom setups
+    setupDesktopZoom();
+    setupMobileZoom();
+
+    // Disable right-click on product images and quick view overlay
+    document.addEventListener('contextmenu', function (e) {
+        if (e.target.closest('.product-img-wrapper') || e.target.closest('.product-img') || e.target.closest('#modalImg') || e.target.closest('.modal-image-container') || e.target.closest('.cart-item-img')) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    });
+}
+
+// Initialize custom dropdowns for all .custom-dropdown elements
+function initCustomDropdowns() {
+    const dropdowns = document.querySelectorAll('.custom-dropdown');
+    dropdowns.forEach(dd => {
+        const selectId = dd.getAttribute('data-select-id');
+        const nativeSelect = document.getElementById(selectId);
+        if (!nativeSelect) return;
+        // Hide native select (already via CSS). Build custom list.
+        const list = document.createElement('div');
+        list.classList.add('dropdown-list');
+        Array.from(nativeSelect.options).forEach(opt => {
+            const item = document.createElement('div');
+            item.classList.add('dropdown-item');
+            item.textContent = opt.textContent;
+            if (opt.selected) item.classList.add('active');
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Update native select
+                nativeSelect.value = opt.value;
+                // Update displayed selected text
+                refreshCustomDropdown(selectId);
+                // Close dropdown
+                dd.classList.remove('open');
+                // Trigger change event for other listeners
+                const event = new Event('change', { bubbles: true });
+                nativeSelect.dispatchEvent(event);
+            });
+            list.appendChild(item);
+        });
+        // Selected display element
+        const selectedDiv = document.createElement('div');
+        selectedDiv.classList.add('selected');
+        selectedDiv.textContent = nativeSelect.selectedOptions[0]?.textContent || '';
+        dd.appendChild(selectedDiv);
+        dd.appendChild(list);
+        // Toggle open/close
+        dd.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Close other open dropdowns
+            document.querySelectorAll('.custom-dropdown.open').forEach(openDd => {
+                if (openDd !== dd) openDd.classList.remove('open');
+            });
+            dd.classList.toggle('open');
+        });
+        // Close when clicking outside
+        document.addEventListener('click', () => dd.classList.remove('open'));
+    });
+}
+
+// Rebuild custom dropdown items (used when native select options change dynamically)
+function rebuildCustomDropdown(selectId) {
+    const dd = document.querySelector(`.custom-dropdown[data-select-id="${selectId}"]`);
+    const nativeSelect = document.getElementById(selectId);
+    if (!dd || !nativeSelect) return;
+
+    let list = dd.querySelector('.dropdown-list');
+    if (!list) return;
+
+    list.innerHTML = '';
+    Array.from(nativeSelect.options).forEach(opt => {
+        const item = document.createElement('div');
+        item.classList.add('dropdown-item');
+        item.textContent = opt.textContent;
+        if (opt.selected) item.classList.add('active');
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            nativeSelect.value = opt.value;
+            refreshCustomDropdown(selectId);
+            dd.classList.remove('open');
+            const event = new Event('change', { bubbles: true });
+            nativeSelect.dispatchEvent(event);
+        });
+        list.appendChild(item);
+    });
+    
+    refreshCustomDropdown(selectId);
+}
+
+// Refresh displayed selected text for a specific custom dropdown
+function refreshCustomDropdown(selectId) {
+    const dd = document.querySelector(`.custom-dropdown[data-select-id="${selectId}"]`);
+    const nativeSelect = document.getElementById(selectId);
+    if (!dd || !nativeSelect) return;
+    const selectedDiv = dd.querySelector('.selected');
+    if (selectedDiv) {
+        selectedDiv.textContent = nativeSelect.selectedOptions[0]?.textContent || '';
+    }
+    // Update active class on items
+    dd.querySelectorAll('.dropdown-item').forEach(item => {
+        const opt = Array.from(nativeSelect.options).find(o => o.textContent === item.textContent);
+        if (opt && opt.selected) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+}
+
+// Initialise both behaviours after DOM is ready
+document.addEventListener('DOMContentLoaded', initApp);
 
 // Re‑render on window resize to adjust per‑page count
 // window.addEventListener('resize', () => {
@@ -539,55 +402,8 @@ let currentTranslateY = 0;
 let maxTranslateX = 0;
 let maxTranslateY = 0;
 
-/**
- * Initialize desktop hover zoom on the modal image.
- */
-// function setupDesktopZoom() {
-//     const container = modalImg.parentElement; // .modal-image-container
-//     // Mouse enter – activate zoom
-//     modalImg.addEventListener('mouseenter', (e) => {
-//         if (window.innerWidth <= 768) return; // skip on mobile
-//         desktopZoomActive = true;
-//         modalImg.classList.add('zoomed');
-//         // Calculate maximum translation limits based on image size and scale
-//         const imgRect = modalImg.getBoundingClientRect();
-//         const imgWidth = imgRect.width;
-//         const imgHeight = imgRect.height;
-//         maxTranslateX = (DESKTOP_ZOOM_SCALE - 1) * imgWidth / 2;
-//         maxTranslateY = (DESKTOP_ZOOM_SCALE - 1) * imgHeight / 2;
-//         // Reset any previous transforms
-//         currentTranslateX = 0;
-//         currentTranslateY = 0;
-//         modalImg.style.transform = `scale(${DESKTOP_ZOOM_SCALE})`;
-//     });
 
-//     // Mouse move – pan while zoomed (bounded)
-//     container.addEventListener('mousemove', (e) => {
-//         if (!desktopZoomActive) return;
-//         const rect = container.getBoundingClientRect();
-//         const offsetX = e.clientX - rect.left - rect.width / 2; // distance from center
-//         const offsetY = e.clientY - rect.top - rect.height / 2;
-//         // Desired translation is opposite direction of mouse offset, scaled
-//         let tx = -offsetX * (DESKTOP_ZOOM_SCALE - 1);
-//         let ty = -offsetY * (DESKTOP_ZOOM_SCALE - 1);
-//         // Clamp to limits so we never show empty space
-//         tx = Math.max(-maxTranslateX, Math.min(maxTranslateX, tx));
-//         ty = Math.max(-maxTranslateY, Math.min(maxTranslateY, ty));
-//         currentTranslateX = tx;
-//         currentTranslateY = ty;
-//         modalImg.style.transform = `scale(${DESKTOP_ZOOM_SCALE}) translate(${tx}px, ${ty}px)`;
-//     });
-
-//     // Mouse leave – reset zoom
-//     modalImg.addEventListener('mouseleave', () => {
-//         if (window.innerWidth <= 768) return;
-//         desktopZoomActive = false;
-//         modalImg.classList.remove('zoomed');
-//         modalImg.style.transform = '';
-//     });
-// }
-
-
+//Función para hacer zoom al pasar el mouse sobre la imagen en vista rápida
 
 function setupDesktopZoom() {
     const container = modalImg.parentElement;
@@ -658,11 +474,7 @@ function setupMobileZoom() {
     });
 }
 
-// Initialise both behaviours after DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    setupDesktopZoom();
-    setupMobileZoom();
-});
+// Funcionalidades de zoom consolidadas en initApp
 
 
 

@@ -56,13 +56,28 @@
         <div class="section-header">
             <h2 class="section-title">PRODUCTOS</h2>
             <!-- Filter Categories -->
-            <div class="filter-container">
-                <button class="filter-btn active" data-category="all">Todos</button>
-                <button class="filter-btn" data-category="sudaderas">Sudaderas</button>
-                <button class="filter-btn" data-category="camisetas">Camisetas</button>
-                <button class="filter-btn" data-category="pantalones">Pantalones</button>
-                <button class="filter-btn" data-category="accesorios">Accesorios</button>
-            </div>
+<div class="filter-container">
+    <select id="categorySelect" class="filter-select native-select">
+        <option value="all">Todas las categorías</option>
+        <option value="camisetas">Camisetas</option>
+        <option value="sudaderas">Sudaderas</option>
+        <option value="pantalones">Pantalones</option>
+        <option value="accesorios">Accesorios</option>
+    </select>
+    <div class="custom-dropdown" data-select-id="categorySelect"></div>
+    <select id="collectionSelect" class="filter-select native-select">
+        <option value="all">Todas las colecciones</option>
+    </select>
+    <div class="custom-dropdown" data-select-id="collectionSelect"></div>
+    <select id="sortSelect" class="filter-select native-select">
+        <option value="" disabled selected>Ordenar por</option>
+        <option value="date-asc">Fecha ↑</option>
+        <option value="date-desc">Fecha ↓</option>
+        <option value="price-asc">Precio ↑</option>
+        <option value="price-desc">Precio ↓</option>
+    </select>
+    <div class="custom-dropdown" data-select-id="sortSelect"></div>
+</div>
         </div>
 
         <div class="products-grid" id="productsGrid">
