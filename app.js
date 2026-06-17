@@ -256,7 +256,6 @@ function initApp() {
     renderProducts('all');
     // Existing zoom setups
     setupDesktopZoom();
-    setupMobileZoom();
 
     // Disable right-click on product images and quick view overlay
     document.addEventListener('contextmenu', function (e) {
@@ -453,26 +452,7 @@ function setupDesktopZoom() {
 }
 
 
-/**
- * Mobile behavior: click opens a full‑screen overlay that can be pinch‑zoomed.
- */
-function setupMobileZoom() {
-    const mobileOverlay = document.getElementById('mobileZoomOverlay');
-    const mobileImg = document.getElementById('mobileZoomImg');
-    // Click on the modal image opens the overlay (only on small screens)
-    modalImg.addEventListener('click', (e) => {
-        if (window.innerWidth > 768) return; // desktop handled by hover
-        mobileImg.src = modalImg.src;
-        mobileImg.alt = modalImg.alt;
-        mobileOverlay.classList.add('visible');
-    });
-    // Clicking outside the image closes the overlay
-    mobileOverlay.addEventListener('click', (e) => {
-        if (e.target !== mobileImg) {
-            mobileOverlay.classList.remove('visible');
-        }
-    });
-}
+
 
 // Funcionalidades de zoom consolidadas en initApp
 

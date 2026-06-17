@@ -1451,6 +1451,30 @@ footer {
         gap: 16px;
     }
 
+    .filter-container {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling en iOS */
+        scrollbar-width: none; /* Oculta scrollbar en Firefox */
+        -ms-overflow-style: none; /* Oculta scrollbar en IE/Edge */
+        width: 100%;
+        /* HACK para evitar que overflow-x corte el menú absolute: 
+           Extendemos el padding box hacia abajo para que quepa el menú,
+           y reducimos el margin para no arruinar el diseño. */
+        padding-bottom: 220px; 
+        margin-bottom: -220px;
+        pointer-events: none; /* Dejamos pasar los clics hacia los productos abajo */
+    }
+
+    .filter-container::-webkit-scrollbar {
+        display: none; /* Oculta scrollbar en Chrome/Safari/Opera */
+    }
+
+    .custom-dropdown {
+        flex-shrink: 0; /* Evita que los filtros se aplasten */
+        pointer-events: auto; /* Reactivamos los clics para los botones */
+    }
+
     .footer-contact {
         display: flex;
         flex-direction: column;
