@@ -1475,17 +1475,29 @@ footer {
         pointer-events: auto; /* Reactivamos los clics para los botones */
     }
 
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .footer-links {
+        margin-bottom: 32px; /* Espacio separador entre Enlaces y Contacto */
+    }
+
     .footer-contact {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 4px;
+        gap: 20px; /* Evita que los items (email, tel, dir) se vean amontonados */
     }
 
     .footer-contact p {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Separación perfecta entre el icono y el texto */
         word-break: break-word;
         overflow-wrap: anywhere;
-        font-size: 0.9rem;
+        font-size: 0.95rem; /* Un poco más grande para mejorar la legibilidad */
         max-width: 100%;
     }
 

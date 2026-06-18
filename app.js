@@ -50,8 +50,7 @@ function populateCollectionSelect() {
 const WHATSAPP_PHONE = "51996440579"; // Reemplaza con tu número de teléfono de WhatsApp (incluyendo código de país sin el + ni espacios, ej: 5215512345678)
 
 // ESTADO DE LA APLICACIÓN
-let cart = [];
-localStorage.removeItem('endure_cart');
+let cart = JSON.parse(localStorage.getItem('endure_cart')) || [];
 let selectedProduct = null;
 let selectedSize = '';
 let selectedQty = 1;
