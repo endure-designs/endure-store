@@ -105,31 +105,16 @@
 /*$vite$:1*/
 
 
-/* Esto solo afecta a pantallas pequeñas (móviles) */
-@media (max-width: 768px) {
-    .left {
-        left: 10px;
-        /* Más pegado al borde izquierdo en móvil */
-    }
-
-    .right {
-        right: 10px;
-        /* Más pegado al borde derecho en móvil */
-    }
-}
-
-
-
 
 /* Esto solo afecta a pantallas pequeñas (móviles) */
 @media (max-width: 480px) {
     .left {
-        left: 5px;
+        left: 3px;
         /* Más pegado al borde izquierdo en móvil */
     }
 
     .right {
-        right: 5px;
+        right: 3px;
         /* Más pegado al borde derecho en móvil */
     }
 }
