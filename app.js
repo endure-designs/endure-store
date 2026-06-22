@@ -92,11 +92,13 @@ const emptyCartAction = document.getElementById('emptyCartAction');
 
 // --- RENDERIZACIÓN DE PRODUCTOS ---
 // Pagination constants
-const PRODUCTS_PER_TAB_DESKTOP = 15;
+const PRODUCTS_PER_TAB_DESKTOP = 16;
 const PRODUCTS_PER_TAB_MOBILE = 10;
 let currentPage = 1;
 let currentFilter = 'all';
 let currentCollection = 'all'; // collection (theme) filter
+let currentSubtopic = 'all'; // subtopic filter para la galería de anime
+let renderTimeout; // debounce para el renderizado
 
 // Determine products per page based on screen width
 function getProductsPerPage() {
@@ -106,11 +108,26 @@ function getProductsPerPage() {
 // Render products for current filter and page
 function renderCurrentProducts() {
     const perPage = getProductsPerPage();
+
+    // Controlar visibilidad del carrusel de anime
+    const animeGallery = document.getElementById('anime-gallery');
+    if (animeGallery) {
+        if (currentCollection === 'anime') {
+            animeGallery.style.display = 'block';
+        } else {
+            animeGallery.style.display = 'none';
+        }
+    }
+
     // Apply category filter
     let filtered = currentFilter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === currentFilter);
     // Apply collection (theme) filter
     if (currentCollection && currentCollection !== 'all') {
         filtered = filtered.filter(p => p.theme === currentCollection);
+    }
+    // Apply subtopic filter ONLY if current collection is anime
+    if (currentCollection === 'anime' && currentSubtopic && currentSubtopic !== 'all') {
+        filtered = filtered.filter(p => p.subtopic === currentSubtopic);
     }
     // Apply sorting
     if (currentSort) {
@@ -131,18 +148,23 @@ function renderCurrentProducts() {
     const start = (currentPage - 1) * perPage;
     const end = start + perPage;
     const pageProducts = filtered.slice(start, end);
-    // Fade out animation
-    productsGrid.classList.add('fade-out');
-    setTimeout(() => {
-        productsGrid.innerHTML = '';
-        if (pageProducts.length === 0) {
-            productsGrid.innerHTML = `<p class="no-products">No hay productos en esta categoría por el momento.</p>`;
-        } else {
-            pageProducts.forEach(product => {
-                const card = document.createElement('div');
-                card.classList.add('product-card');
-                const badgeHTML = product.tag ? `<span class="product-badge">${product.tag}</span>` : '';
-                card.innerHTML = `
+    clearTimeout(renderTimeout);
+    clearTimeout(window.fadeTimeout);
+
+    renderTimeout = setTimeout(() => {
+        // Fade out animation
+        productsGrid.classList.add('fade-out');
+
+        window.fadeTimeout = setTimeout(() => {
+            productsGrid.innerHTML = '';
+            if (pageProducts.length === 0) {
+                productsGrid.innerHTML = `<p class="no-products">No hay productos en esta categoría por el momento.</p>`;
+            } else {
+                pageProducts.forEach(product => {
+                    const card = document.createElement('div');
+                    card.classList.add('product-card');
+                    const badgeHTML = product.tag ? `<span class="product-badge">${product.tag}</span>` : '';
+                    card.innerHTML = `
                     <div class="product-img-wrapper" onclick="openProductModal(${product.id})">
                         ${badgeHTML}
                         <img class="product-img" src="${product.image}" alt="${product.name}" loading="lazy">
@@ -157,16 +179,17 @@ function renderCurrentProducts() {
                         </button>
                     </div>
                 `;
-                productsGrid.appendChild(card);
-            });
-        }
-        // Fade in
-        productsGrid.classList.remove('fade-out');
-        // Update pagination UI
-        updatePaginationTabs(totalPages);
-        // Scroll to grid start
-        //window.scrollTo({ top: productsGrid.offsetTop - 100, behavior: 'smooth' });
-    }, 300);
+                    productsGrid.appendChild(card);
+                });
+            }
+            // Fade in
+            productsGrid.classList.remove('fade-out');
+            // Update pagination UI
+            updatePaginationTabs(totalPages);
+            // Scroll to grid start
+            //window.scrollTo({ top: productsGrid.offsetTop - 100, behavior: 'smooth' });
+        }, 10); // reduced fade out wait time to 200ms
+    }, 50); // debounce input
 }
 
 
@@ -239,6 +262,7 @@ function setupSelectListeners() {
     if (collectionSelect) {
         collectionSelect.addEventListener('change', () => {
             currentCollection = collectionSelect.value;
+            currentSubtopic = 'all'; // Resetear el filtro de anime al cambiar la colección
             currentPage = 1;
             renderCurrentProducts();
         });
@@ -339,7 +363,7 @@ function rebuildCustomDropdown(selectId) {
         });
         list.appendChild(item);
     });
-    
+
     refreshCustomDropdown(selectId);
 }
 
@@ -728,3 +752,23 @@ function setupFAQAccordion() {
         });
     });
 }
+
+
+renderAnimeGallery("anime-gallery", {
+    onSelectAnime: (anime) => {
+        const prevSubtopic = currentSubtopic;
+
+        // anime.file_name coincide con el campo 'subtopic' en products.json
+        if (anime && anime.file_name) {
+            currentSubtopic = anime.file_name;
+        } else {
+            currentSubtopic = 'all';
+        }
+
+        // Solo renderizar si el subtopic cambió Y estamos viendo la colección de anime
+        if (prevSubtopic !== currentSubtopic && currentCollection === 'anime') {
+            currentPage = 1;
+            renderCurrentProducts();
+        }
+    }
+});

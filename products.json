@@ -3,7 +3,8 @@
         "id": 1,
         "name": "Chainsaw",
         "category": "camisetas",
-        "theme": "chainsaw-man",
+        "theme": "anime",
+        "subtopic": "chainsaw-man",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -24,7 +25,8 @@
         "id": 2,
         "name": "Vegeto SSJ",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -45,7 +47,8 @@
         "id": 3,
         "name": "Vegeto SSJB",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -66,7 +69,8 @@
         "id": 4,
         "name": "Gogeta SSJB",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -87,7 +91,8 @@
         "id": 5,
         "name": "Garfield",
         "category": "camisetas",
-        "theme": "garfield",
+        "theme": "comic",
+        "subtopic": "garfield",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -108,7 +113,8 @@
         "id": 6,
         "name": "Baki Hanma",
         "category": "camisetas",
-        "theme": "baki",
+        "theme": "anime",
+        "subtopic": "baki",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -129,7 +135,8 @@
         "id": 7,
         "name": "Chainsawman Denji",
         "category": "camisetas",
-        "theme": "chainsaw-man",
+        "theme": "anime",
+        "subtopic": "chainsaw-man",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -150,7 +157,8 @@
         "id": 8,
         "name": "Doflamingo",
         "category": "camisetas",
-        "theme": "one-piece",
+        "theme": "anime",
+        "subtopic": "one-piece",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -171,7 +179,8 @@
         "id": 9,
         "name": "Goku, Roshi & Krilin",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -192,7 +201,8 @@
         "id": 10,
         "name": "Goku, Roshi & Krilin saludo",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -213,7 +223,8 @@
         "id": 11,
         "name": "Gogeta SSJ4",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -234,7 +245,8 @@
         "id": 12,
         "name": "Luffy saludo",
         "category": "camisetas",
-        "theme": "one-piece",
+        "theme": "anime",
+        "subtopic": "one-piece",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -255,7 +267,8 @@
         "id": 13,
         "name": "Luffy",
         "category": "camisetas",
-        "theme": "one-piece",
+        "theme": "anime",
+        "subtopic": "one-piece",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -276,7 +289,8 @@
         "id": 14,
         "name": "Majin Boo malvado",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -297,7 +311,8 @@
         "id": 15,
         "name": "Deku, Bakugo & Todoroki",
         "category": "camisetas",
-        "theme": "my-hero-academia",
+        "theme": "anime",
+        "subtopic": "my-hero-academia",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -318,7 +333,8 @@
         "id": 16,
         "name": "Mugiwara One Piece",
         "category": "camisetas",
-        "theme": "one-piece",
+        "theme": "anime",
+        "subtopic": "one-piece",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -339,7 +355,8 @@
         "id": 17,
         "name": "Meliodas",
         "category": "camisetas",
-        "theme": "seven-deadly-sins",
+        "theme": "anime",
+        "subtopic": "seven-deadly-sins",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -360,7 +377,8 @@
         "id": 18,
         "name": "One Piece Luffy Gear 5",
         "category": "camisetas",
-        "theme": "one-piece",
+        "theme": "anime",
+        "subtopic": "one-piece",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -381,7 +399,8 @@
         "id": 19,
         "name": "Solo Leveling Sung Jin-Woo",
         "category": "camisetas",
-        "theme": "solo-leveling",
+        "theme": "anime",
+        "subtopic": "solo-leveling",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -402,7 +421,8 @@
         "id": 20,
         "name": "Verano Bulma & Roshi",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -423,7 +443,8 @@
         "id": 21,
         "name": "Ace One Piece",
         "category": "camisetas",
-        "theme": "one-piece",
+        "theme": "anime",
+        "subtopic": "one-piece",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -444,7 +465,8 @@
         "id": 22,
         "name": "Chopper One Piece",
         "category": "camisetas",
-        "theme": "one-piece",
+        "theme": "anime",
+        "subtopic": "one-piece",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -465,7 +487,8 @@
         "id": 23,
         "name": "Fusión Goku y Vegeta",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -486,7 +509,8 @@
         "id": 24,
         "name": "Itachi Genjutsu",
         "category": "camisetas",
-        "theme": "naruto",
+        "theme": "anime",
+        "subtopic": "naruto",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -507,7 +531,8 @@
         "id": 25,
         "name": "Kenjaku Culling Game",
         "category": "camisetas",
-        "theme": "jujutsu-kaisen",
+        "theme": "anime",
+        "subtopic": "jujutsu-kaisen",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -528,7 +553,8 @@
         "id": 26,
         "name": "Okarun Dandadan",
         "category": "camisetas",
-        "theme": "dandadan",
+        "theme": "anime",
+        "subtopic": "dandadan",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -549,7 +575,8 @@
         "id": 27,
         "name": "Parque titánico",
         "category": "camisetas",
-        "theme": "attack-on-titan",
+        "theme": "anime",
+        "subtopic": "attack-on-titan",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -570,7 +597,8 @@
         "id": 28,
         "name": "Picoro",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -591,7 +619,8 @@
         "id": 29,
         "name": "Saitama One Punch Man",
         "category": "camisetas",
-        "theme": "one-punch-man",
+        "theme": "anime",
+        "subtopic": "one-punch-man",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -612,7 +641,8 @@
         "id": 30,
         "name": "Profesor Gojo",
         "category": "camisetas",
-        "theme": "jujutsu-kaisen",
+        "theme": "anime",
+        "subtopic": "jujutsu-kaisen",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -633,7 +663,8 @@
         "id": 31,
         "name": "Satoru Gojo Estudiante",
         "category": "camisetas",
-        "theme": "jujutsu-kaisen",
+        "theme": "anime",
+        "subtopic": "jujutsu-kaisen",
         "price": 35.00,
         "colors": [
             "#FFFFFF",
@@ -654,7 +685,8 @@
         "id": 32,
         "name": "Primera Forma Cell",
         "category": "camisetas",
-        "theme": "dragon-ball",
+        "theme": "anime",
+        "subtopic": "dragon-ball",
         "price": 35.00,
         "colors": [
             "#FFFFFF",

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "anime-001",
+    "type": "anime",
+    "display_name": "Attack on Titan",
+    "file_name": "attack-on-titan",
+    "url_path": "/assets/anime-logos/attack-on-titan.webp"
+  },
+  {
+    "id": "anime-002",
+    "type": "anime",
+    "display_name": "Baki",
+    "file_name": "baki",
+    "url_path": "/assets/anime-logos/baki.webp"
+  },
+  {
+    "id": "anime-003",
+    "type": "anime",
+    "display_name": "Chainsaw Man",
+    "file_name": "chainsaw-man",
+    "url_path": "/assets/anime-logos/chainsaw-man.webp"
+  },
+  {
+    "id": "anime-004",
+    "type": "anime",
+    "display_name": "Dandadan",
+    "file_name": "dandadan",
+    "url_path": "/assets/anime-logos/dandadan.webp"
+  },
+  {
+    "id": "anime-005",
+    "type": "anime",
+    "display_name": "Dragon Ball Z",
+    "file_name": "dragon-ball",
+    "url_path": "/assets/anime-logos/dragon-ball.webp"
+  },
+  {
+    "id": "anime-006",
+    "type": "anime",
+    "display_name": "Jujutsu Kaisen",
+    "file_name": "jujutsu-kaisen",
+    "url_path": "/assets/anime-logos/jujutsu-kaisen.webp"
+  },
+  {
+    "id": "anime-007",
+    "type": "anime",
+    "display_name": "My Hero Academia",
+    "file_name": "my-hero-academia",
+    "url_path": "/assets/anime-logos/my-hero-academia.webp"
+  },
+  {
+    "id": "anime-008",
+    "type": "anime",
+    "display_name": "Naruto Shippuden",
+    "file_name": "naruto",
+    "url_path": "/assets/anime-logos/naruto.webp"
+  },
+  {
+    "id": "anime-009",
+    "type": "anime",
+    "display_name": "One Piece",
+    "file_name": "one-piece",
+    "url_path": "/assets/anime-logos/one-piece.webp"
+  },
+  {
+    "id": "anime-010",
+    "type": "anime",
+    "display_name": "One Punch Man",
+    "file_name": "one-punch-man",
+    "url_path": "/assets/anime-logos/one-punch-man.webp"
+  },
+  {
+    "id": "anime-011",
+    "type": "anime",
+    "display_name": "The Seven Deadly Sins",
+    "file_name": "seven-deadly-sins",
+    "url_path": "/assets/anime-logos/seven-deadly-sins.webp"
+  },
+  {
+    "id": "anime-012",
+    "type": "anime",
+    "display_name": "Solo Leveling",
+    "file_name": "solo-leveling",
+    "url_path": "/assets/anime-logos/solo-leveling.webp"
+  }
+]

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,16 @@
     <!-- Google Fonts: Space Grotesk (headings) and Inter (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./anime-gallery.css">
 </head>
+
 <body>
 
     <!-- NAV BAR -->
@@ -47,9 +52,9 @@
             </div>
         </div>
         <div class="scroll-indicator">
-  <a href="#productos" class="scroll-link"><span>Descubre</span></a>
-  <i class="fa-solid fa-arrow-down"></i>
-</div>
+            <a href="#productos" class="scroll-link"><span>Descubre</span></a>
+            <i class="fa-solid fa-arrow-down"></i>
+        </div>
     </section>
 
     <!-- PRODUCTS SECTION -->
@@ -57,30 +62,31 @@
         <div class="section-header">
             <h2 class="section-title">PRODUCTOS</h2>
             <!-- Filter Categories -->
-<div class="filter-container">
-    <select id="categorySelect" class="filter-select native-select">
-        <option value="all">Todas las categorías</option>
-        <option value="camisetas">Camisetas</option>
-        <option value="sudaderas">Sudaderas</option>
-        <option value="pantalones">Pantalones</option>
-        <option value="accesorios">Accesorios</option>
-    </select>
-    <div class="custom-dropdown" data-select-id="categorySelect"></div>
-    <select id="collectionSelect" class="filter-select native-select">
-        <option value="all">Todas las colecciones</option>
-    </select>
-    <div class="custom-dropdown" data-select-id="collectionSelect"></div>
-    <select id="sortSelect" class="filter-select native-select">
-        <option value="" disabled selected>Ordenar por</option>
-        <option value="date-asc">Fecha ↑</option>
-        <option value="date-desc">Fecha ↓</option>
-        <option value="price-asc">Precio ↑</option>
-        <option value="price-desc">Precio ↓</option>
-    </select>
-    <div class="custom-dropdown" data-select-id="sortSelect"></div>
-</div>
+            <div class="filter-container">
+                <select id="categorySelect" class="filter-select native-select">
+                    <option value="all">Todas las categorías</option>
+                    <option value="camisetas">Camisetas</option>
+                    <option value="sudaderas">Sudaderas</option>
+                    <option value="pantalones">Pantalones</option>
+                    <option value="accesorios">Accesorios</option>
+                </select>
+                <div class="custom-dropdown" data-select-id="categorySelect"></div>
+                <select id="collectionSelect" class="filter-select native-select">
+                    <option value="all">Todas las colecciones</option>
+                </select>
+                <div class="custom-dropdown" data-select-id="collectionSelect"></div>
+                <select id="sortSelect" class="filter-select native-select">
+                    <option value="" disabled selected>Ordenar por</option>
+                    <option value="date-asc">Fecha ↑</option>
+                    <option value="date-desc">Fecha ↓</option>
+                    <option value="price-asc">Precio ↑</option>
+                    <option value="price-desc">Precio ↓</option>
+                </select>
+                <div class="custom-dropdown" data-select-id="sortSelect"></div>
+            </div>
         </div>
-
+        <!-- Carrusel React -->
+        <div id="anime-gallery"></div>
         <div class="products-grid" id="productsGrid">
             <!-- Products will be generated dynamically by JS -->
         </div>
@@ -99,7 +105,9 @@
             <div class="about-info">
                 <div class="badge">FILOSOFÍA</div>
                 <h2>DISEÑADO PARA DURAR, CREADO PARA DESTACAR</h2>
-                <p>En ENDURE no seguimos tendencias efímeras. Creamos piezas de streetwear de alta calidad, utilizando algodones de alto gramaje (heavyweight) y cortes oversized que combinan comodidad con una estética urbana cruda y limpia.</p>
+                <p>En ENDURE no seguimos tendencias efímeras. Creamos piezas de streetwear de alta calidad, utilizando
+                    algodones de alto gramaje (heavyweight) y cortes oversized que combinan comodidad con una estética
+                    urbana cruda y limpia.</p>
                 <div class="about-features">
                     <div class="feature-item">
                         <i class="fa-solid fa-shield-halved"></i>
@@ -125,7 +133,7 @@
         <div class="faq-container">
             <div class="badge text-center">FAQ</div>
             <h2 class="section-title text-center">PREGUNTAS FRECUENTES</h2>
-            
+
             <div class="faq-accordion">
                 <div class="faq-item">
                     <button class="faq-question">
@@ -133,7 +141,10 @@
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Agrega los productos que te gusten a tu carrito, selecciona la talla y haz clic en "Confirmar Pedido". Esto generará automáticamente un mensaje detallado para enviarnos por WhatsApp, donde concretaremos el método de pago (transferencia, depósito o tarjeta) y los datos de envío.</p>
+                        <p>Agrega los productos que te gusten a tu carrito, selecciona la talla y haz clic en "Confirmar
+                            Pedido". Esto generará automáticamente un mensaje detallado para enviarnos por WhatsApp,
+                            donde concretaremos el método de pago (transferencia, depósito o tarjeta) y los datos de
+                            envío.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -142,7 +153,9 @@
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Los envíos nacionales tardan entre 2 a 5 días hábiles una vez confirmado el pago. Te proporcionaremos un código de seguimiento de la paquetería para que puedas rastrear tu orden en tiempo real.</p>
+                        <p>Los envíos nacionales tardan entre 2 a 5 días hábiles una vez confirmado el pago. Te
+                            proporcionaremos un código de seguimiento de la paquetería para que puedas rastrear tu orden
+                            en tiempo real.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -151,7 +164,9 @@
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Sí, aceptamos cambios de talla dentro de los primeros 7 días de haber recibido tu paquete, siempre y cuando las prendas no hayan sido usadas, lavadas y conserven sus etiquetas originales. Los costos de envío por cambio corren por cuenta del cliente.</p>
+                        <p>Sí, aceptamos cambios de talla dentro de los primeros 7 días de haber recibido tu paquete,
+                            siempre y cuando las prendas no hayan sido usadas, lavadas y conserven sus etiquetas
+                            originales. Los costos de envío por cambio corren por cuenta del cliente.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -160,7 +175,9 @@
                         <i class="fa-solid fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Aceptamos transferencias bancarias, depósitos en efectivo (en corresponsales bancarios autorizados) y pagos con tarjeta de crédito/débito a través de links de pago seguros (Clip / Mercado Pago) que te enviaremos al confirmar tu compra en WhatsApp.</p>
+                        <p>Aceptamos transferencias bancarias, depósitos en efectivo (en corresponsales bancarios
+                            autorizados) y pagos con tarjeta de crédito/débito a través de links de pago seguros (Clip /
+                            Mercado Pago) que te enviaremos al confirmar tu compra en WhatsApp.</p>
                     </div>
                 </div>
             </div>
@@ -207,14 +224,14 @@
             </button>
             <div class="modal-body">
                 <div class="modal-image-container">
-                <img src="" alt="Producto" id="modalImg">
-            </div>
+                    <img src="" alt="Producto" id="modalImg">
+                </div>
                 <div class="modal-info">
                     <span class="modal-category" id="modalCategory">CATEGORÍA</span>
                     <h3 class="modal-title" id="modalTitle">Nombre del Producto</h3>
                     <div class="modal-price" id="modalPrice">$0.00</div>
                     <p class="modal-description" id="modalDescription">Descripción detallada del producto...</p>
-                    
+
                     <div class="selector-group">
                         <label>Talla:</label>
                         <div class="size-selector" id="modalSizes">
@@ -259,8 +276,11 @@
             </div>
             <div class="footer-contact">
                 <h4>Contacto</h4>
-                <p><i class="fa-solid fa-envelope"></i> <a href="mailto:enduredisenospersonalizados@gmail.com">enduredisenospersonalizados@gmail.com</a></p>
-                <p><i class="fa-solid fa-phone"></i> <a href="https://wa.me/51996440579" target="_blank">+51 996 440 579</a></p>
+                <p><i class="fa-solid fa-envelope"></i> <a
+                        href="mailto:enduredisenospersonalizados@gmail.com">enduredisenospersonalizados@gmail.com</a>
+                </p>
+                <p><i class="fa-solid fa-phone"></i> <a href="https://wa.me/51996440579" target="_blank">+51 996 440
+                        579</a></p>
                 <p><i class="fa-solid fa-location-dot"></i> Lima, Perú</p>
             </div>
         </div>
@@ -269,8 +289,16 @@
         </div>
     </footer>
 
-
+    <script>
+        window.process = {
+            env: {
+                NODE_ENV: "production"
+            }
+        };
+    </script>
+    <script src="./anime-gallery.jsx"></script>
     <!-- Custom JS -->
     <script src="app.js"></script>
 </body>
+
 </html>
