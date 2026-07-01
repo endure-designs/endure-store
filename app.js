@@ -53,6 +53,7 @@ const WHATSAPP_PHONE = "51996440579"; // Reemplaza con tu número de teléfono d
 let cart = JSON.parse(localStorage.getItem('endure_cart')) || [];
 let selectedProduct = null;
 let selectedSize = '';
+let selectedColor = '';
 let selectedQty = 1;
 
 // VARIABLES DEL DOM
@@ -72,6 +73,8 @@ const modalTitle = document.getElementById('modalTitle');
 const modalPrice = document.getElementById('modalPrice');
 const modalDescription = document.getElementById('modalDescription');
 const modalSizes = document.getElementById('modalSizes');
+const modalColorsContainer = document.getElementById('modalColorsContainer');
+const modalColors = document.getElementById('modalColors');
 const qtyVal = document.getElementById('qtyVal');
 const qtyMinus = document.getElementById('qtyMinus');
 const qtyPlus = document.getElementById('qtyPlus');
@@ -261,8 +264,19 @@ function setupSelectListeners() {
     }
     if (collectionSelect) {
         collectionSelect.addEventListener('change', () => {
+            const prevCollection = currentCollection;
             currentCollection = collectionSelect.value;
             currentSubtopic = 'all'; // Resetear el filtro de anime al cambiar la colección
+            
+            if (currentCollection === 'anime' && prevCollection !== 'anime') {
+                const container = document.getElementById('anime-gallery');
+                if (container) {
+                    const newContainer = container.cloneNode(false);
+                    container.parentNode.replaceChild(newContainer, container);
+                    if (typeof initAnimeGallery === 'function') initAnimeGallery();
+                }
+            }
+            
             currentPage = 1;
             renderCurrentProducts();
         });
@@ -520,7 +534,11 @@ function setupEventListeners() {
             alert("Por favor selecciona una talla.");
             return;
         }
-        addToCart(selectedProduct.id, selectedSize || selectedProduct.sizes[0], selectedQty);
+        if (!selectedColor && selectedProduct.colors && selectedProduct.colors.length > 0) {
+            alert("Por favor selecciona un color.");
+            return;
+        }
+        addToCart(selectedProduct.id, selectedSize || selectedProduct.sizes[0], selectedColor, selectedQty);
         closeProductModal();
         openCart();
     });
@@ -536,6 +554,7 @@ window.openProductModal = function (productId) {
 
     selectedProduct = product;
     selectedQty = 1;
+    selectedColor = '';
     qtyVal.textContent = selectedQty;
 
     // Llenar datos en el modal
@@ -570,6 +589,31 @@ window.openProductModal = function (productId) {
         });
     }
 
+    // Generar botones de colores
+    modalColors.innerHTML = '';
+    if (product.colors && product.colors.length > 0) {
+        modalColorsContainer.style.display = 'block';
+        selectedColor = product.colors[0];
+        product.colors.forEach(colorHex => {
+            const btn = document.createElement('button');
+            btn.classList.add('color-btn');
+            if (colorHex === selectedColor) btn.classList.add('active');
+            btn.style.backgroundColor = colorHex;
+            
+            btn.addEventListener('click', () => {
+                const colorBtns = modalColors.querySelectorAll('.color-btn');
+                colorBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedColor = colorHex;
+            });
+
+            modalColors.appendChild(btn);
+        });
+    } else {
+        modalColorsContainer.style.display = 'none';
+        selectedColor = '';
+    }
+
     productModal.classList.add('open');
     document.body.style.overflow = 'hidden'; // Bloquear scroll de la página
 };
@@ -584,22 +628,22 @@ window.quickAdd = function (productId) {
     const product = PRODUCTS.find(p => p.id === productId);
     if (!product) return;
 
-    // Si tiene tallas múltiples, abrimos el modal para que elija. De lo contrario, se añade directamente.
-    if (product.sizes.length > 1 && product.sizes[0] !== "Única") {
+    // Si tiene tallas múltiples o colores múltiples, abrimos el modal para que elija. De lo contrario, se añade directamente.
+    if ((product.sizes.length > 1 && product.sizes[0] !== "Única") || (product.colors && product.colors.length > 1)) {
         openProductModal(productId);
     } else {
-        addToCart(productId, product.sizes[0], 1);
+        addToCart(productId, product.sizes[0], product.colors ? product.colors[0] : '', 1);
         openCart();
     }
 };
 
 // --- GESTIÓN DEL CARRITO ---
-function addToCart(productId, size, qty) {
+function addToCart(productId, size, color, qty) {
     const product = PRODUCTS.find(p => p.id === productId);
     if (!product) return;
 
-    // Buscar si ya existe el mismo artículo con la misma talla
-    const existingIndex = cart.findIndex(item => item.id === productId && item.size === size);
+    // Buscar si ya existe el mismo artículo con la misma talla y color
+    const existingIndex = cart.findIndex(item => item.id === productId && item.size === size && item.color === color);
 
     if (existingIndex > -1) {
         cart[existingIndex].qty += qty;
@@ -610,6 +654,7 @@ function addToCart(productId, size, qty) {
             price: product.price,
             image: product.image,
             size: size,
+            color: color,
             qty: qty
         });
     }
@@ -675,6 +720,7 @@ function updateCartUI() {
             <div class="cart-item-info">
                 <h4 class="cart-item-title">${item.name}</h4>
                 <div class="cart-item-meta">Talla: ${item.size}</div>
+                ${item.color ? `<div class="cart-item-meta" style="display:flex; align-items:center; gap:5px; margin-top:2px;">Color: <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background-color:${item.color}; border:1px solid #ccc;"></span></div>` : ''}
                 <div class="cart-item-price">S/${(item.price * item.qty).toFixed(2)}</div>
                 <div class="cart-item-actions">
                     <div class="cart-item-qty">
@@ -713,7 +759,8 @@ function sendOrderToWhatsApp() {
     cart.forEach(item => {
         const itemTotal = item.price * item.qty;
         subtotal += itemTotal;
-        productsText += `- *${item.name}* (Talla: ${item.size}) x${item.qty} -> S/${itemTotal.toFixed(2)}\n`;
+        const colorText = item.color ? `, Color: ${item.color}` : '';
+        productsText += `- *${item.name}* (Talla: ${item.size}${colorText}) x${item.qty} -> S/${itemTotal.toFixed(2)}\n`;
     });
 
     const totalText = `S/${subtotal.toFixed(2)}`;
@@ -754,21 +801,26 @@ function setupFAQAccordion() {
 }
 
 
-renderAnimeGallery("anime-gallery", {
-    onSelectAnime: (anime) => {
-        const prevSubtopic = currentSubtopic;
+function initAnimeGallery() {
+    renderAnimeGallery("anime-gallery", {
+        onSelectAnime: (anime) => {
+            const prevSubtopic = currentSubtopic;
 
-        // anime.file_name coincide con el campo 'subtopic' en products.json
-        if (anime && anime.file_name) {
-            currentSubtopic = anime.file_name;
-        } else {
-            currentSubtopic = 'all';
-        }
+            // anime.file_name coincide con el campo 'subtopic' en products.json
+            if (anime && anime.file_name) {
+                currentSubtopic = anime.file_name;
+            } else {
+                currentSubtopic = 'all';
+            }
 
-        // Solo renderizar si el subtopic cambió Y estamos viendo la colección de anime
-        if (prevSubtopic !== currentSubtopic && currentCollection === 'anime') {
-            currentPage = 1;
-            renderCurrentProducts();
+            // Solo renderizar si el subtopic cambió Y estamos viendo la colección de anime
+            if (prevSubtopic !== currentSubtopic && currentCollection === 'anime') {
+                currentPage = 1;
+                renderCurrentProducts();
+            }
         }
-    }
-});
+    });
+}
+
+// Initial call
+initAnimeGallery();

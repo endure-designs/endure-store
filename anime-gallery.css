@@ -56,9 +56,9 @@
 }
 
 .anime-btn.active {
-    background: var(--swan-wing);
+    background: var(--light-bg);
     border-color: var(--quicksand);
-    box-shadow: 0 0 30px var(--shellstone)
+    box-shadow: 0 0 20px var(--swan-wing)
 }
 
 .anime-btn img {
@@ -75,23 +75,15 @@
 }
 
 .nav-btn {
-    color: #fff;
+    opacity: 0; /* Invisibles visualmente pero clickeables */
     cursor: pointer;
     z-index: 9999;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    background: #ffffff14;
+    background: transparent;
     border: none;
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    font-size: 30px;
-    transition: all .3s;
-    position: absolute
-}
-
-.nav-btn:hover {
-    background: #ffffff2e
+    position: absolute;
 }
 
 .left {
@@ -108,6 +100,18 @@
 
 /* Esto solo afecta a pantallas pequeñas (móviles) */
 @media (max-width: 480px) {
+
+    .nav-btn {
+        background: transparent;
+        /* Quitas el fondo semi-transparente */
+        border: none;
+        opacity: 0;
+        /* Los haces 100% invisibles */
+        transition: opacity 0.3s;
+    }
+
+
+
     .left {
         left: 3px;
         /* Más pegado al borde izquierdo en móvil */
