@@ -1,0 +1,334 @@
+/* ==========================================================================
+   CATALOG FILTERS — Selectores principales
+   ========================================================================== */
+
+.filter-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+
+.filter-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--royal-blue);
+    background: linear-gradient(135deg, var(--quicksand) 0%, var(--swan-wing) 100%);
+    border: none;
+    border-radius: 20px;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    color: var(--swan-wing);
+    background: var(--royal-blue);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.filter-select {
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 8px 24px 8px 16px;
+    /* extra right padding for arrow */
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--royal-blue);
+    background: linear-gradient(135deg, var(--quicksand) 0%, var(--swan-wing) 100%);
+    border: none;
+    border-radius: 20px;
+    /* matches .filter-btn */
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
+    min-width: 180px;
+    /* ensure enough space for text and arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23112280' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+}
+
+.filter-select:hover,
+.filter-select:focus {
+    color: var(--swan-wing);
+    background: var(--royal-blue);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23112280' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+
+/* Hide native select elements */
+.filter-select {
+    display: none;
+}
+
+
+/* Custom dropdown styles */
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+    min-width: 180px;
+    padding: 8px 24px 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--royal-blue);
+    background: linear-gradient(135deg, var(--quicksand) 0%, var(--swan-wing) 100%);
+    border: none;
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    user-select: none;
+}
+
+.custom-dropdown::after {
+    content: '';
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23112280' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 8px;
+    width: 12px;
+    height: 8px;
+}
+
+.custom-dropdown:hover {
+    color: var(--swan-wing);
+    background: var(--royal-blue);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.custom-dropdown .selected {
+    pointer-events: none;
+    /* let container handle clicks */
+}
+
+.custom-dropdown .dropdown-list {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    display: none;
+}
+
+.custom-dropdown.open {
+    z-index: 100;
+}
+
+.custom-dropdown.open .dropdown-list {
+    display: block;
+}
+
+.custom-dropdown .dropdown-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    color: var(--royal-blue);
+}
+
+.custom-dropdown .dropdown-item:hover,
+.custom-dropdown .dropdown-item.active {
+    background: var(--royal-blue);
+    color: var(--swan-wing);
+}
+
+
+
+@media (max-width: 768px) {
+
+    .filter-container {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        /* Smooth scrolling en iOS */
+        scrollbar-width: none;
+        /* Oculta scrollbar en Firefox */
+        -ms-overflow-style: none;
+        /* Oculta scrollbar en IE/Edge */
+        width: 100%;
+        /* HACK para evitar que overflow-x corte el menú absolute: 
+           Extendemos el padding box hacia abajo para que quepa el menú,
+           y reducimos el margin para no arruinar el diseño. */
+        padding-bottom: 220px;
+        margin-bottom: -220px;
+        pointer-events: none;
+        /* Dejamos pasar los clics hacia los productos abajo */
+    }
+
+    .filter-container::-webkit-scrollbar {
+        display: none;
+        /* Oculta scrollbar en Chrome/Safari/Opera */
+    }
+
+
+    .custom-dropdown {
+        flex-shrink: 0;
+        /* Evita que los filtros se aplasten */
+        pointer-events: auto;
+        /* Reactivamos los clics para los botones */
+    }
+
+}
+
+/* ==========================================================================
+   CATALOG SUBFILTERS — Subselector dinámico
+   ========================================================================== */
+
+#catalogSubfilters {
+    position: fixed;
+    display: none;
+    min-width: 190px;
+    max-width: 240px;
+    padding: 8px;
+
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+
+    z-index: 900;
+}
+
+
+/* --------------------------------------------------------------------------
+   Estado visible
+   -------------------------------------------------------------------------- */
+
+#catalogSubfilters.visible {
+    display: block;
+}
+
+
+/* --------------------------------------------------------------------------
+   Título
+   -------------------------------------------------------------------------- */
+
+.catalog-subfilter-title {
+    padding: 8px 12px 6px;
+
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    color: var(--text-muted);
+
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    user-select: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   Opciones
+   -------------------------------------------------------------------------- */
+
+.catalog-subfilter-item {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    min-height: 38px;
+
+    padding: 9px 12px;
+
+    border-radius: 7px;
+
+    font-family: var(--font-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    color: var(--text-dark);
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* --------------------------------------------------------------------------
+   Hover
+   -------------------------------------------------------------------------- */
+
+.catalog-subfilter-item:hover {
+    background: var(--swan-wing);
+
+    color: var(--royal-blue);
+
+    transform: translateX(2px);
+}
+
+
+/* --------------------------------------------------------------------------
+   Opción activa
+   -------------------------------------------------------------------------- */
+
+.catalog-subfilter-item.active {
+    background: var(--royal-blue);
+
+    color: var(--white);
+}
+
+
+/* --------------------------------------------------------------------------
+   Hover sobre opción activa
+   -------------------------------------------------------------------------- */
+
+.catalog-subfilter-item.active:hover {
+    background: var(--sapphire);
+
+    color: var(--white);
+}
+
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+
+    #catalogSubfilters {
+        min-width: 170px;
+        max-width: 210px;
+    }
+
+    .catalog-subfilter-item {
+        min-height: 36px;
+
+        padding: 8px 10px;
+
+        font-size: 0.8125rem;
+    }
+}

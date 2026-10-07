@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENDURE | Acceso</title>
+    <meta name="description" content="Inicia sesión o crea tu cuenta en ENDURE. Streetwear urbano atemporal.">
+    <link rel="icon" type="image/webp" href="assets/ICONO_WEB.webp">
+    <!-- Google Fonts: Space Grotesk (headings) and Inter (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+
+<body>
+
+    <!-- NAV BAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo"><img src="assets/ENDURE_LOGO.png" alt="ENDURE Logo"></a>
+            <nav class="nav-menu">
+                <a href="index.html#productos" class="nav-link">Colección</a>
+                <a href="index.html#nosotros" class="nav-link">Nosotros</a>
+                <a href="index.html#faq" class="nav-link">Ayuda</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="index.html" class="cart-trigger user-active" aria-label="Volver al inicio"
+                    style="text-decoration:none;">
+                    <!-- La flecha va antes para que aparezca desde la izquierda -->
+                    <i class="fa-solid fa-arrow-left user-arrow"></i>
+                    <i class="fa-solid fa-user"></i>
+                </a>
+                <a href="index.html?cart=open" class="cart-trigger" id="cartBtn" aria-label="Ver carrito"
+                    style="text-decoration:none;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- AUTH SECTION -->
+    <section class="auth-section">
+        <!-- Background decorative elements -->
+        <div class="auth-bg-pattern"></div>
+
+        <div class="auth-card">
+            <!-- Logo / Brand header -->
+            <div class="auth-brand">
+                <img src="assets/ENDURE_LOGO.png" alt="ENDURE" class="auth-logo">
+                <p class="auth-tagline">Streetwear con carácter</p>
+            </div>
+
+            <!-- Alert container -->
+            <div class="auth-alert" id="authAlert" role="alert"></div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin" data-tab="login">Iniciar Sesión</button>
+                <button class="auth-tab" id="tabRegister" data-tab="register">Crear Cuenta</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Correo electrónico</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="loginEmail" name="email" placeholder="tu@correo.com" required
+                            autocomplete="email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="loginPassword" name="password" placeholder="••••••••" required
+                            autocomplete="current-password" minlength="6">
+                        <button type="button" class="toggle-password" aria-label="Mostrar contraseña">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block auth-submit" id="loginSubmit">
+                    <span class="btn-text">Ingresar</span>
+                    <span class="btn-loader" style="display:none;">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                    </span>
+                </button>
+                <div class="auth-divider">
+                    <span>o</span>
+                </div>
+
+                <div class="google-login-container">
+                    <div id="googleButton"></div>
+                </div>
+                <p class="auth-switch">
+                    ¿No tienes cuenta?
+                    <a href="#" id="goToRegister">Regístrate aquí</a>
+                </p>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form class="auth-form" id="registerForm" style="display: none;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="registerFirstName">Nombres</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="registerFirstName" name="firstName" placeholder="Nombres" required
+                                autocomplete="given-name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerLastName">Apellidos</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="registerLastName" name="lastName" placeholder="Apellidos" required
+                                autocomplete="family-name">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Correo electrónico</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="registerEmail" name="email" placeholder="tu@correo.com" required
+                            autocomplete="email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Contraseña</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="registerPassword" name="password" placeholder="Tu contraseña"
+                            required autocomplete="new-password">
+                        <button type="button" class="toggle-password" aria-label="Mostrar contraseña">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <!-- Indicador independiente cuando es válida -->
+                    <p id="passwordValidIndicator" class="password-status">
+                        <i class="fa-solid fa-circle-check"></i> Contraseña válida
+                    </p>
+
+                    <div class="password-requirements" id="passwordRequirements">
+                        <p class="requirements-title">Requisitos de la contraseña:</p>
+                        <ul>
+                            <li id="reqLength" class="invalid"><i class="fa-solid fa-circle-xmark"></i> Mínimo 8
+                                caracteres</li>
+                            <li id="reqUpper" class="invalid"><i class="fa-solid fa-circle-xmark"></i> Al menos una
+                                letra mayúscula</li>
+                            <li id="reqNumber" class="invalid"><i class="fa-solid fa-circle-xmark"></i> Al menos un
+                                número</li>
+                            <li id="reqSpecial" class="invalid"><i class="fa-solid fa-circle-xmark"></i> Al menos un
+                                carácter especial</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmar contraseña</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="registerConfirmPassword" name="confirmPassword"
+                            placeholder="Confirma tu contraseña" required autocomplete="new-password">
+
+                    </div>
+                    <div class="match-indicator" id="matchIndicator">
+                        <i class="fa-solid fa-circle-xmark"></i> <span>Las contraseñas no coinciden</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block auth-submit" id="registerSubmit">
+                    <span class="btn-text">Crear Cuenta</span>
+                    <span class="btn-loader" style="display:none;">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                    </span>
+                </button>
+                <p class="auth-switch">
+                    ¿Ya tienes cuenta?
+                    <a href="#" id="goToLogin">Inicia sesión aquí</a>
+                </p>
+            </form>
+
+            <!-- EMAIL VERIFICATION -->
+            <div class="email-verification" id="emailVerification" style="display: none;">
+
+                <div class="verification-icon">
+                    <i class="fa-solid fa-envelope-circle-check"></i>
+                </div>
+
+                <h2>Verifica tu correo</h2>
+
+                <p class="verification-message">
+                    Hemos enviado un código de 6 dígitos a:
+                </p>
+
+                <p class="verification-email" id="verificationEmail"></p>
+
+                <div class="form-group">
+                    <label for="verificationCode">Código de verificación</label>
+
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-key"></i>
+                        <input type="text" id="verificationCode" inputmode="numeric" autocomplete="one-time-code"
+                            maxlength="6" placeholder="000000">
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-block auth-submit" id="verifyEmailButton">
+                    <span class="btn-text">Verificar correo</span>
+                    <span class="btn-loader" style="display:none;">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                    </span>
+                </button>
+
+                <div class="verification-resend">
+                    <p id="resendMessage">
+                        ¿No recibiste el código?
+                    </p>
+
+                    <button type="button" id="resendVerificationButton" disabled>
+                        Reenviar código
+                    </button>
+                </div>
+
+                <button type="button" class="verification-back" id="backToRegister">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Volver al registro
+                </button>
+
+            </div>
+
+            <!-- =========================================================
+     REGISTRO COMPLETADO
+========================================================= -->
+            <div id="registrationSuccess" class="registration-success" style="display: none;">
+
+                <div class="success-icon">
+                    ✓
+                </div>
+
+                <h2>¡Cuenta creada!</h2>
+
+                <p>
+                    Tu correo ha sido verificado correctamente.
+                </p>
+
+                <p class="success-redirect">
+                    Serás redirigido al inicio de sesión en
+                    <strong id="successCountdown">5</strong> segundos.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER (simplified for auth page) -->
+    <footer class="auth-footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 ENDURE. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Auth JS -->
+    <script src="/modules/auth/authApi.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="debugger.js"></script>
+    <script src="/modules/validator/passwordValidation.js"></script>
+    <script src="/config/config.js"></script>
+    <script src="auth.js"></script>
+</body>
+
+</html>

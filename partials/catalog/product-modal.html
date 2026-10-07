@@ -1,0 +1,71 @@
+<!-- PRODUCT DETAIL MODAL -->
+<div class="product-modal" id="productModal">
+
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <div class="modal-content">
+
+        <button class="modal-close" id="modalClose" aria-label="Cerrar modal">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="modal-body">
+
+            <div class="modal-image-container">
+                <img src="" alt="Producto" id="modalImg">
+            </div>
+
+            <div class="modal-info">
+
+                <span class="modal-category" id="modalCategory">
+                    CATEGORÍA
+                </span>
+
+                <h3 class="modal-title" id="modalTitle">
+                    Nombre del Producto
+                </h3>
+
+                <div class="modal-price" id="modalPrice">
+                    $0.00
+                </div>
+
+                <p class="modal-description" id="modalDescription">
+                    Descripción detallada del producto...
+                </p>
+
+                <div class="modal-attributes" id="modalAttributes">
+                    <!-- Los atributos y sus opciones serán generados por JS -->
+                </div>
+
+                <div class="quantity-group">
+
+                    <label>Cantidad:</label>
+
+                    <div class="qty-selector">
+
+                        <button id="qtyMinus">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+
+                        <span id="qtyVal">1</span>
+
+                        <button id="qtyPlus">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <button class="btn btn-primary btn-block" id="modalAddBtn">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Añadir al Carrito
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

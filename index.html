@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="./anime-gallery.css">
+
 </head>
 
 <body>
@@ -31,6 +31,38 @@
                 <a href="#faq" class="nav-link">Ayuda</a>
             </nav>
             <div class="nav-actions">
+                <!-- 1. VISITANTE: Enlace clásico con icono de usuario -->
+                <a href="auth.html" id="guestUserBtn" class="cart-trigger" aria-label="Mi cuenta"
+                    style="text-decoration:none;">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+
+                <!-- 2. AUTENTICADO: Botón con nombre + Menú desplegable (Oculto por defecto) -->
+                <div id="userDropdown" class="user-dropdown-container" style="display: none;">
+                    <button class="cart-trigger user-btn-trigger" id="userMenuBtn" aria-label="Menú de usuario">
+                        <i class="fa-solid fa-user"></i>
+                        <span id="userFirstName">Usuario</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.7em; margin-left: 2px;"></i>
+                    </button>
+
+                    <!-- Desplegable flotante -->
+                    <div id="userMenu" class="dropdown-menu" style="display: none;">
+                        <div class="dropdown-header">
+                            <span id="userFullName" class="user-name-title">Nombre Usuario</span>
+                            <small id="userEmail" class="user-email-subtitle">correo@ejemplo.com</small>
+                        </div>
+                        <hr>
+                        <a href="account.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
+                        <button id="logoutBtn" class="logout-item">
+                            <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Notificaciones -->
+                <div id="appNotificationsContainer" hidden></div>
+
+                <!-- Botón de Carrito (Sin cambios) -->
                 <button class="cart-trigger" id="cartBtn" aria-label="Ver carrito">
                     <i class="fa-solid fa-bag-shopping"></i>
                     <span class="cart-count">0</span>
@@ -60,30 +92,17 @@
     <!-- PRODUCTS SECTION -->
     <section class="catalog-section" id="productos">
         <div class="section-header">
+
             <h2 class="section-title">PRODUCTOS</h2>
+
+            <!-- Alternar catálogo público / administrativo -->
+            <button id="adminCatalogToggle" class="admin-catalog-toggle" type="button" hidden>
+                Catálogo administrativo
+            </button>
+
             <!-- Filter Categories -->
-            <div class="filter-container">
-                <select id="categorySelect" class="filter-select native-select">
-                    <option value="all">Todas las categorías</option>
-                    <option value="camisetas">Camisetas</option>
-                    <option value="sudaderas">Sudaderas</option>
-                    <option value="pantalones">Pantalones</option>
-                    <option value="accesorios">Accesorios</option>
-                </select>
-                <div class="custom-dropdown" data-select-id="categorySelect"></div>
-                <select id="collectionSelect" class="filter-select native-select">
-                    <option value="all">Todas las colecciones</option>
-                </select>
-                <div class="custom-dropdown" data-select-id="collectionSelect"></div>
-                <select id="sortSelect" class="filter-select native-select">
-                    <option value="" disabled selected>Ordenar por</option>
-                    <option value="date-asc">Fecha ↑</option>
-                    <option value="date-desc">Fecha ↓</option>
-                    <option value="price-asc">Precio ↑</option>
-                    <option value="price-desc">Precio ↓</option>
-                </select>
-                <div class="custom-dropdown" data-select-id="sortSelect"></div>
-            </div>
+            <div id="productFilters"></div>
+
         </div>
         <!-- Carrusel React -->
         <div id="anime-gallery"></div>
@@ -184,84 +203,11 @@
         </div>
     </section>
 
-    <!-- SHOPPING CART SIDE DRAWER -->
-    <div class="cart-drawer" id="cartDrawer">
-        <div class="cart-overlay" id="cartOverlay"></div>
-        <div class="cart-content">
-            <div class="cart-header">
-                <h3>TU CARRITO</h3>
-                <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="cart-items" id="cartItemsContainer">
-                <!-- Items will be generated by JS -->
-                <div class="cart-empty-state">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <p>Tu carrito está vacío.</p>
-                    <a href="#productos" class="btn btn-primary btn-sm" id="emptyCartAction">Ver catálogo</a>
-                </div>
-            </div>
-            <div class="cart-footer">
-                <div class="cart-totals">
-                    <span>Subtotal:</span>
-                    <span id="cartSubtotal">$0.00</span>
-                </div>
-                <p class="cart-note">* El envío y métodos de pago se coordinarán por WhatsApp.</p>
-                <button class="btn btn-primary btn-block" id="checkoutBtn">
-                    <i class="fa-brands fa-whatsapp"></i> Confirmar Pedido
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- SHOPPING CART -->
+    <div id="cartModalContainer"></div>
 
-    <!-- PRODUCT DETAIL MODAL -->
-    <div class="product-modal" id="productModal">
-        <div class="modal-overlay" id="modalOverlay"></div>
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose" aria-label="Cerrar modal">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="modal-body">
-                <div class="modal-image-container">
-                    <img src="" alt="Producto" id="modalImg">
-                </div>
-                <div class="modal-info">
-                    <span class="modal-category" id="modalCategory">CATEGORÍA</span>
-                    <h3 class="modal-title" id="modalTitle">Nombre del Producto</h3>
-                    <div class="modal-price" id="modalPrice">$0.00</div>
-                    <p class="modal-description" id="modalDescription">Descripción detallada del producto...</p>
-
-                    <div class="selector-group">
-                        <label>Talla:</label>
-                        <div class="size-selector" id="modalSizes">
-                            <!-- Sizes will be generated by JS -->
-                        </div>
-                    </div>
-
-                    <div class="selector-group" id="modalColorsContainer" style="display: none;">
-                        <label>Color:</label>
-                        <div class="color-selector" id="modalColors" style="display: flex; gap: 10px; margin-top: 5px;">
-                            <!-- Colors will be generated by JS -->
-                        </div>
-                    </div>
-
-                    <div class="selector-group">
-                        <label>Cantidad:</label>
-                        <div class="qty-selector">
-                            <button id="qtyMinus"><i class="fa-solid fa-minus"></i></button>
-                            <span id="qtyVal">1</span>
-                            <button id="qtyPlus"><i class="fa-solid fa-plus"></i></button>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-primary btn-block" id="modalAddBtn">
-                        <i class="fa-solid fa-bag-shopping"></i> Añadir al Carrito
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="productModalContainer"></div>
+    <div id="checkoutModalContainer"></div>
 
     <!-- FOOTER -->
     <footer>
@@ -296,6 +242,9 @@
         </div>
     </footer>
 
+    <div id="alertModalContainer"></div>
+    <div id="rapidFormContainer" hidden></div>
+    <div id="addressModalContainer"></div>
     <script>
         window.process = {
             env: {
@@ -303,9 +252,12 @@
             }
         };
     </script>
+
+    <!-- Anime Gallery -->
     <script src="./anime-gallery.jsx"></script>
-    <!-- Custom JS -->
-    <script src="app.js"></script>
+
+    <!-- Frontend -->
+    <script src="./main.js"></script>
 </body>
 
 </html>

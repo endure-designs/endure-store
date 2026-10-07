@@ -1,0 +1,97 @@
+<div class="app-notifications">
+
+    <button id="notificationsButton" class="cart-trigger notifications-trigger" type="button"
+        aria-label="Notificaciones" aria-expanded="false" aria-controls="notificationsPanel">
+        <i class="fa-regular fa-bell"></i>
+
+        <span id="notificationsBadge" class="notifications-badge" hidden>
+            0
+        </span>
+    </button>
+
+
+    <!-- Panel de notificaciones -->
+    <div id="notificationsPanel" class="notifications-panel" hidden>
+
+        <!-- Cabecera -->
+        <div class="notifications-panel-header">
+
+            <div class="notifications-title">
+
+                <h3>Notificaciones</h3>
+
+                <span id="notificationsUnreadLabel">
+                    0 sin leer
+                </span>
+
+            </div>
+
+            <button id="notificationsMarkAllRead" class="notifications-mark-all" type="button">
+                Marcar todas como leídas
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================================
+             CONFIGURACIÓN DE NOTIFICACIONES PUSH
+             ========================================================== -->
+
+        <div id="notificationsPushSettings" class="notifications-push-settings">
+
+            <div class="notifications-push-info">
+
+                <i class="fa-regular fa-bell"></i>
+
+                <div class="notifications-push-text">
+
+                    <strong>Notificaciones del navegador</strong>
+
+                    <span id="notificationsPushStatus">
+                        Comprobando estado...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button id="notificationsPushButton" class="notifications-push-button" type="button" hidden>
+                Activar
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================================
+             LISTA DE NOTIFICACIONES IN-APP
+             ========================================================== -->
+
+        <div id="notificationsList" class="notifications-list">
+
+            <!-- Estado de carga -->
+            <div id="notificationsLoading" class="notifications-state">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                <span>
+                    Cargando notificaciones...
+                </span>
+            </div>
+
+        </div>
+
+
+        <!-- Estado vacío -->
+        <div id="notificationsEmpty" class="notifications-state" hidden>
+
+            <i class="fa-regular fa-bell-slash"></i>
+
+            <span>
+                No tienes notificaciones.
+            </span>
+
+        </div>
+
+    </div>
+
+</div>

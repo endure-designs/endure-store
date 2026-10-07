@@ -1,0 +1,608 @@
+/* ==========================================================================
+   MIS COMPRAS — LISTA DE PEDIDOS
+   ========================================================================== */
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   TARJETA DE PEDIDO
+   ========================================================================== */
+
+.order-card {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 16px 18px;
+
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+
+    background: var(--white);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.order-card:hover {
+    border-color: var(--shellstone);
+
+    box-shadow: var(--shadow-md);
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   ENCABEZADO
+   ========================================================================== */
+
+.order-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding-bottom: 11px;
+
+    border-bottom: 1px solid var(--gray-200);
+}
+
+
+.order-card-info {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+
+.order-card-info h3 {
+    margin: 0;
+
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+
+.order-card-info>span {
+    color: var(--text-muted);
+
+    font-size: 11px;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   ESTADO
+   ========================================================================== */
+
+.order-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 25px;
+    padding: 0 10px;
+
+    border-radius: 13px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.order-status-pending {
+    background: rgba(245, 158, 11, 0.10);
+    color: #b45309;
+}
+
+.order-status-paid {
+    background: rgba(16, 185, 129, 0.10);
+    color: var(--success);
+}
+
+.order-status-processing {
+    background: rgba(59, 130, 246, 0.10);
+    color: #2563eb;
+}
+
+.order-status-shipped {
+    background: rgba(99, 102, 241, 0.10);
+    color: #4f46e5;
+}
+
+.order-status-delivered {
+    background: rgba(16, 185, 129, 0.10);
+    color: var(--success);
+}
+
+.order-status-cancelled {
+    background: rgba(239, 68, 68, 0.10);
+    color: #dc2626;
+}
+
+
+/* ==========================================================================
+   PRODUCTOS DEL PEDIDO
+   ========================================================================== */
+
+.order-card-products {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-top: 12px;
+}
+
+
+/* ==========================================================================
+   PRODUCTO
+   ========================================================================== */
+
+.order-card-item {
+    display: grid;
+
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-height: 48px;
+
+    padding: 7px 8px;
+
+    box-sizing: border-box;
+
+    border-radius: 7px;
+
+    background: var(--light-bg);
+}
+
+
+.order-card-item-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    overflow: hidden;
+
+    border-radius: 6px;
+
+    background: var(--swan-wing);
+}
+
+
+.order-card-item-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN DEL PRODUCTO
+   ========================================================================== */
+
+.order-card-item-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+}
+
+
+.order-card-item-info strong {
+    overflow: hidden;
+
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    line-height: 1.3;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.order-card-item-info span {
+    color: var(--text-muted);
+
+    font-size: 10px;
+
+    line-height: 1.3;
+}
+
+
+/* ==========================================================================
+   PRECIO DEL PRODUCTO
+   ========================================================================== */
+
+.order-card-item-price {
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   PIE DE PEDIDO
+   ========================================================================== */
+
+.order-card-footer {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-top: 12px;
+    padding-top: 11px;
+
+    border-top: 1px solid var(--gray-200);
+}
+
+
+.order-card-payment {
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+
+.order-card-total {
+    margin-left: auto;
+
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* ==========================================================================
+   BOTÓN VER PEDIDO
+   ========================================================================== */
+
+.order-card-view-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    min-height: 30px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--royal-blue);
+    border-radius: 15px;
+
+    background: var(--royal-blue);
+
+    color: var(--white);
+
+    font-family: var(--font-primary);
+
+    font-size: 10px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.order-card-view-button:hover {
+    background: var(--sapphire);
+
+    border-color: var(--sapphire);
+
+    transform: translateY(-1px);
+}
+
+
+.order-card-view-button i {
+    font-size: 9px;
+}
+
+/* ==========================================================================
+   INFORMACIÓN DEL PEDIDO
+   ========================================================================== */
+
+.order-card-details {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-top: 12px;
+    padding: 10px 0;
+
+    border-bottom: 1px solid var(--gray-200);
+}
+
+
+.order-card-detail {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+}
+
+
+.order-card-detail span {
+    color: var(--text-muted);
+
+    font-size: 9px;
+}
+
+
+.order-card-detail strong {
+    overflow: hidden;
+
+    color: var(--royal-blue);
+
+    font-size: 10px;
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   ATRIBUTOS
+   ========================================================================== */
+
+.order-card-item-attributes {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 2px 9px;
+
+    margin-top: 2px;
+}
+
+
+.order-card-item-attributes span {
+    color: var(--text-muted);
+
+    font-size: 9px;
+}
+
+
+/* ==========================================================================
+   PRECIO DEL PRODUCTO
+   ========================================================================== */
+
+.order-card-item-price {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 2px;
+
+    min-width: 75px;
+
+    text-align: right;
+}
+
+
+.order-card-item-price-old {
+    color: var(--text-muted);
+
+    font-size: 9px;
+
+    text-decoration: line-through;
+}
+
+
+.order-card-item-price-current {
+    color: var(--royal-blue);
+
+    font-size: 10px;
+}
+
+
+.order-card-item-price strong {
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* ==========================================================================
+   RESUMEN ECONÓMICO
+   ========================================================================== */
+
+.order-card-summary {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    margin-top: 11px;
+    padding-top: 10px;
+
+    border-top: 1px solid var(--gray-200);
+}
+
+
+.order-card-summary-row {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 10px;
+}
+
+
+.order-card-summary-row span:first-child {
+    color: var(--text-muted);
+}
+
+
+.order-card-summary-row span:last-child {
+    color: var(--text-dark);
+}
+
+
+.order-card-summary-discount span:last-child {
+    color: var(--success);
+}
+
+
+/* ==========================================================================
+   TOTAL
+   ========================================================================== */
+
+.order-card-summary-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 5px;
+    padding-top: 8px;
+
+    border-top: 1px solid var(--gray-200);
+}
+
+
+.order-card-summary-total span {
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+.order-card-summary-total strong {
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+/* ==========================================================================
+   PIE
+   ========================================================================== */
+
+.order-card-item-count {
+    color: var(--text-muted);
+
+    font-size: 9px;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 650px) {
+
+    .order-card {
+        padding: 14px;
+    }
+
+    .order-card-info {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 3px;
+    }
+
+    .order-card-footer {
+        flex-wrap: wrap;
+    }
+
+    .order-card-view-button {
+        width: 100%;
+    }
+
+    .order-card-details {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .order-card-item {
+        grid-template-columns: 42px minmax(0, 1fr);
+
+        gap: 9px;
+    }
+
+    .order-card-item-image {
+        width: 42px;
+        height: 42px;
+    }
+
+    .order-card-item-price {
+        grid-column: 2;
+
+        text-align: left;
+    }
+
+    .order-card-details {
+        grid-template-columns: 1fr;
+    }
+
+}

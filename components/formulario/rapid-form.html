@@ -1,0 +1,152 @@
+<div id="rapidAddressForm" class="rapid-form">
+
+    <div class="rapid-form-grid">
+
+        <!-- ==========================================================
+             TIPO DE COMPROBANTE
+             ========================================================== -->
+
+        <div class="rapid-form-field rapid-form-field-full">
+
+            <label>
+                Tipo de comprobante
+            </label>
+
+            <div id="rapidDocumentType" class="rapid-form-document-type">
+
+                <label class="rapid-document-option">
+                    <input type="radio" name="rapidDocumentType" value="BOLETA" checked>
+
+                    <span>
+                        Boleta
+                    </span>
+                </label>
+
+                <label class="rapid-document-option">
+                    <input type="radio" name="rapidDocumentType" value="FACTURA">
+
+                    <span>
+                        Factura
+                    </span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================================
+             DATOS DEL COMPRADOR / CONTRIBUYENTE
+             ========================================================== -->
+
+        <!--
+            Este contenedor será generado dinámicamente
+            según BOLETA o FACTURA.
+        -->
+
+        <div id="rapidBillingIdentity" class="rapid-form-grid rapid-form-field-full"></div>
+
+
+        <!-- ==========================================================
+            TELÉFONO
+            ========================================================== -->
+
+        <div class="rapid-form-field">
+
+            <label for="rapidPhone">
+                Teléfono
+                <span class="rapid-required">*</span>
+            </label>
+
+            <input type="tel" id="rapidPhone" name="phone" autocomplete="tel" required>
+
+        </div>
+
+
+        <!-- ==========================================================
+            CORREO
+            ========================================================== -->
+
+        <div class="rapid-form-field">
+
+            <label for="rapidEmail">
+                Correo electrónico
+                <span class="rapid-required">*</span>
+            </label>
+
+            <input type="email" id="rapidEmail" name="email" autocomplete="email" required>
+
+        </div>
+
+
+        <!-- ==========================================================
+            PAÍS
+            ========================================================== -->
+
+        <div class="rapid-form-field">
+
+            <label for="rapidCountrySelector">
+                País
+                <span class="rapid-required">*</span>
+            </label>
+
+            <div id="rapidCountrySelector" class="rapid-form-selector" aria-required="true"></div>
+
+        </div>
+
+
+        <!-- ==========================================================
+            DIVISIONES ADMINISTRATIVAS
+            ========================================================== -->
+
+        <div id="rapidDivisions" class="rapid-form-divisions"></div>
+
+
+        <!-- ==========================================================
+            URBANIZACIÓN / ZONA
+            ========================================================== -->
+
+        <div class="rapid-form-field">
+
+            <label for="rapidZone">
+                Urbanización / Zona
+            </label>
+
+            <input type="text" id="rapidZone" name="zone" autocomplete="address-line2">
+
+        </div>
+
+
+        <!-- ==========================================================
+            CÓDIGO POSTAL
+            ========================================================== -->
+
+        <div class="rapid-form-field">
+
+            <label for="rapidPostalCode">
+                Código postal
+            </label>
+
+            <input type="text" id="rapidPostalCode" name="postalCode" autocomplete="postal-code">
+
+        </div>
+
+
+        <!-- ==========================================================
+            DIRECCIÓN
+            ========================================================== -->
+
+        <div class="rapid-form-field">
+
+            <label for="rapidAddress">
+                Dirección
+                <span class="rapid-required">*</span>
+            </label>
+
+            <input type="text" id="rapidAddress" name="address" autocomplete="street-address" required>
+
+        </div>
+
+    </div>
+
+</div>

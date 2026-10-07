@@ -1,0 +1,778 @@
+/* ================================================
+   AUTH PAGE — ENDURE Streetwear
+   Uses existing :root custom properties from styles.css
+   ================================================ */
+
+/* AUTH SECTION — Full-page background */
+.auth-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--header-height) + 40px) 24px 80px;
+    background-color: var(--dark-bg);
+    overflow: hidden;
+}
+
+/* Decorative background pattern */
+.auth-bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(60, 80, 125, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(224, 197, 143, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(17, 34, 80, 0.2) 0%, transparent 60%);
+    z-index: 0;
+    animation: bgShift 20s ease-in-out infinite alternate;
+}
+
+@keyframes bgShift {
+    0% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+/* AUTH CARD */
+.auth-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 460px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(224, 197, 143, 0.12);
+    border-radius: 8px;
+    padding: 48px 40px;
+    box-shadow:
+        0 32px 64px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(245, 240, 233, 0.04) inset;
+    animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+@keyframes cardEntrance {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Brand header inside card */
+.auth-brand {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.auth-logo {
+    max-height: 42px;
+    width: auto;
+    margin: 0 auto 12px;
+    display: block;
+    filter: brightness(1.1);
+}
+
+.auth-tagline {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--shellstone);
+    opacity: 0.7;
+}
+
+/* ── ALERT CONTAINER ── */
+.auth-alert {
+    display: none;
+    padding: 14px 18px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    line-height: 1.5;
+    animation: alertSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-alert.visible {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-alert.alert-error {
+    background-color: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+.auth-alert.alert-success {
+    background-color: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #6ee7b7;
+}
+
+@keyframes alertSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── TABS ── */
+.auth-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 32px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(224, 197, 143, 0.2);
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 14px 16px;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--shellstone);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+.auth-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--quicksand);
+    transition: var(--transition-smooth);
+    transform: translateX(-50%);
+}
+
+.auth-tab:hover {
+    color: var(--quicksand);
+    background: rgba(224, 197, 143, 0.04);
+}
+
+.auth-tab.active {
+    color: var(--quicksand);
+    background: rgba(224, 197, 143, 0.08);
+}
+
+.auth-tab.active::after {
+    width: 60%;
+}
+
+
+/* Estilos para el botón de usuario activo en la página de cuenta */
+.cart-trigger.user-active {
+    color: #E0C58F;
+    /* Sustituye por el color acento de tu marca */
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Indicador visual de la flecha */
+.cart-trigger.user-active .user-arrow {
+    font-size: 0.75rem;
+    /* Tamaño más sutil para la flecha */
+    transition: transform 0.2s ease;
+}
+
+/* Animación sutil al pasar el cursor sobre el botón */
+.cart-trigger.user-active:hover .user-arrow {
+    transform: translateX(-3px);
+    /* La flecha se mueve a la izquierda para indicar "Volver" */
+}
+
+/* ── FORM STYLES ── */
+.auth-form {
+    animation: formFadeIn 0.35s ease forwards;
+}
+
+@keyframes formFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--shellstone);
+    margin-bottom: 8px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper>i:first-child {
+    position: absolute;
+    left: 16px;
+    font-size: 0.9rem;
+    color: var(--shellstone);
+    opacity: 0.4;
+    transition: var(--transition-smooth);
+    pointer-events: none;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 14px 16px 14px 44px;
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    color: var(--swan-wing);
+    background: rgba(245, 240, 233, 0.04);
+    border: 1px solid rgba(224, 197, 143, 0.15);
+    border-radius: 4px;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+
+.input-wrapper input::placeholder {
+    color: rgba(245, 240, 233, 0.25);
+}
+
+.input-wrapper input:focus {
+    border-color: var(--quicksand);
+    background: rgba(245, 240, 233, 0.06);
+    box-shadow: 0 0 0 3px rgba(224, 197, 143, 0.08);
+}
+
+.input-wrapper input:focus~i:first-child,
+.input-wrapper input:focus+i:first-child {
+    opacity: 1;
+    color: var(--quicksand);
+}
+
+/* When input is focused, change the icon color */
+.input-wrapper:focus-within>i:first-child {
+    opacity: 1;
+    color: var(--quicksand);
+}
+
+/* Toggle password visibility button */
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    background: none;
+    border: none;
+    color: var(--shellstone);
+    opacity: 0.4;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 4px;
+    transition: var(--transition-smooth);
+}
+
+.toggle-password:hover {
+    opacity: 0.8;
+    color: var(--quicksand);
+}
+
+/* ── SUBMIT BUTTON ── */
+.auth-submit {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(224, 197, 143, 0.15), transparent);
+    transition: left 0.6s ease;
+}
+
+.auth-submit:hover::before {
+    left: 100%;
+}
+
+.btn-loader {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* ── SWITCH LINK ── */
+.auth-switch {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.85rem;
+    color: var(--shellstone);
+    opacity: 0.7;
+}
+
+.auth-switch a {
+    color: var(--quicksand);
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.auth-switch a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--quicksand);
+    transition: var(--transition-smooth);
+}
+
+.auth-switch a:hover::after {
+    width: 100%;
+}
+
+.auth-switch a:hover {
+    opacity: 1;
+}
+
+/* ── FORM ROW (2 columns) ── */
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+
+/* Indicador de Contraseña Válida */
+.password-status {
+    display: none;
+    font-size: 0.72rem;
+    color: #6ee7b7;
+    margin-top: 6px;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.password-status.is-visible {
+    display: flex;
+}
+
+/* ── PASSWORD REQUIREMENTS ── */
+.password-requirements {
+    display: none;
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(224, 197, 143, 0.08);
+    border-radius: 4px;
+}
+
+
+/* Mostrar solo al escribir */
+.password-requirements.is-visible {
+    display: block;
+}
+
+/* Estado cuando TODOS los requisitos están cumplidos */
+.password-requirements.all-valid {
+    border-color: rgba(110, 231, 183, 0.3);
+    background: rgba(110, 231, 183, 0.05);
+    padding: 8px 12px;
+}
+
+/* 1. Cambia el color del título y le quita el margen inferior */
+.password-requirements.all-valid .requirements-title {
+    color: #6ee7b7;
+    opacity: 1;
+    margin-bottom: 0;
+    /* Quita el espacio vacíó que dejaba la lista */
+}
+
+.requirements-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--shellstone);
+    margin-bottom: 6px;
+    opacity: 0.8;
+}
+
+/* 2. Oculta la lista de requisitos cuando la contraseña es válida */
+.password-requirements.all-valid ul {
+    display: none;
+}
+
+.password-requirements ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.password-requirements li {
+    font-size: 0.72rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition-smooth);
+}
+
+.password-requirements li.invalid {
+    color: #fca5a5;
+    opacity: 0.65;
+}
+
+.password-requirements li.valid {
+    color: #6ee7b7;
+    opacity: 1;
+}
+
+.password-requirements li i {
+    font-size: 0.7rem;
+}
+
+/* ── MATCH INDICATOR ── */
+.match-indicator {
+    display: none;
+    font-size: 0.75rem;
+    margin-top: 6px;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.match-indicator.visible {
+    display: flex;
+}
+
+.match-indicator.match-error {
+    color: #fca5a5;
+}
+
+.match-indicator.match-success {
+    color: #6ee7b7;
+}
+
+.google-login-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#googleButton {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 14px 0;
+    color: #888;
+    font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.auth-divider span {
+    line-height: 1;
+    text-transform: lowercase;
+}
+
+/* ── FOOTER (simplified) ── */
+.auth-footer {
+    background-color: var(--dark-bg);
+    border-top: 1px solid rgba(224, 197, 143, 0.08);
+    padding: 24px;
+}
+
+.auth-footer .footer-bottom {
+    padding-top: 0;
+    border-top: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 520px) {
+    .auth-card {
+        padding: 36px 24px;
+    }
+
+    .auth-tab {
+        font-size: 0.78rem;
+        padding: 12px 12px;
+    }
+
+    .input-wrapper input {
+        padding: 12px 12px 12px 40px;
+        font-size: 0.9rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+
+/* ==========================================================
+   EMAIL VERIFICATION
+   ========================================================== */
+
+.email-verification {
+    animation: formFadeIn 0.35s ease forwards;
+}
+
+.verification-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    border: 1px solid rgba(224, 197, 143, 0.25);
+    background: rgba(224, 197, 143, 0.08);
+
+    color: var(--quicksand);
+    font-size: 26px;
+
+    box-shadow:
+        0 0 0 1px rgba(245, 240, 233, 0.02) inset;
+}
+
+.email-verification h2 {
+    margin: 0 0 12px;
+    text-align: center;
+
+    color: var(--swan-wing);
+}
+
+.verification-message {
+    margin: 0;
+    text-align: center;
+
+    color: var(--shellstone);
+    opacity: 0.75;
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.verification-email {
+    margin: 10px 0 28px;
+    text-align: center;
+
+    color: var(--quicksand);
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    word-break: break-word;
+}
+
+/* ── Verification Code ── */
+
+#verificationCode {
+    text-align: center;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    letter-spacing: 8px;
+    font-size: 1.35rem;
+    font-weight: 600;
+
+    color: var(--swan-wing);
+}
+
+/* Evita que el último carácter quede demasiado separado */
+#verificationCode::placeholder {
+    letter-spacing: 6px;
+    color: rgba(245, 240, 233, 0.25);
+}
+
+/* ── Resend ── */
+
+.verification-resend {
+    margin-top: 22px;
+    text-align: center;
+}
+
+.verification-resend p {
+    margin: 0 0 8px;
+
+    color: var(--shellstone);
+    opacity: 0.65;
+
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+#resendVerificationButton {
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: var(--quicksand);
+
+    font-family: var(--font-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+#resendVerificationButton:hover:not(:disabled) {
+    color: var(--swan-wing);
+}
+
+#resendVerificationButton:disabled {
+    color: rgba(245, 240, 233, 0.3);
+    cursor: not-allowed;
+}
+
+/* ── Back to Register ── */
+
+.verification-back {
+    display: block;
+
+    margin: 22px auto 0;
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: var(--shellstone);
+
+    font-family: var(--font-primary);
+    font-size: 0.78rem;
+
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.verification-back:hover {
+    color: var(--quicksand);
+}
+
+
+/* ==========================================================
+   REGISTRO COMPLETADO
+   ========================================================== */
+
+.registration-success {
+    padding: 30px 20px;
+
+    text-align: center;
+
+    animation: formFadeIn 0.35s ease forwards;
+}
+
+.success-icon {
+    width: 72px;
+    height: 72px;
+
+    margin: 0 auto 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(110, 231, 183, 0.25);
+    background: rgba(110, 231, 183, 0.08);
+
+    color: #6ee7b7;
+
+    font-size: 34px;
+    font-weight: 600;
+
+    box-shadow:
+        0 0 0 1px rgba(245, 240, 233, 0.02) inset;
+}
+
+.registration-success h2 {
+    margin: 0 0 12px;
+
+    color: var(--swan-wing);
+}
+
+.registration-success p {
+    margin: 0 0 10px;
+
+    color: var(--shellstone);
+    opacity: 0.75;
+
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.registration-success .success-redirect {
+    margin-top: 22px;
+
+    color: var(--shellstone);
+    opacity: 0.55;
+
+    font-size: 0.78rem;
+}
+
+#successCountdown {
+    color: var(--quicksand);
+    font-weight: 600;
+}

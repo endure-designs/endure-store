@@ -1,0 +1,315 @@
+/* ==========================================================================
+   CONFIRMATION MODAL
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CONTENEDOR
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+.confirmation-modal[hidden] {
+    display: none !important;
+}
+
+.confirmation-modal.is-visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/* --------------------------------------------------------------------------
+   FONDO
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal-backdrop {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(9, 14, 26, 0.55);
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+
+/* --------------------------------------------------------------------------
+   CONTENIDO
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal-dialog {
+    position: relative;
+    z-index: 1;
+
+    width: min(100%, 440px);
+
+    padding: 32px;
+
+    background: var(--white);
+
+    border: 1px solid var(--shellstone);
+    border-radius: 16px;
+
+    box-shadow: var(--shadow-lg);
+
+    text-align: center;
+
+    transform: translateY(12px) scale(0.97);
+
+    transition:
+        transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.confirmation-modal.is-visible .confirmation-modal-dialog {
+    transform: translateY(0) scale(1);
+}
+
+
+/* --------------------------------------------------------------------------
+   BOTÓN CERRAR
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--gray-100);
+    color: var(--text-muted);
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: var(--transition-smooth);
+}
+
+.confirmation-modal-close:hover {
+    background: var(--gray-200);
+    color: var(--royal-blue);
+}
+
+.confirmation-modal-close:focus-visible {
+    outline: 2px solid var(--sapphire);
+    outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   ICONO
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    font-size: 25px;
+
+    transition: var(--transition-smooth);
+}
+
+.confirmation-modal-icon-danger {
+    background: rgba(220, 38, 38, 0.10);
+    color: #dc2626;
+}
+
+.confirmation-modal-icon-warning {
+    background: rgba(224, 197, 143, 0.22);
+    color: #9a6f20;
+}
+
+
+/* --------------------------------------------------------------------------
+   TÍTULO
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal-dialog h2 {
+    margin: 0 0 10px;
+
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+
+/* --------------------------------------------------------------------------
+   MENSAJE
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal-dialog p {
+    margin: 0 auto;
+
+    max-width: 350px;
+
+    color: var(--text-muted);
+
+    font-family: var(--font-primary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* --------------------------------------------------------------------------
+   ACCIONES
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 28px;
+}
+
+
+/* --------------------------------------------------------------------------
+   BOTONES
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal-btn {
+    min-width: 120px;
+    height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 8px;
+
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: var(--transition-smooth);
+}
+
+.confirmation-modal-btn-secondary {
+    border: 1px solid var(--shellstone);
+    background: var(--white);
+    color: var(--royal-blue);
+}
+
+.confirmation-modal-btn-secondary:hover {
+    background: var(--gray-100);
+    border-color: var(--sapphire);
+}
+
+.confirmation-modal-btn-danger {
+    border: 1px solid #dc2626;
+    background: #dc2626;
+    color: var(--white);
+}
+
+.confirmation-modal-btn-danger:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+}
+
+.confirmation-modal-btn-warning {
+    border: 1px solid var(--royal-blue);
+    background: var(--royal-blue);
+    color: var(--white);
+}
+
+.confirmation-modal-btn-warning:hover {
+    background: var(--sapphire);
+    border-color: var(--sapphire);
+}
+
+
+/* --------------------------------------------------------------------------
+   FOCUS
+   -------------------------------------------------------------------------- */
+
+.confirmation-modal-btn:focus-visible {
+    outline: 2px solid var(--sapphire);
+    outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   BLOQUEAR SCROLL
+   -------------------------------------------------------------------------- */
+
+body.confirmation-modal-open {
+    overflow: hidden;
+}
+
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+
+    .confirmation-modal {
+        padding: 16px;
+    }
+
+    .confirmation-modal-dialog {
+        padding: 28px 20px 24px;
+
+        border-radius: 14px;
+    }
+
+    .confirmation-modal-icon {
+        width: 58px;
+        height: 58px;
+
+        margin-bottom: 16px;
+
+        font-size: 22px;
+    }
+
+    .confirmation-modal-dialog h2 {
+        font-size: 20px;
+    }
+
+    .confirmation-modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .confirmation-modal-btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,317 @@
+/* ==========================================================================
+   ACCOUNT PROFILE — Información personal
+   ========================================================================== */
+
+
+/* ==========================================================================
+   ENCABEZADO
+   ========================================================================== */
+
+#panel-personal .panel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+#panel-personal .panel-header>div {
+    min-width: 0;
+}
+
+
+/* ==========================================================================
+   BOTÓN EDITAR
+   ========================================================================== */
+
+.profile-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 8px 14px;
+
+    border: 1px solid var(--shellstone);
+    border-radius: 6px;
+
+    background: var(--white);
+    color: var(--royal-blue);
+
+    font-family: var(--font-primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.profile-edit-btn:hover {
+    background: var(--swan-wing);
+    border-color: var(--sapphire);
+    color: var(--royal-blue);
+}
+
+.profile-edit-btn:active {
+    transform: translateY(1px);
+}
+
+.profile-edit-btn i {
+    font-size: 0.7rem;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN DEL PERFIL
+   ========================================================================== */
+
+#profileView {
+    width: 100%;
+}
+
+#profileView .info-grid {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   FORMULARIO
+   ========================================================================== */
+
+.profile-form {
+    width: 100%;
+}
+
+.profile-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 28px;
+}
+
+.profile-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.profile-form-field label {
+    color: #8fa1bb;
+    font-family: var(--font-primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.profile-form-field input {
+    width: 100%;
+    height: 42px;
+
+    box-sizing: border-box;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--shellstone);
+    border-radius: 6px;
+
+    background: var(--white);
+    color: var(--text-dark);
+
+    font-family: var(--font-primary);
+    font-size: 0.84rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.profile-form-field input:hover {
+    border-color: var(--sapphire);
+}
+
+.profile-form-field input:focus {
+    border-color: var(--sapphire);
+
+    box-shadow:
+        0 0 0 3px rgba(60, 80, 125, 0.10);
+}
+
+.profile-form-field input:disabled {
+    background: var(--gray-100);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+.profile-form-field small {
+    margin-top: -1px;
+
+    color: var(--text-muted);
+
+    font-family: var(--font-primary);
+    font-size: 0.68rem;
+    line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   BOTONES DEL FORMULARIO
+   ========================================================================== */
+
+.profile-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 28px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--gray-200);
+}
+
+.profile-cancel-btn,
+.profile-save-btn {
+    height: 38px;
+
+    padding: 0 15px;
+
+    border-radius: 6px;
+
+    font-family: var(--font-primary);
+    font-size: 0.76rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.profile-cancel-btn {
+    border: 1px solid var(--shellstone);
+
+    background: var(--white);
+    color: var(--text-muted);
+}
+
+.profile-cancel-btn:hover {
+    background: var(--gray-100);
+    border-color: var(--shellstone);
+    color: var(--text-dark);
+}
+
+.profile-save-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border: 1px solid var(--royal-blue);
+
+    background: var(--royal-blue);
+    color: var(--white);
+}
+
+.profile-save-btn:hover {
+    background: var(--sapphire);
+    border-color: var(--sapphire);
+}
+
+.profile-cancel-btn:active,
+.profile-save-btn:active {
+    transform: translateY(1px);
+}
+
+.profile-save-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+/* ==========================================================================
+   LOADER
+   ========================================================================== */
+
+.profile-save-loader {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+/* ==========================================================================
+   ELEMENTOS OCULTOS
+   ========================================================================== */
+
+#panel-personal [hidden] {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 700px) {
+
+    #panel-personal .panel-header {
+        align-items: flex-start;
+    }
+
+    .profile-edit-btn {
+        flex-shrink: 0;
+        padding: 7px 11px;
+        font-size: 0.72rem;
+    }
+
+    .profile-form-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .profile-form-actions {
+        margin-top: 22px;
+        padding-top: 17px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    #panel-personal .panel-header {
+        gap: 10px;
+    }
+
+    .profile-edit-btn {
+        padding: 6px 9px;
+    }
+
+    .profile-edit-btn i {
+        font-size: 0.65rem;
+    }
+
+    .profile-form-field input {
+        height: 40px;
+        font-size: 0.8rem;
+    }
+
+    .profile-form-actions {
+        justify-content: stretch;
+    }
+
+    .profile-cancel-btn,
+    .profile-save-btn {
+        flex: 1;
+    }
+}

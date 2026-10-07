@@ -1,0 +1,871 @@
+<div class="panel-card">
+
+    <!-- ============================================================== -->
+    <!-- CABECERA                                                       -->
+    <!-- ============================================================== -->
+
+    <div class="inventory-header">
+
+        <div>
+
+            <h3>
+                Tipos de Producto y Atributos
+            </h3>
+
+            <p style="
+                color:#64748b;
+                font-size:0.9rem;
+                margin-top:4px;
+            ">
+                Gestiona los tipos de producto y los atributos
+                disponibles para generar sus variantes.
+            </p>
+
+            <!-- ====================================================== -->
+            <!-- SELECTOR DE VISTA                                     -->
+            <!-- ====================================================== -->
+
+            <div class="admin-resource-view-tabs">
+
+                <button type="button" class="subtab-btn active" data-resource-view="product-types">
+                    Tipos de producto
+                </button>
+
+                <button type="button" class="subtab-btn" data-resource-view="attributes">
+                    Atributos
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================= -->
+    <!-- VISTA: TIPOS DE PRODUCTO                                      -->
+    <!-- ============================================================= -->
+    <!-- ============================================================== -->
+
+    <div id="adminProductTypesView">
+
+
+        <!-- ========================================================== -->
+        <!-- VISTA: LISTA DE TIPOS DE PRODUCTO                           -->
+        <!-- ========================================================== -->
+
+        <div id="adminProductTypesListView">
+
+
+
+            <div class="inventory-header">
+
+                <div>
+
+                    <h3>
+                        Tipos de producto
+                    </h3>
+
+                    <p style="
+                        color:#64748b;
+                        font-size:0.85rem;
+                        margin-top:4px;
+                    ">
+                        Define los tipos de productos disponibles
+                        en el catálogo.
+                    </p>
+
+                </div>
+
+
+                <button type="button" class="btn-primary" id="adminCreateProductTypeBtn">
+                    <i class="fa-solid fa-plus"></i>
+                    Nuevo tipo
+                </button>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- BUSCADOR                                           -->
+            <!-- ================================================== -->
+
+            <div class="inventory-search-box">
+
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+                <input type="text" id="adminProductTypeSearchInput" class="form-input"
+                    placeholder="Buscar tipo de producto...">
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- LISTA DE TIPOS                                      -->
+            <!-- ================================================== -->
+
+            <div id="adminProductTypesList" class="product-types-list">
+
+                <p style="
+                    padding:20px;
+                    text-align:center;
+                    color:var(--text-muted);
+                ">
+                    Cargando tipos de producto...
+                </p>
+
+            </div>
+
+
+
+        </div>
+
+
+        <!-- ========================================================== -->
+        <!-- ========================================================== -->
+        <!-- VISTA: ATRIBUTOS DEL TIPO SELECCIONADO                     -->
+        <!-- ========================================================== -->
+        <!-- ========================================================== -->
+
+        <div id="adminProductTypeAttributesView" style="display:none;">
+
+            <!-- ====================================================== -->
+            <!-- BOTÓN VOLVER                                           -->
+            <!-- ====================================================== -->
+
+            <button type="button" class="btn-secondary" id="adminBackToProductTypesBtn" style="margin-bottom:16px;">
+                <i class="fa-solid fa-arrow-left"></i>
+                Volver a tipos de producto
+            </button>
+
+
+            <!-- ====================================================== -->
+            <!-- PANEL DE ATRIBUTOS                                      -->
+            <!-- ====================================================== -->
+
+            <div class="panel-card">
+
+                <div class="inventory-header">
+
+                    <div>
+
+                        <h3 id="adminProductTypeAttributesTitle">
+                            Atributos
+                        </h3>
+
+                        <p id="adminProductTypeAttributesDescription" style="
+                            color:#64748b;
+                            font-size:0.85rem;
+                            margin-top:4px;
+                        ">
+                            Atributos configurados para este
+                            tipo de producto.
+                        </p>
+
+                    </div>
+
+
+                    <div style="display:flex; gap:10px;">
+
+                        <button type="button" class="btn-secondary" id="adminSaveProductTypeAttributesBtn">
+                            <i class="fa-solid fa-save"></i>
+                            Guardar cambios
+                        </button>
+
+                        <button type="button" class="btn-primary" id="adminCreateAttributeBtn">
+                            <i class="fa-solid fa-plus"></i>
+                            Agregar atributo
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================== -->
+                <!-- LISTA DE ATRIBUTOS                                  -->
+                <!-- ================================================== -->
+
+                <div id="adminProductAttributesList" class="product-attributes-list">
+
+                    <div style="
+                    padding:30px;
+                    text-align:center;
+                    color:var(--text-muted);
+                ">
+
+                        <i class="fa-solid fa-sliders" style="
+                            font-size:2rem;
+                            margin-bottom:10px;
+                            opacity:0.5;
+                        "></i>
+
+                        <p>
+                            Este tipo de producto no tiene
+                            atributos configurados.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================= -->
+    <!-- VISTA: ATRIBUTOS GLOBALES                                     -->
+    <!-- ============================================================= -->
+    <!-- ============================================================== -->
+
+    <div id="adminAttributesView" class="attributes-management" style="display:none;">
+
+        <div class="panel-card">
+
+            <!-- ====================================================== -->
+            <!-- CABECERA                                               -->
+            <!-- ====================================================== -->
+
+            <div class="inventory-header">
+
+                <div>
+
+                    <h3>
+                        Atributos
+                    </h3>
+
+                    <p style="
+                        color:#64748b;
+                        font-size:0.85rem;
+                        margin-top:4px;
+                    ">
+                        Gestiona los atributos reutilizables
+                        disponibles para los tipos de producto.
+                    </p>
+
+                </div>
+
+                <button type="button" class="btn-primary" id="adminCreateGlobalAttributeBtn">
+                    <i class="fa-solid fa-plus"></i>
+                    Nuevo atributo
+                </button>
+
+            </div>
+
+
+            <!-- ====================================================== -->
+            <!-- BUSCADOR                                               -->
+            <!-- ====================================================== -->
+
+            <div class="inventory-search-box">
+
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+                <input type="text" id="adminAttributeSearchInput" class="form-input" placeholder="Buscar atributo...">
+
+            </div>
+
+
+            <!-- ====================================================== -->
+            <!-- LISTA DE ATRIBUTOS                                      -->
+            <!-- ====================================================== -->
+
+            <div id="adminAttributesList" class="attributes-list">
+
+                <p style="
+                    padding:20px;
+                    text-align:center;
+                    color:var(--text-muted);
+                ">
+                    Cargando atributos...
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================= -->
+    <!-- MODAL: CREAR / EDITAR TIPO DE PRODUCTO                        -->
+    <!-- ============================================================= -->
+    <!-- ============================================================== -->
+
+    <div id="adminProductTypeModal" class="admin-modal" hidden>
+
+        <div class="admin-modal-backdrop"></div>
+
+        <div class="admin-modal-content" role="dialog" aria-modal="true" aria-labelledby="adminProductTypeModalTitle">
+
+            <div class="admin-modal-header">
+
+                <div>
+
+                    <h3 id="adminProductTypeModalTitle">
+                        Nuevo tipo de producto
+                    </h3>
+
+                    <p>
+                        Define la información del tipo de producto.
+                    </p>
+
+                </div>
+
+                <button type="button" class="admin-modal-close" id="adminProductTypeModalClose" aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <div class="admin-modal-body">
+
+                <div class="form-group">
+
+                    <label for="adminProductTypeName">
+                        Nombre *
+                    </label>
+
+                    <input type="text" id="adminProductTypeName" class="form-input" maxlength="100"
+                        placeholder="Ej. Polo">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminProductTypeSlug">
+                        Slug
+                    </label>
+
+                    <input type="text" id="adminProductTypeSlug" class="form-input" maxlength="100"
+                        placeholder="Ej. polo">
+
+                    <small>
+                        Puedes dejarlo vacío para generarlo automáticamente.
+                    </small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminProductTypeDescription">
+                        Descripción
+                    </label>
+
+                    <textarea id="adminProductTypeDescription" class="form-input" rows="4" maxlength="500"
+                        placeholder="Descripción del tipo de producto..."></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-modal-footer">
+
+                <button type="button" class="btn-secondary" id="adminProductTypeModalCancel">
+                    Cancelar
+                </button>
+
+                <button type="button" class="btn-primary" id="adminProductTypeModalSave">
+                    Guardar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================= -->
+    <!-- MODAL: CREAR / EDITAR ATRIBUTO GLOBAL                         -->
+    <!-- ============================================================= -->
+    <!-- ============================================================== -->
+
+    <div id="adminAttributeModal" class="admin-modal" hidden>
+
+        <div class="admin-modal-backdrop"></div>
+
+        <div class="admin-modal-content" role="dialog" aria-modal="true" aria-labelledby="adminAttributeModalTitle">
+
+            <div class="admin-modal-header">
+
+                <div>
+
+                    <h3 id="adminAttributeModalTitle">
+                        Nuevo atributo
+                    </h3>
+
+                    <p>
+                        Define un atributo reutilizable para los productos.
+                    </p>
+
+                </div>
+
+                <button type="button" class="admin-modal-close" id="adminAttributeModalClose" aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <div class="admin-modal-body">
+
+                <div class="form-group">
+
+                    <label for="adminAttributeName">
+                        Nombre *
+                    </label>
+
+                    <input type="text" id="adminAttributeName" class="form-input" maxlength="100"
+                        placeholder="Ej. Talla">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminAttributeSlug">
+                        Slug
+                    </label>
+
+                    <input type="text" id="adminAttributeSlug" class="form-input" maxlength="100"
+                        placeholder="Ej. talla">
+
+                    <small>
+                        Puedes dejarlo vacío para generarlo automáticamente.
+                    </small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminAttributeDescription">
+                        Descripción
+                    </label>
+
+                    <textarea id="adminAttributeDescription" class="form-input" rows="3" maxlength="500"
+                        placeholder="Descripción del atributo..."></textarea>
+
+                </div>
+
+
+                <!-- ================================================== -->
+                <!-- OPCIONES DEL ATRIBUTO                              -->
+                <!-- ================================================== -->
+
+                <div class="form-group">
+
+                    <div class="inventory-header">
+
+                        <div>
+
+                            <label>
+                                Opciones
+                            </label>
+
+                            <small>
+                                Valores disponibles para este atributo.
+                            </small>
+
+                        </div>
+
+                        <button type="button" class="btn-secondary" id="adminAddAttributeOptionBtn">
+                            <i class="fa-solid fa-plus"></i>
+                            Agregar opción
+                        </button>
+
+                    </div>
+
+
+                    <div id="adminAttributeOptionsList" class="attribute-options-list">
+
+                        <p style="
+                            padding:15px;
+                            text-align:center;
+                            color:var(--text-muted);
+                        ">
+                            No hay opciones registradas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-modal-footer">
+
+                <button type="button" class="btn-secondary" id="adminAttributeModalCancel">
+                    Cancelar
+                </button>
+
+                <button type="button" class="btn-primary" id="adminAttributeModalSave">
+                    Guardar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================= -->
+    <!-- MODAL: AGREGAR OPCIÓN DE ATRIBUTO                             -->
+    <!-- ============================================================= -->
+    <!-- ============================================================== -->
+
+    <div id="adminAttributeOptionModal" class="admin-modal" hidden>
+
+        <div class="admin-modal-backdrop"></div>
+
+        <div class="admin-modal-content" role="dialog" aria-modal="true"
+            aria-labelledby="adminAttributeOptionModalTitle">
+
+            <div class="admin-modal-header">
+
+                <div>
+
+                    <h3 id="adminAttributeOptionModalTitle">
+                        Nueva opción
+                    </h3>
+
+                    <p>
+                        Agrega un valor al atributo seleccionado.
+                    </p>
+
+                </div>
+
+                <button type="button" class="admin-modal-close" id="adminAttributeOptionModalClose" aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <div class="admin-modal-body">
+
+                <div class="form-group">
+
+                    <label for="adminAttributeOptionValue">
+                        Valor *
+                    </label>
+
+                    <input type="text" id="adminAttributeOptionValue" class="form-input" maxlength="100"
+                        placeholder="Nombre de la opción, si es color ingresa el código HEX...">
+
+                </div>
+
+
+                <!-- ============================================================= -->
+                <!-- NOMBRE DEL COLOR — SE MUESTRA SOLO SI EL VALOR ES UN HEX      -->
+                <!-- ============================================================= -->
+
+                <div class="form-group" id="adminAttributeColorNameGroup" hidden>
+
+                    <div class="admin-color-name-header">
+
+                        <label for="adminAttributeColorName">
+                            Nombre del color
+                        </label>
+
+                        <button type="button" class="btn-secondary" id="adminAttributeColorAutoName" hidden>
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            Autonombrar color
+                        </button>
+
+                    </div>
+
+                    <input type="text" id="adminAttributeColorName" class="form-input" maxlength="100"
+                        placeholder="Ej. Rojo carmesí">
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-modal-footer">
+
+                <button type="button" class="btn-secondary" id="adminAttributeOptionModalCancel">
+                    Cancelar
+                </button>
+
+                <button type="button" class="btn-primary" id="adminAttributeOptionModalSave">
+                    Agregar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================= -->
+    <!-- MODAL: AGREGAR ATRIBUTO A PRODUCT TYPE                        -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+
+    <div id="adminAssignAttributeModal" class="admin-modal" hidden>
+
+        <div class="admin-modal-backdrop"></div>
+
+        <div class="admin-modal-content" role="dialog" aria-modal="true"
+            aria-labelledby="adminAssignAttributeModalTitle">
+
+            <div class="admin-modal-header">
+
+                <div>
+
+                    <h3 id="adminAssignAttributeModalTitle">
+                        Agregar atributo
+                    </h3>
+
+                    <p id="adminAssignAttributeModalDescription">
+                        Selecciona un atributo existente para enlazarlo
+                        con este tipo de producto.
+                    </p>
+
+                </div>
+
+                <button type="button" class="admin-modal-close" id="adminAssignAttributeModalClose" aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <div class="admin-modal-body">
+
+                <div class="form-group">
+
+                    <label for="adminAssignAttributeSelect">
+                        Atributo *
+                    </label>
+
+                    <select id="adminAssignAttributeSelect" class="form-input">
+
+                        <option value="">
+                            Selecciona un atributo...
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminAssignAttributeRequired">
+                        Obligatorio
+                    </label>
+
+                    <select id="adminAssignAttributeRequired" class="form-input">
+
+                        <option value="true">
+                            Sí
+                        </option>
+
+                        <option value="false">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="admin-modal-footer">
+
+                <button type="button" class="btn-secondary" id="adminAssignAttributeModalCancel">
+                    Cancelar
+                </button>
+
+                <button type="button" class="btn-primary" id="adminAssignAttributeModalSave">
+                    Agregar atributo
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================= -->
+    <!-- MODAL: VER TIPOS DE PRODUCTO DE UN ATRIBUTO                   -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+
+    <div id="adminAttributeProductTypesModal" class="admin-modal" hidden>
+
+        <div class="admin-modal-backdrop"></div>
+
+        <div class="admin-modal-content" role="dialog" aria-modal="true"
+            aria-labelledby="adminAttributeProductTypesModalTitle">
+
+            <div class="admin-modal-header">
+
+                <div>
+
+                    <h3 id="adminAttributeProductTypesModalTitle">
+                        Tipos de producto
+                    </h3>
+
+                    <p id="adminAttributeProductTypesModalDescription">
+                        Tipos de producto que utilizan este atributo.
+                    </p>
+
+                </div>
+
+                <button type="button" class="admin-modal-close" id="adminAttributeProductTypesModalClose"
+                    aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <div class="admin-modal-body">
+
+                <div id="adminAttributeProductTypesList" class="product-types-list">
+
+                    <p style="
+                        padding:20px;
+                        text-align:center;
+                        color:var(--text-muted);
+                    ">
+                        No hay tipos de producto enlazados.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-modal-footer">
+
+                <button type="button" class="btn-secondary" id="adminAttributeProductTypesModalCancel">
+                    Cerrar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================= -->
+    <!-- MODAL: EDITAR CONFIGURACIÓN DEL ATRIBUTO EN PRODUCT TYPE     -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+
+    <div id="adminProductTypeAttributeModal" class="admin-modal" hidden>
+
+        <div class="admin-modal-backdrop"></div>
+
+        <div class="admin-modal-content" role="dialog" aria-modal="true"
+            aria-labelledby="adminProductTypeAttributeModalTitle">
+
+            <div class="admin-modal-header">
+
+                <div>
+
+                    <h3 id="adminProductTypeAttributeModalTitle">
+                        Configuración del atributo
+                    </h3>
+
+                    <p id="adminProductTypeAttributeModalDescription">
+                        Configura cómo se utilizará este atributo
+                        en el tipo de producto.
+                    </p>
+
+                </div>
+
+                <button type="button" class="admin-modal-close" id="adminProductTypeAttributeModalClose"
+                    aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <div class="admin-modal-body">
+
+                <div class="form-group">
+
+                    <label for="adminProductTypeAttributeSelect">
+                        Atributo
+                    </label>
+
+                    <select id="adminProductTypeAttributeSelect" class="form-input">
+                        <option value="">
+                            Selecciona un atributo...
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminProductTypeAttributeRequired">
+                        Obligatorio
+                    </label>
+
+                    <select id="adminProductTypeAttributeRequired" class="form-input">
+
+                        <option value="true">
+                            Sí
+                        </option>
+
+                        <option value="false">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="admin-modal-footer">
+
+                <button type="button" class="btn-secondary" id="adminProductTypeAttributeModalCancel">
+                    Cancelar
+                </button>
+
+                <button type="button" class="btn-primary" id="adminProductTypeAttributeModalSave">
+                    Actualizar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

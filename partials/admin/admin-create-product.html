@@ -1,0 +1,713 @@
+<div class="panel-card">
+
+    <form id="createProductForm" style="display:grid; gap:20px;">
+
+
+        <!-- ========================================================== -->
+        <!-- SECCIÓN 1: INFORMACIÓN GENERAL                            -->
+        <!-- ========================================================== -->
+
+        <div class="form-section">
+
+            <h3 class="form-section-title">
+                <i class="fa-solid fa-tag"></i>
+                INFORMACIÓN GENERAL
+            </h3>
+
+
+            <div style="
+                            display:grid;
+                            grid-template-columns:2fr 1fr;
+                            gap:16px;
+                        ">
+
+                <!-- Nombre -->
+                <div>
+
+                    <label class="form-label">
+                        Nombre del Diseño/Producto *
+                    </label>
+
+                    <input type="text" id="adminDesignName" class="form-input" placeholder="Ej: Polo Doflamingo"
+                        required>
+
+                </div>
+
+
+                <!-- Tipo de producto -->
+                <div>
+
+                    <label class="form-label">
+                        Tipo de Producto *
+                    </label>
+
+                    <div class="editable-select-wrapper">
+
+                        <select id="adminProductType" class="form-input"
+                            onchange="accountSelects.handleEditableSelectChange(this)" required>
+
+                            <option value="__NUEVO__" selected>
+                                + Añadir nuevo...
+                            </option>
+
+                        </select>
+
+                        <input type="text" class="editable-input" placeholder="Escribir tipo de prenda..."
+                            style="display:block;">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Descripción -->
+            <div style="margin-top:12px;">
+
+                <label class="form-label">
+                    Descripción Corta / Detalles
+                </label>
+
+                <textarea id="adminProductDesc" class="form-input" rows="3"
+                    placeholder="Polo de algodón reactivo 20/1 con estampado en serigrafía/DTG de alta durabilidad..."></textarea>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================================== -->
+        <!-- SECCIÓN 2: CATEGORIZACIÓN                                  -->
+        <!-- ========================================================== -->
+
+        <div class="form-section">
+
+            <h3 class="form-section-title">
+                <i class="fa-solid fa-layer-group"></i>
+                CATEGORIZACIÓN
+            </h3>
+
+
+            <div style="
+                            display:grid;
+                            grid-template-columns:1fr 2fr;
+                            gap:16px;
+                            align-items:stretch;
+                        ">
+
+                <!-- Categoría -->
+                <div style="
+                                display:flex;
+                                flex-direction:column;
+                                justify-content:flex-end;
+                            ">
+
+                    <label class="form-label">
+                        Categoría Principal *
+                    </label>
+
+                    <div class="editable-select-wrapper">
+
+                        <select id="adminCategory" class="form-input"
+                            onchange="accountSelects.handleEditableSelectChange(this)" required>
+
+                            <option value="__NUEVO__" selected>
+                                + Añadir nuevo...
+                            </option>
+
+                        </select>
+
+                        <input type="text" class="editable-input" placeholder="Escribir categoría..."
+                            style="display:block;">
+
+                    </div>
+
+                </div>
+
+
+                <!-- Tema / Subtema -->
+                <div class="ai-theme-container">
+
+                    <div class="ai-theme-header">
+
+                        <span class="ai-theme-tag">
+
+                            <i class="fa-solid fa-sparkles"></i>
+
+                            Sugerencia Inteligente
+
+                        </span>
+
+
+                        <button type="button" class="btn-autodetect" onclick="accountProductForm.autodetectarTema()">
+
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                            Auto-detectar
+
+                        </button>
+
+                    </div>
+
+
+                    <div style="
+                                    display:grid;
+                                    grid-template-columns:1fr 1fr;
+                                    gap:12px;
+                                ">
+
+                        <!-- Tema -->
+                        <div>
+
+                            <label class="form-label">
+                                Tema *
+                            </label>
+
+                            <div class="editable-select-wrapper">
+
+                                <select id="adminTheme" class="form-input"
+                                    onchange="accountSelects.handleThemeChange(this)" required>
+
+                                    <option value="__NUEVO__" selected>
+                                        + Añadir nuevo...
+                                    </option>
+
+                                </select>
+
+                                <input type="text" class="editable-input" placeholder="Escribir tema..."
+                                    style="display:block;">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Subtema -->
+                        <div>
+
+                            <label class="form-label">
+                                Subtema / Serie *
+                            </label>
+
+                            <div class="editable-select-wrapper">
+
+                                <select id="adminSubtheme" class="form-input"
+                                    onchange="accountSelects.handleEditableSelectChange(this)" required>
+
+                                    <option value="__NUEVO__" selected>
+                                        + Añadir nuevo...
+                                    </option>
+
+                                </select>
+
+                                <input type="text" class="editable-input" placeholder="Escribir subtema..."
+                                    style="display:block;">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================================== -->
+        <!-- SECCIONES 3 Y 4: ETIQUETAS + CONFIGURACIÓN DE PRECIOS     -->
+        <!-- ========================================================== -->
+
+        <div class="admin-tags-price-row">
+
+            <!-- ========================================================== -->
+            <!-- SECCIÓN 3: ETIQUETAS                                       -->
+            <!-- ========================================================== -->
+
+            <div class="form-section">
+
+                <h3 class="form-section-title">
+
+                    <i class="fa-solid fa-tags"></i>
+
+                    ETIQUETAS
+
+                </h3>
+
+
+                <div>
+
+                    <label class="form-label">
+                        Etiquetas Destacadas (Máx. 2) *
+                    </label>
+
+
+                    <div class="tags-group-container">
+
+                        <!-- Nuevo -->
+                        <label class="tag-chip-item">
+
+                            <input type="checkbox" class="tag-checkbox" value="Nuevo" checked
+                                onchange="accountTags.handleTagSelection(this)">
+
+                            <span class="tag-chip">
+                                Nuevo
+                            </span>
+
+                        </label>
+
+
+                        <!-- Oferta -->
+                        <div class="tag-oferta-wrapper">
+
+                            <label class="tag-chip-item">
+
+                                <input type="checkbox" class="tag-checkbox" id="tagOfertaCheck" value="Oferta"
+                                    onchange="accountTags.handleTagSelection(this)">
+
+                                <span class="tag-chip tag-chip-oferta">
+                                    Oferta
+                                </span>
+
+                            </label>
+
+
+                            <div id="discountInputWrapper" class="discount-badge-input" style="display:none;">
+
+                                <input type="number" id="adminDiscountPercent" class="discount-field" placeholder="10"
+                                    min="1" max="99" oninput="accountTags.calcularPrecioConDescuento()">
+
+                                <span class="discount-unit">
+                                    % desc.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Popular -->
+                        <label class="tag-chip-item">
+
+                            <input type="checkbox" class="tag-checkbox" value="Popular"
+                                onchange="accountTags.handleTagSelection(this)">
+
+                            <span class="tag-chip">
+                                Popular
+                            </span>
+
+                        </label>
+
+
+                        <!-- Personalizada -->
+                        <div class="custom-tag-box">
+
+                            <label class="tag-chip-item">
+
+                                <input type="checkbox" class="tag-checkbox" id="customTagCheck" value="__CUSTOM__"
+                                    onchange="accountTags.handleTagSelection(this)">
+
+                                <span class="tag-chip">
+                                    + Otra:
+                                </span>
+
+                            </label>
+
+
+                            <input type="text" id="customTagText" class="custom-tag-input" placeholder="Nombre..."
+                                oninput="accountTags.handleCustomTagInput(this)">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================================== -->
+            <!-- SECCIÓN 4: CONFIGURACIÓN DE PRECIOS                       -->
+            <!-- ========================================================== -->
+
+            <div class="form-section">
+
+                <h3 class="form-section-title">
+
+                    <i class="fa-solid fa-coins"></i>
+
+                    PRECIO
+
+                </h3>
+
+
+                <div>
+
+                    <label class="form-label">
+                        Precio Base (S/) *
+                    </label>
+
+                    <input type="number" id="adminBasePrice" class="form-input" step="0.01" min="0"
+                        placeholder="Ej: 89.90" required>
+
+                    <small class="form-help">
+                        Precio mínimo para las variantes.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================================== -->
+        <!-- SECCIÓN 5: GALERÍA DEL PRODUCTO                           -->
+        <!-- ========================================================== -->
+
+        <div class="form-section">
+
+            <h3 class="form-section-title">
+
+                <i class="fa-solid fa-images"></i>
+
+                GALERÍA DEL PRODUCTO
+
+            </h3>
+
+
+            <!-- ====================================================== -->
+            <!-- ZONA PARA SELECCIONAR / ARRASTRAR IMÁGENES             -->
+            <!-- ====================================================== -->
+
+            <div id="productGalleryDropZone" class="product-gallery-drop-zone">
+
+                <!-- Input de archivos -->
+
+                <input type="file" id="adminProductImages" accept="image/*" multiple hidden>
+
+
+                <!-- Icono -->
+
+                <i class="fa-solid fa-cloud-arrow-up product-gallery-drop-icon"></i>
+
+
+                <!-- Texto -->
+
+                <p class="product-gallery-drop-title">
+                    Arrastra tus imágenes aquí
+                </p>
+
+
+                <p class="product-gallery-drop-description">
+                    o selecciona las imágenes desde tu equipo
+                </p>
+
+
+                <!-- Botón -->
+
+                <button type="button" id="selectProductImagesBtn" class="btn-primary-action">
+
+                    <i class="fa-solid fa-file-image"></i>
+
+                    Seleccionar Imágenes
+
+                </button>
+
+
+                <!-- Información -->
+
+                <small id="productGalleryFileInfo" class="product-gallery-file-info">
+                    Ninguna imagen seleccionada
+                </small>
+
+            </div>
+
+
+            <!-- ====================================================== -->
+            <!-- GALERÍA DE IMÁGENES                                    -->
+            <!-- ====================================================== -->
+
+            <div id="productGalleryPreview" class="product-gallery-preview" hidden>
+            </div>
+
+
+            <!-- ====================================================== -->
+            <!-- IMAGEN PRINCIPAL                                       -->
+            <!-- ====================================================== -->
+
+            <div id="productGalleryPrimaryInfo" class="product-gallery-primary-info" hidden>
+
+                <i class="fa-solid fa-star"></i>
+
+                <span>
+                    Imagen principal:
+                </span>
+
+                <strong id="productGalleryPrimaryName">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ========================================================== -->
+        <!-- SECCIÓN 6: ATRIBUTOS                                       -->
+        <!-- ========================================================== -->
+
+        <div class="form-section">
+
+            <h3 class="form-section-title">
+
+                <i class="fa-solid fa-sliders"></i>
+
+                ATRIBUTOS DEL PRODUCTO
+
+            </h3>
+
+
+            <div class="variant-attributes-section">
+
+                <!-- ====================================================== -->
+                <!-- ENCABEZADO                                              -->
+                <!-- ====================================================== -->
+
+                <div class="variant-section-header">
+
+                    <div class="variant-section-heading">
+
+                        <h4 class="variant-section-title">
+
+                            <i class="fa-solid fa-list-check"></i>
+
+                            Opciones disponibles
+
+                        </h4>
+
+                        <p class="variant-section-description">
+
+                            Selecciona las opciones que definirán las variantes
+                            de este producto.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ====================================================== -->
+                <!-- CONTENEDOR DINÁMICO DE ATRIBUTOS                       -->
+                <!-- ====================================================== -->
+
+                <div id="adminProductAttributes" class="product-attributes-container">
+
+                    <div class="attributes-empty-state">
+
+                        <div class="attributes-empty-icon">
+
+                            <i class="fa-solid fa-sliders"></i>
+
+                        </div>
+
+                        <div class="attributes-empty-content">
+
+                            <strong>
+                                No hay atributos disponibles
+                            </strong>
+
+                            <p>
+                                Selecciona un tipo de producto para cargar
+                                las opciones disponibles.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ====================================================== -->
+                <!-- ACCIONES                                                -->
+                <!-- ====================================================== -->
+
+                <div class="variant-actions">
+
+                    <button type="button" id="generateVariantsBtn" class="btn-primary-action"
+                        onclick="accountVariants.generarVariantes()">
+
+                        <i class="fa-solid fa-table-cells"></i>
+
+                        Generar Variantes
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================================== -->
+        <!-- SECCIÓN 7: VARIANTES                                       -->
+        <!-- ========================================================== -->
+
+        <div id="variantsSection" class="form-section" style="display:none;">
+
+            <div class="variant-section-header">
+
+                <div>
+
+                    <h3 class="form-section-title">
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                        VARIANTES DEL PRODUCTO
+
+                    </h3>
+
+                    <p class="variant-section-description">
+
+                        Configura individualmente precio, inventario
+                        y demás propiedades de cada combinación.
+
+                    </p>
+
+                </div>
+
+
+                <span id="variantsCount" class="variants-count">
+                    0 variantes
+                </span>
+
+            </div>
+
+
+            <!-- ====================================================== -->
+            <!-- CONTENEDOR DE VARIANTES                               -->
+            <!-- ====================================================== -->
+
+            <div id="adminVariantsContainer" class="admin-variants-container">
+
+                <!-- Las variantes serán generadas mediante JavaScript -->
+
+            </div>
+
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- MODAL: IMÁGENES DE LA VARIANTE                             -->
+        <!-- ========================================================== -->
+
+        <div id="adminVariantImagesModal" class="admin-modal" hidden>
+
+            <div class="admin-modal-backdrop"></div>
+
+
+            <div class="admin-modal-content" role="dialog" aria-modal="true"
+                aria-labelledby="adminVariantImagesModalTitle">
+
+                <!-- ====================================================== -->
+                <!-- HEADER                                                 -->
+                <!-- ====================================================== -->
+
+                <div class="admin-modal-header">
+
+                    <div>
+
+                        <h3 id="adminVariantImagesModalTitle">
+                            Imágenes de la variante
+                        </h3>
+
+                        <p id="adminVariantImagesModalDescription">
+                            Selecciona las imágenes que deseas asociar
+                            a esta variante.
+                        </p>
+
+                    </div>
+
+
+                    <button type="button" class="admin-modal-close" id="adminVariantImagesModalClose"
+                        aria-label="Cerrar">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                    </button>
+
+                </div>
+
+
+                <!-- ====================================================== -->
+                <!-- BODY                                                   -->
+                <!-- ====================================================== -->
+
+                <div class="admin-modal-body">
+
+                    <div id="adminVariantImagesList" class="admin-variant-images-list">
+                    </div>
+
+
+                    <!-- ================================================== -->
+                    <!-- INFORMACIÓN                                        -->
+                    <!-- ================================================== -->
+
+                    <p id="adminVariantImagesEmpty" class="admin-variant-images-empty" hidden>
+                        No hay imágenes disponibles para asociar a esta variante.
+                    </p>
+
+                </div>
+
+
+                <!-- ====================================================== -->
+                <!-- FOOTER                                                 -->
+                <!-- ====================================================== -->
+
+                <div class="admin-modal-footer">
+
+                    <button type="button" class="btn-secondary" id="adminVariantImagesModalCancel">
+                        Cancelar
+                    </button>
+
+
+                    <button type="button" class="btn-primary" id="adminVariantImagesModalSave">
+                        Guardar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div id="productValidationErrors" class="product-validation-errors" hidden></div>
+
+        <!-- ========================================================== -->
+        <!-- BOTÓN GUARDAR                                              -->
+        <!-- ========================================================== -->
+
+        <button type="submit" class="btn-primary-action" style="
+                        padding:14px;
+                        font-size:1rem;
+                        cursor:pointer;
+                    ">
+
+            <i class="fa-solid fa-floppy-disk"></i>
+
+            Guardar Producto en la Base de Datos
+
+        </button>
+
+
+    </form>
+
+</div>

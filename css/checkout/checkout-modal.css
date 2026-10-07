@@ -1,0 +1,128 @@
+/* ============================================================
+   CHECKOUT MODAL (LARGE CENTERED MODAL)
+   ============================================================ */
+
+.checkout-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    transition: visibility 0.4s;
+    padding: 16px;
+}
+
+.checkout-modal.open {
+    visibility: visible;
+}
+
+.checkout-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(9, 14, 26, 0.7);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    backdrop-filter: blur(6px);
+}
+
+.checkout-modal.open .checkout-modal-overlay {
+    opacity: 1;
+}
+
+.checkout-modal-content {
+    position: relative;
+    background-color: var(--light-bg);
+    width: 100%;
+    max-width: 1500px;
+    max-height: 90vh;
+    border-radius: 8px;
+    overflow-y: auto;
+    transform: scale(0.9);
+    opacity: 0;
+    transition:
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.4s;
+    z-index: 1;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-200);
+    padding: 30px;
+}
+
+.checkout-modal.open .checkout-modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.checkout-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    z-index: 10;
+    background-color: var(--white);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--gray-200);
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.checkout-modal-close:hover {
+    color: var(--quicksand);
+    background-color: var(--royal-blue);
+    border-color: var(--royal-blue);
+    transform: rotate(90deg);
+}
+
+/* ============================================================
+   CHECKOUT INTERIOR
+   ============================================================ */
+
+.checkout-modal-content .account-checkout {
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+}
+
+
+/* ============================================================
+   CHECKOUT INPUT
+   ============================================================ */
+
+.checkout-modal-input {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    background: var(--light-bg);
+    color: var(--text-dark);
+    font-family: var(--font-primary);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.25s ease;
+}
+
+.checkout-modal-input:focus {
+    border-color: var(--sapphire);
+}
+
+@media (max-width: 900px) {
+    .checkout-modal-content {
+        padding: 20px;
+        max-height: 95vh;
+    }
+}

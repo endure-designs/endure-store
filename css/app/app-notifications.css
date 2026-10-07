@@ -1,0 +1,565 @@
+/* ==========================================================
+   ESTADOS HIDDEN
+   ========================================================== */
+
+[hidden] {
+    display: none !important;
+}
+
+/* ==========================================================
+   APP NOTIFICATIONS
+   ========================================================== */
+
+.app-notifications {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+/* ==========================================================
+   BOTÓN DE NOTIFICACIONES
+   ========================================================== */
+
+.notifications-trigger {
+    position: relative;
+    padding: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notifications-trigger:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.notifications-trigger:active {
+    transform: scale(0.95);
+}
+
+.notifications-trigger:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================
+   BADGE DE NOTIFICACIONES
+   ========================================================== */
+
+.notifications-badge {
+    position: absolute;
+
+    top: -5px;
+    right: -7px;
+
+    min-width: 15px;
+    height: 15px;
+
+    padding: 0 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    border-radius: 999px;
+
+    background: #d32f2f;
+    color: #fff;
+
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+
+    border: 2px solid #fff;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+/* ==========================================================
+   PANEL
+   ========================================================== */
+
+.notifications-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+
+    width: 380px;
+    max-width: calc(100vw - 24px);
+    max-height: 520px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #fff;
+
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.14),
+        0 4px 12px rgba(0, 0, 0, 0.06);
+
+    overflow: hidden;
+
+    z-index: 1000;
+}
+
+
+/* ==========================================================
+   CABECERA
+   ========================================================== */
+
+.notifications-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 16px 18px;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.notifications-title {
+    min-width: 0;
+}
+
+.notifications-title h3 {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.notifications-title span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #777;
+
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+
+/* ==========================================================
+   MARCAR TODAS COMO LEÍDAS
+   ========================================================== */
+
+.notifications-mark-all {
+    flex-shrink: 0;
+
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: #555;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.notifications-mark-all:hover {
+    color: #111;
+}
+
+.notifications-mark-all:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================
+   LISTA
+   ========================================================== */
+
+.notifications-list {
+    flex: 1;
+
+    min-height: 0;
+    max-height: 420px;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+
+/* ==========================================================
+   ELEMENTO DE NOTIFICACIÓN
+   ========================================================== */
+
+.notification-item {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 14px 16px;
+
+    background: var(--white);
+
+    border-bottom: 1px solid rgba(17, 34, 80, 0.07);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+
+/* ==========================================================
+   HOVER
+   ========================================================== */
+
+.notification-item:hover {
+    background: rgba(17, 34, 80, 0.035);
+}
+
+
+/* ==========================================================
+   NOTIFICACIÓN NO LEÍDA
+   ========================================================== */
+
+.notification-item-unread {
+    background: var(--swan-wing);
+}
+
+.notification-item-unread:hover {
+    background: #d8bc82;
+}
+
+
+/* ==========================================================
+   ICONO
+   ========================================================== */
+
+.notification-item-icon {
+    flex: 0 0 36px;
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 1px;
+
+    border-radius: 50%;
+
+    background: rgba(17, 34, 80, 0.08);
+
+    color: var(--royal-blue);
+
+    font-size: 14px;
+}
+
+
+/* ==========================================================
+   CONTENIDO
+   ========================================================== */
+
+.notification-item-content {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+/* ==========================================================
+   TÍTULO
+   ========================================================== */
+
+.notification-item-title {
+    margin: 0;
+
+    color: var(--royal-blue);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.35;
+}
+
+
+/* ==========================================================
+   CUERPO
+   ========================================================== */
+
+.notification-item-body {
+    margin: 0;
+
+    color: #555;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.45;
+}
+
+
+/* ==========================================================
+   FECHA
+   ========================================================== */
+
+.notification-item-date {
+    margin-top: 2px;
+
+    color: #929292;
+
+    font-size: 10px;
+    font-weight: 400;
+
+    line-height: 1.3;
+}
+
+
+/* ==========================================================
+   AJUSTE PARA NOTIFICACIONES NO LEÍDAS
+   ========================================================== */
+
+.notification-item-unread .notification-item-title {
+    color: var(--royal-blue);
+    font-weight: 700;
+}
+
+.notification-item-unread .notification-item-body {
+    color: var(--text-dark);
+}
+
+
+
+
+
+/* ==========================================================
+   CONFIGURACIÓN DE NOTIFICACIONES DEL NAVEGADOR
+   ========================================================== */
+
+.notifications-push-settings {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 12px 16px;
+
+    background: #f8f9fc;
+
+    border-bottom: 1px solid rgba(17, 34, 80, 0.08);
+}
+
+
+/* ==========================================================
+   INFORMACIÓN PUSH
+   ========================================================== */
+
+.notifications-push-info {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.notifications-push-info>i {
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(17, 34, 80, 0.08);
+
+    color: var(--royal-blue);
+
+    font-size: 12px;
+}
+
+
+/* ==========================================================
+   TEXTO PUSH
+   ========================================================== */
+
+.notifications-push-text {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.notifications-push-text strong {
+    color: var(--royal-blue);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+.notifications-push-text span {
+    color: #777;
+
+    font-size: 10px;
+
+    line-height: 1.35;
+}
+
+
+/* ==========================================================
+   BOTÓN ACTIVAR PUSH
+   ========================================================== */
+
+.notifications-push-button {
+    flex-shrink: 0;
+
+    padding: 6px 10px;
+
+    border: 1px solid var(--royal-blue);
+    border-radius: 6px;
+
+    background: var(--royal-blue);
+    color: #fff;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.notifications-push-button:hover {
+    background: #fff;
+    color: var(--royal-blue);
+}
+
+.notifications-push-button:active {
+    transform: scale(0.96);
+}
+
+.notifications-push-button:disabled {
+    opacity: 0.55;
+
+    cursor: wait;
+}
+
+
+
+
+/* Scrollbar */
+
+.notifications-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notifications-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.notifications-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 999px;
+}
+
+
+/* ==========================================================
+   ESTADOS
+   ========================================================== */
+
+.notifications-state {
+    min-height: 180px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 30px 20px;
+
+    color: #777;
+
+    text-align: center;
+    font-size: 13px;
+}
+
+.notifications-state i {
+    font-size: 24px;
+    opacity: 0.65;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+    .notifications-panel {
+        position: fixed;
+
+        top: 70px;
+        right: 12px;
+        left: 12px;
+
+        width: auto;
+        max-width: none;
+
+        max-height: calc(100vh - 90px);
+
+        border-radius: 12px;
+    }
+
+    .notifications-list {
+        max-height: none;
+    }
+
+    .notifications-panel-header {
+        padding: 14px 15px;
+    }
+
+    .notifications-mark-all {
+        font-size: 10px;
+    }
+}

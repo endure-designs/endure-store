@@ -1,0 +1,627 @@
+<!-- ======================================================================
+         FORMULARIO / MODAL DE DIRECCIÓN
+         ====================================================================== -->
+
+<div id="addressModal" class="address-modal" hidden>
+
+    <div class="address-modal-overlay" data-address-modal-close></div>
+
+
+    <div class="address-modal-content" role="dialog" aria-modal="true" aria-labelledby="addressModalTitle">
+
+        <!-- ==============================================================
+                 MODAL HEADER
+                 ============================================================== -->
+
+        <div class="address-modal-header">
+
+            <div>
+                <h3 id="addressModalTitle">
+                    Agregar dirección
+                </h3>
+
+                <p id="addressModalSubtitle">
+                    Completa los datos de tu dirección.
+                </p>
+            </div>
+
+            <button type="button" id="addressModalCloseBtn" class="address-modal-close" aria-label="Cerrar"
+                data-address-modal-close>
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <!-- ==============================================================
+                 FORM
+                 ============================================================== -->
+
+        <form id="addressForm" class="address-form">
+
+            <!-- ==========================================================
+                     IDENTIFICACIÓN
+                     ========================================================== -->
+
+            <section class="address-form-section">
+
+                <div class="address-section-title">
+
+                    <i class="fa-solid fa-tag"></i>
+
+                    <div>
+                        <h4>Identificación</h4>
+                        <p>Identifica fácilmente esta dirección.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="address-form-grid">
+
+                    <div class="address-form-field">
+
+                        <label for="addressAlias">
+                            Alias
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" id="addressAlias" name="alias" placeholder="Ej. Casa, Oficina"
+                            maxlength="100" required>
+
+                    </div>
+
+
+                    <div class="address-form-field">
+
+                        <label>
+                            Tipo de dirección
+                            <span>*</span>
+                        </label>
+
+                        <div id="addressTypeSelector"></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==========================================================
+                     DESTINATARIO Y CONTACTO
+                     ========================================================== -->
+
+            <section class="address-form-section">
+
+                <div class="address-section-title">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <div>
+                        <h4>Destinatario y contacto</h4>
+                        <p>Información de la persona que recibirá el pedido.</p>
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================================================
+                        NOMBRE E IDENTIFICACIÓN
+                        ========================================================== -->
+
+                <div class="address-recipient-grid">
+
+                    <div class="address-form-field address-recipient-first-name">
+
+                        <label for="addressFirstName">
+                            Nombres
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" id="addressFirstName" name="firstName" placeholder="Nombres" maxlength="100"
+                            autocomplete="given-name" required>
+
+                    </div>
+
+
+                    <!-- ==============================================================
+                            APELLIDOS
+                            ============================================================== -->
+
+                    <div class="address-form-field address-recipient-last-name">
+
+                        <label for="addressLastName">
+                            Apellidos
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" id="addressLastName" name="lastName" placeholder="Apellidos" maxlength="100"
+                            autocomplete="family-name" required>
+
+                    </div>
+
+
+                    <div class="address-form-field address-identification-type">
+
+                        <label>
+                            Tipo de identificación
+                        </label>
+
+                        <div id="addressIdentificationTypeSelector"></div>
+
+                    </div>
+
+
+                    <div class="address-form-field address-identification-number">
+
+                        <label for="addressIdentificationNumber">
+                            Número de identificación
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" id="addressIdentificationNumber" name="identificationNumber"
+                            placeholder="Selecciona primero el tipo" maxlength="30" autocomplete="off" required
+                            readonly>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================================================
+                        EMPRESA Y CONTACTO
+                        ========================================================== -->
+
+                <div class="address-form-grid">
+
+                    <div class="address-form-field">
+
+                        <label for="addressCompanyName">
+                            Empresa / Razón Social
+                        </label>
+
+                        <input type="text" id="addressCompanyName" name="companyName"
+                            placeholder="Nombre de la empresa o razón social" maxlength="150">
+
+                    </div>
+
+
+                    <div class="address-form-field">
+
+                        <label for="addressPhone">
+                            Teléfono
+                            <span>*</span>
+                        </label>
+
+                        <div class="phone-input-wrapper">
+
+                            <span id="addressPhoneCountryCode" class="phone-country-code">
+                                +51
+                            </span>
+
+                            <span class="phone-divider"></span>
+
+                            <input type="tel" id="addressPhone" name="phone" placeholder="987 654 321" maxlength="20"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="address-form-field">
+
+                        <label for="addressPhoneSecondary">
+                            Teléfono secundario
+                        </label>
+
+                        <input type="tel" id="addressPhoneSecondary" name="phoneSecondary" placeholder="+51 987 654 321"
+                            maxlength="25">
+
+                    </div>
+
+
+                    <div class="address-form-field">
+
+                        <label for="addressEmail">
+                            Correo electrónico
+                        </label>
+
+                        <input type="email" id="addressEmail" name="email" placeholder="correo@ejemplo.com"
+                            maxlength="150">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==========================================================
+                     UBICACIÓN
+                     ========================================================== -->
+
+            <section class="address-form-section">
+
+                <div class="address-section-title">
+
+                    <i class="fa-solid fa-map"></i>
+
+                    <div>
+                        <h4>Ubicación</h4>
+                        <p>Indica dónde se encuentra la dirección.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="address-form-grid address-location-grid">
+
+                    <!-- ==============================================================
+                        PAÍS
+                        ============================================================== -->
+
+                    <div class="address-form-field address-location-country">
+
+                        <label>
+                            País
+                            <span>*</span>
+                        </label>
+
+                        <div id="addressCountrySelector"></div>
+
+                    </div>
+
+
+                    <!-- ==============================================================
+                        CÓDIGO ISO2 DEL PAÍS
+                        ============================================================== -->
+
+                    <div class="address-form-field address-location-country-code">
+
+                        <label for="addressCountryCode">
+                            Código de país
+                        </label>
+
+                        <input type="text" id="addressCountryCode" name="countryCode" placeholder="PE" maxlength="2"
+                            readonly>
+
+                    </div>
+
+
+                    <!-- ==============================================================
+                        DIVISIONES ADMINISTRATIVAS
+                        ============================================================== -->
+
+                    <div id="addressDivisions" class="address-location-divisions"></div>
+
+
+                    <!-- ==============================================================
+                        URBANIZACIÓN / ZONA
+                        ============================================================== -->
+
+                    <div class="address-form-field address-location-half">
+
+                        <label for="addressNeighborhood">
+                            Urbanización / zona
+                        </label>
+
+                        <input type="text" id="addressNeighborhood" name="neighborhood" maxlength="150">
+
+                    </div>
+
+
+                    <!-- ==============================================================
+                            CÓDIGO POSTAL
+                            ============================================================== -->
+
+                    <div class="address-form-field address-location-half">
+
+                        <label for="addressPostalCode">
+                            Código postal
+                        </label>
+
+                        <input type="text" id="addressPostalCode" name="postalCode" maxlength="20">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==========================================================
+                     DIRECCIÓN
+                     ========================================================== -->
+
+            <section class="address-form-section">
+
+                <div class="address-section-title">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <div>
+                        <h4>Dirección</h4>
+                        <p>Detalles específicos de la ubicación.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="address-form-grid">
+
+                    <div class="address-form-field address-field-full">
+
+                        <label for="addressStreet">
+                            Dirección
+                            <span>*</span>
+                        </label>
+
+                        <input type="text" id="addressStreet" name="address" placeholder="Ej. Av. Larco" maxlength="250"
+                            required>
+
+                    </div>
+
+
+                    <div class="address-form-field">
+
+                        <label for="addressNumber">
+                            Número
+                        </label>
+
+                        <input type="text" id="addressNumber" name="addressNumber" placeholder="Ej. 123" maxlength="30">
+
+                    </div>
+
+
+                    <div class="address-form-field">
+
+                        <label for="addressBuilding">
+                            Edificio
+                        </label>
+
+                        <input type="text" id="addressBuilding" name="building" placeholder="Ej. Torre A"
+                            maxlength="100">
+
+                    </div>
+
+
+                    <div class="address-form-field">
+
+                        <label for="addressFloor">
+                            Piso
+                        </label>
+
+                        <input type="text" id="addressFloor" name="floor" placeholder="Ej. 5" maxlength="30">
+
+                    </div>
+
+
+                    <div class="address-form-field">
+
+                        <label for="addressUnit">
+                            Departamento / unidad
+                        </label>
+
+                        <input type="text" id="addressUnit" name="unit" placeholder="Ej. 502" maxlength="50">
+
+                    </div>
+
+
+                    <div class="address-form-field">
+
+                        <label for="addressEntrance">
+                            Entrada
+                        </label>
+
+                        <input type="text" id="addressEntrance" name="entrance" placeholder="Ej. Entrada principal"
+                            maxlength="100">
+
+                    </div>
+
+
+                    <div class="address-form-field address-field-full">
+
+                        <label for="addressReference">
+                            Referencia
+                        </label>
+
+                        <input type="text" id="addressReference" name="reference"
+                            placeholder="Ej. Frente al parque central" maxlength="250">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==========================================================
+                     ENTREGA
+                     ========================================================== -->
+
+            <section class="address-form-section">
+
+                <div class="address-section-title">
+
+                    <i class="fa-solid fa-truck"></i>
+
+                    <div>
+                        <h4>Entrega</h4>
+                        <p>Indicaciones adicionales para la entrega.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="address-form-grid">
+
+                    <div class="address-form-field address-field-full">
+
+                        <label for="addressDeliveryInstructions">
+                            Instrucciones de entrega
+                        </label>
+
+                        <textarea id="addressDeliveryInstructions" name="deliveryInstructions" rows="3" maxlength="500"
+                            placeholder="Ej. Llamar antes de entregar."></textarea>
+
+                    </div>
+
+
+                    <div class="address-form-field address-field-full">
+
+                        <label for="addressAccessInstructions">
+                            Instrucciones de acceso
+                        </label>
+
+                        <textarea id="addressAccessInstructions" name="accessInstructions" rows="3" maxlength="500"
+                            placeholder="Ej. Preguntar por recepción."></textarea>
+
+                    </div>
+
+
+                    <label class="address-checkbox-field address-field-full" for="addressContactlessDelivery">
+
+                        <input type="checkbox" id="addressContactlessDelivery" name="contactlessDelivery">
+
+                        <span class="address-checkbox-content">
+
+                            <strong>
+                                Entrega sin contacto
+                            </strong>
+
+                            <small>
+                                Autorizar la entrega sin contacto directo.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    <label class="address-checkbox-field address-field-full" for="addressIsDefault">
+
+                        <input type="checkbox" id="addressIsDefault" name="isDefault">
+
+                        <span class="address-checkbox-content">
+
+                            <strong>
+                                Establecer como dirección predeterminada
+                            </strong>
+
+                            <small>
+                                Se utilizará automáticamente para futuras compras.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==========================================================
+     UBICACIÓN EN EL MAPA
+     ========================================================== -->
+
+            <section class="address-form-section address-advanced-section">
+
+                <div class="address-section-title">
+
+                    <i class="fa-solid fa-map-location-dot"></i>
+
+                    <div>
+                        <h4>Ubicación en el mapa</h4>
+                        <p>
+                            Busca tu dirección o selecciónala directamente en el mapa.
+                            Puedes mover el marcador para precisar la ubicación.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- BUSCADOR DE GOOGLE MAPS -->
+
+                <div class="address-form-field address-map-search">
+
+                    <label for="addressMapSearch">
+                        Buscar ubicación
+                    </label>
+
+                    <div id="addressMapSearch"></div>
+
+                </div>
+
+
+                <!-- BOTÓN PARA USAR LOS DATOS DEL FORMULARIO -->
+
+                <div class="address-map-actions">
+
+                    <button type="button" id="addressMapSearchButton" class="address-secondary-btn">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        Buscar con los datos de dirección
+
+                    </button>
+
+                </div>
+
+
+                <!-- MAPA -->
+
+                <div id="addressMap" class="address-map"
+                    aria-label="Mapa para seleccionar la ubicación de la dirección">
+                </div>
+
+
+                <!-- ESTADO / AYUDA -->
+
+                <p id="addressMapStatus" class="address-map-status">
+                    Arrastra el marcador para precisar la ubicación.
+                </p>
+
+
+                <!-- COORDENADAS OCULTAS -->
+
+                <input type="hidden" id="addressLatitude" name="latitude">
+
+                <input type="hidden" id="addressLongitude" name="longitude">
+
+            </section>
+
+
+            <!-- ==========================================================
+                     FORM ACTIONS
+                     ========================================================== -->
+
+            <div class="address-form-actions">
+
+                <button type="button" id="addressCancelBtn" class="address-cancel-btn" data-address-modal-close>
+                    Cancelar
+                </button>
+
+                <button type="submit" id="addressSaveBtn" class="address-save-btn">
+
+                    <span id="addressSaveText">
+                        Guardar dirección
+                    </span>
+
+                    <span id="addressSaveLoader" hidden>
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        Guardando...
+                    </span>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

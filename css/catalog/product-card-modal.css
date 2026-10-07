@@ -1,0 +1,466 @@
+/* PRODUCT DETAIL MODAL */
+.product-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    transition: visibility 0.4s;
+    padding: 16px;
+}
+
+.product-modal.open {
+    visibility: visible;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(9, 14, 26, 0.7);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    backdrop-filter: blur(6px);
+}
+
+.product-modal.open .modal-overlay {
+    opacity: 1;
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--white);
+    width: 100%;
+    max-width: 1100px;
+    max-height: 90vh;
+    border-radius: 4px;
+    overflow-y: auto;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+    z-index: 1;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-200);
+}
+
+.product-modal.open .modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    z-index: 10;
+    background-color: var(--white);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--gray-200);
+    transition: var(--transition-smooth);
+}
+
+.modal-close:hover {
+    color: var(--quicksand);
+    background-color: var(--royal-blue);
+    border-color: var(--royal-blue);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.modal-image-container {
+    background-color: transparent;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 24px;
+}
+
+.modal-info {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-category {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.modal-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--royal-blue);
+    margin-bottom: 12px;
+}
+
+.modal-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--sapphire);
+    margin-bottom: 20px;
+}
+
+.modal-description {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+
+
+/* Adjust existing zoomed image rule – we now control scaling via JS */
+.modal-image-container img.zoomed {
+    /* No forced scale here; JS sets transform */
+    cursor: zoom-out;
+}
+
+
+
+/* =========================================================
+   CANTIDAD
+   ========================================================= */
+
+.qty-selector {
+    display: inline-flex;
+    align-items: center;
+
+    width: fit-content;
+
+    overflow: hidden;
+
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+
+    background: var(--white);
+
+    box-shadow:
+        0 3px 10px rgba(17, 34, 80, 0.05);
+}
+
+.qty-selector button {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: transparent;
+
+    color: var(--royal-blue);
+
+    font-size: 0.85rem;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.qty-selector button:hover {
+    background: var(--gray-100);
+    color: var(--sapphire);
+}
+
+.qty-selector span {
+    min-width: 45px;
+
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+    font-size: 0.95rem;
+
+    color: var(--royal-blue);
+}
+
+
+/* =========================================================
+   PRECIO
+   ========================================================= */
+
+.modal-price-compare {
+    margin-right: 10px;
+
+    color: var(--text-muted);
+
+    text-decoration: line-through;
+
+    opacity: 0.65;
+    font-size: 0.85em;
+}
+
+.modal-price-current {
+    font-weight: 700;
+    color: var(--sapphire);
+}
+
+
+/* =========================================================
+   BOTÓN AGREGAR
+   ========================================================= */
+
+#modalAddBtn {
+    margin-top: auto;
+}
+
+
+/* =========================================================
+   ATRIBUTOS DEL PRODUCTO
+   ========================================================= */
+
+.attribute-group {
+    margin-bottom: 24px;
+}
+
+.attribute-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 10px;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+
+    color: var(--royal-blue);
+}
+
+.attribute-group label::before {
+    content: "";
+
+    width: 4px;
+    height: 16px;
+
+    border-radius: 4px;
+
+    background-color: var(--quicksand);
+}
+
+
+/* =========================================================
+   OPCIONES DE ATRIBUTO
+   ========================================================= */
+
+.attribute-options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: 9px;
+}
+
+
+/* =========================================================
+   OPCIÓN NORMAL
+   ========================================================= */
+
+.attribute-option {
+    min-width: 48px;
+    min-height: 42px;
+
+    padding: 9px 16px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+
+    background-color: var(--white);
+    color: var(--text-dark);
+
+    font-family: var(--font-primary);
+    font-size: 0.84rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.attribute-option:hover {
+    border-color: var(--sapphire);
+    color: var(--royal-blue);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 12px rgba(17, 34, 80, 0.08);
+}
+
+.attribute-option.active {
+    background-color: var(--royal-blue);
+    color: var(--swan-wing);
+
+    border-color: var(--royal-blue);
+
+    box-shadow:
+        0 5px 12px rgba(17, 34, 80, 0.18);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ATRIBUTO DE COLOR
+   ========================================================= */
+
+.color-options {
+    gap: 14px;
+
+    padding: 4px 5px;
+}
+
+.color-option {
+    flex: 0 0 40px;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border: 3px solid var(--white);
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 0 1.5px var(--gray-200),
+        0 3px 8px rgba(17, 34, 80, 0.12);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.color-option:hover {
+    transform: scale(1.10);
+
+    box-shadow:
+        0 0 0 2px var(--sapphire),
+        0 5px 12px rgba(17, 34, 80, 0.15);
+}
+
+.color-option.active {
+    transform: scale(1.08);
+
+    box-shadow:
+        0 0 0 2px var(--white),
+        0 0 0 4px var(--royal-blue),
+        0 5px 12px rgba(17, 34, 80, 0.20);
+}
+
+
+/* =========================================================
+   CANTIDAD
+   ========================================================= */
+
+.quantity-group {
+    margin-bottom: 28px;
+}
+
+.quantity-group label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+
+    color: var(--royal-blue);
+}
+
+.quantity-group label::before {
+    content: "";
+
+    display: inline-block;
+
+    width: 4px;
+    height: 16px;
+
+    margin-right: 8px;
+
+    vertical-align: middle;
+
+    border-radius: 4px;
+
+    background-color: var(--quicksand);
+}
+
+
+
+
+@media (max-width: 768px) {
+
+    .modal-body {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-info {
+        padding: 24px;
+    }
+
+    .attribute-group {
+        margin-bottom: 20px;
+    }
+
+    .attribute-group label {
+        font-size: 0.75rem;
+    }
+
+    .quantity-group {
+        margin-bottom: 28px;
+    }
+
+    #modalAddBtn {
+        margin-top: 0;
+    }
+}

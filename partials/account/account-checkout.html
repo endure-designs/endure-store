@@ -1,0 +1,950 @@
+<!-- ==========================================================================
+     CHECKOUT — PROCESO DE COMPRA
+     ========================================================================== -->
+
+<section id="account-checkout" class="account-checkout">
+
+
+    <!-- ==========================================================================
+     BANNER — ESTADO DE LA COMPRA
+     ========================================================================== -->
+
+    <div class="checkout-status">
+
+        <button type="button" class="checkout-status-step checkout-status-step-active" data-checkout-step="summary">
+            Resumen de pedido
+        </button>
+
+        <button type="button" class="checkout-status-step" data-checkout-step="purchase">
+            Proceso de compra
+        </button>
+
+        <button type="button" class="checkout-status-step" data-checkout-step="completed" disabled>
+            Pedido completado
+        </button>
+
+    </div>
+
+
+
+    <!-- ==========================================================================
+     ETAPA 1 — RESUMEN DEL PEDIDO
+     ========================================================================== -->
+
+    <section id="checkoutStepSummary" class="checkout-step">
+
+        <!-- ======================================================================
+         VOLVER AL CARRITO
+         ====================================================================== -->
+
+        <button type="button" id="accountCheckoutBack" class="account-checkout-back">
+            <i class="fa-solid fa-arrow-left"></i>
+            Volver al carrito
+        </button>
+
+
+        <!-- ======================================================================
+         ENCABEZADO
+         ====================================================================== -->
+
+        <div class="account-checkout-title">
+
+            <h2>
+                Resumen de pedido
+            </h2>
+
+            <p>
+                Revisa los productos de tu pedido antes de continuar.
+            </p>
+
+        </div>
+
+
+        <!-- ======================================================================
+         CONTENIDO DEL RESUMEN
+         ====================================================================== -->
+
+        <div class="checkout-summary-layout">
+
+
+            <!-- ==================================================================
+             PRODUCTOS
+             ================================================================== -->
+
+            <div class="checkout-summary-products">
+
+                <h3>
+                    Tu pedido
+                </h3>
+
+                <!--
+                accountCheckout.js generará aquí los productos
+                del carrito.
+            -->
+
+                <div id="checkoutSummaryProducts" class="checkout-summary-product-list">
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================================
+             RESUMEN LATERAL
+             ================================================================== -->
+
+            <aside class="checkout-summary-sidebar">
+
+
+                <!-- ==============================================================
+                 CUPÓN
+                 ============================================================== -->
+
+                <div class="checkout-summary-coupon">
+
+                    <h3>
+                        ¿Tienes un cupón?
+                    </h3>
+
+                    <div class="checkout-coupon-form">
+
+                        <input type="text" id="checkoutCoupon" class="checkout-coupon-input"
+                            placeholder="Código de cupón">
+
+                        <button type="button" id="checkoutCouponButton" class="checkout-coupon-button">
+                            Aplicar
+                        </button>
+
+                    </div>
+
+                    <p id="checkoutCouponMessage" class="checkout-coupon-message"></p>
+
+                </div>
+
+
+                <!-- ==============================================================
+                 MODALIDAD DE ENTREGA
+                 ============================================================== -->
+
+                <label class="checkout-delivery-option checkout-delivery-option-delivery">
+
+                    <input type="radio" name="deliveryMethod" value="DELIVERY" checked>
+
+                    <span class="checkout-delivery-option-icon">
+                        <i class="fa-solid fa-truck"></i>
+                    </span>
+
+                    <span class="checkout-delivery-option-label">
+                        Delivery
+                    </span>
+
+                </label>
+
+
+                <label class="checkout-delivery-option checkout-delivery-option-pickup">
+
+                    <input type="radio" name="deliveryMethod" value="STORE_PICKUP">
+
+                    <span class="checkout-delivery-option-icon">
+                        <i class="fa-solid fa-store"></i>
+                    </span>
+
+                    <span class="checkout-delivery-option-label">
+                        Recojo en tienda
+                    </span>
+
+                </label>
+
+
+                <!-- ==============================================================
+                 TOTAL
+                 ============================================================== -->
+
+                <div class="checkout-summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="checkoutSummaryTotal">
+                        S/ 0.00
+                    </strong>
+
+                </div>
+
+
+                <!-- ==============================================================
+                 CONTINUAR
+                 ============================================================== -->
+
+                <button type="button" id="checkoutSummaryContinue" class="checkout-summary-continue">
+                    Continuar
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </aside>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================================================
+     ETAPA 2 — PROCESO DE COMPRA
+     ========================================================================== -->
+
+    <section id="checkoutStepPurchase" class="checkout-step" style="display: none;">
+
+        <!-- ==========================================================================
+         ENCABEZADO DEL CHECKOUT
+         ========================================================================== -->
+
+        <div class="account-checkout-header">
+
+
+            <div class="account-checkout-title">
+
+                <h2>
+                    Proceso de compra
+                </h2>
+
+                <p>
+                    Selecciona el método de pago que deseas utilizar.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================================================
+         CONTENIDO PRINCIPAL
+         ========================================================================== -->
+
+        <div class="account-checkout-layout">
+
+
+            <!-- ======================================================================
+             COLUMNA PRINCIPAL
+             ====================================================================== -->
+
+            <div class="account-checkout-main">
+
+                <!-- ======================================================================
+                    DIRECCIÓN
+                    ====================================================================== -->
+
+                <section class="checkout-purchase-section checkout-address-section">
+
+                    <div class="checkout-purchase-section-header">
+
+                        <h3>
+                            Datos de contacto
+                        </h3>
+
+                        <p>
+                            Indica los datos necesarios para completar tu pedido.
+                        </p>
+
+                    </div>
+
+
+                    <!-- ==================================================================
+                        DELIVERY
+                        ================================================================== -->
+
+                    <div id="checkoutDeliveryAddress" class="checkout-address-content">
+
+                        <div class="checkout-purchase-section-header">
+
+                            <h4>
+                                Dirección de envío
+                            </h4>
+
+                        </div>
+
+
+                        <div id="checkoutShippingAddressSelector" class="checkout-address-selector"></div>
+
+
+                        <button type="button" id="checkoutAddShippingAddress" class="checkout-address-add-button">
+                            <i class="fa-solid fa-plus"></i>
+                            Agregar nueva dirección
+                        </button>
+
+                        <div id="checkoutDeliveryNewAddress" class="checkout-address-form-container" hidden></div>
+
+                    </div>
+
+
+                    <!-- ==================================================================
+                        RECOJO EN TIENDA
+                        ================================================================== -->
+
+                    <div id="checkoutPickupAddress" class="checkout-address-content" hidden>
+
+
+                        <!-- ==============================================================
+                            OPCIONES DE DIRECCIÓN
+                            ============================================================== -->
+
+                        <div class="checkout-address-choice-list">
+
+                            <label class="checkout-address-choice" id="checkoutSavedAddressChoice">
+
+                                <input type="radio" name="pickupAddressMode" value="SAVED"
+                                    id="checkoutSavedAddressRadio">
+
+                                <span class="checkout-address-choice-radio"></span>
+
+                                <span class="checkout-address-choice-content">
+
+                                    <strong>
+                                        Usar datos guardados
+                                    </strong>
+
+                                    <span>
+                                        Selecciona una dirección registrada en tu cuenta.
+                                    </span>
+
+                                </span>
+
+                            </label>
+
+
+                            <label class="checkout-address-choice">
+
+                                <input type="radio" name="pickupAddressMode" value="NEW" id="checkoutNewAddressRadio">
+
+                                <span class="checkout-address-choice-radio"></span>
+
+                                <span class="checkout-address-choice-content">
+
+                                    <strong>
+                                        Ingresar nuevos datos
+                                    </strong>
+
+                                    <span>
+                                        Completa los datos necesarios para tu pedido.
+                                    </span>
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- ==============================================================
+                            DIRECCIÓN GUARDADA
+                            ============================================================== -->
+
+                        <div id="checkoutPickupSavedAddress" class="checkout-pickup-address-content" hidden>
+
+                            <label for="checkoutPickupAddressSelect" class="checkout-field-label">
+                                Dirección guardada
+                            </label>
+
+                            <div id="checkoutPickupAddressSelector" class="checkout-address-selector"></div>
+
+                            <div id="checkoutPickupDocumentType" class="checkout-billing-document-type"></div>
+
+                        </div>
+
+
+                        <!-- ==============================================================
+                            NUEVA DIRECCIÓN
+                            ============================================================== -->
+
+                        <div id="checkoutPickupNewAddress" class="checkout-pickup-address-content" hidden>
+
+                            <div class="checkout-purchase-section-header">
+
+                                <h4>
+                                    Dirección de facturación
+                                </h4>
+
+                                <p>
+                                    Completa los datos necesarios para la facturación.
+                                </p>
+
+                            </div>
+
+                            <div id="checkoutPickupNewAddressForm" class="checkout-address-form-container" hidden></div>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- ======================================================================
+                    FACTURACIÓN
+                    ====================================================================== -->
+
+                <section class="checkout-purchase-section checkout-billing-section">
+
+                    <label class="checkout-billing-same">
+
+                        <input type="checkbox" id="checkoutSameBillingAddress" checked>
+
+                        <span class="checkout-checkbox"></span>
+
+                        <span>
+                            Usar la misma dirección de envío para facturación
+                        </span>
+
+                    </label>
+
+
+                    <!-- ==============================================================
+                        TIPO DE COMPROBANTE — MISMA DIRECCIÓN DE ENVÍO
+                        ============================================================== -->
+
+                    <div id="checkoutSameBillingDocumentType" class="checkout-billing-document-type"></div>
+
+
+                    <!-- ==============================================================
+                        DIRECCIÓN DE FACTURACIÓN DIFERENTE
+                        ============================================================== -->
+
+                    <div id="checkoutBillingAddress" class="checkout-billing-address" hidden>
+
+                        <div class="checkout-purchase-section-header">
+
+                            <h4>
+                                Dirección de facturación
+                            </h4>
+
+                            <p>
+                                Ingresa los datos de facturación.
+                            </p>
+
+                        </div>
+
+
+                        <div id="checkoutBillingAddressContent">
+
+                            <!-- Rapid Form -->
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- ======================================================================
+             COLUMNA LATERAL — PEDIDO
+             ====================================================================== -->
+
+            <aside class="account-checkout-sidebar">
+
+                <div class="account-checkout-order">
+
+                    <h3>
+                        Tu pedido
+                    </h3>
+
+
+                    <!-- ==============================================================
+                     RESUMEN DEL PEDIDO
+                     ============================================================== -->
+
+                    <div class="account-checkout-summary">
+
+                        <!-- El contenido real del pedido lo conectaremos después -->
+
+                    </div>
+
+
+                    <!-- ==============================================================
+                     MÉTODOS DE PAGO
+                     ============================================================== -->
+
+                    <div class="account-payment-methods">
+
+                        <!-- ==========================================================
+                         TARJETAS
+                         ========================================================== -->
+
+                        <label class="account-payment-method" data-payment-method="CARD">
+
+                            <input type="radio" class="account-payment-method-radio" name="paymentMethod" value="CARD"
+                                checked>
+
+                            <div class="account-payment-method-content">
+
+                                <strong class="account-payment-method-title">
+                                    Tarjeta de crédito o débito
+                                </strong>
+
+                                <div class="account-payment-method-logos account-payment-method-logos-cards">
+
+                                    <img src="./assets/checkout/Visa-logo.svg" alt="Visa">
+
+                                    <img src="./assets/checkout/Mastercard-logo.svg" alt="Mastercard">
+
+                                    <img src="./assets/checkout/American-Express-logo.svg" alt="American Express">
+
+                                    <img src="./assets/checkout/Diners-Club-logo.svg" alt="Diners Club">
+
+                                </div>
+
+                            </div>
+
+                        </label>
+
+
+                        <!-- ==========================================================
+                         YAPE
+                         ========================================================== -->
+
+                        <label class="account-payment-method" data-payment-method="YAPE">
+
+                            <input type="radio" class="account-payment-method-radio" name="paymentMethod" value="YAPE">
+
+                            <div class="account-payment-method-content">
+
+                                <strong class="account-payment-method-title">
+                                    Yape
+                                </strong>
+
+                                <div class="account-payment-method-logos account-payment-method-logos-yape">
+
+                                    <img src="./assets/checkout/Yape-logo.svg" alt="Yape">
+
+                                </div>
+
+                            </div>
+
+                        </label>
+
+
+                        <!-- ==========================================================
+                         BILLETERAS DIGITALES
+                         ========================================================== -->
+
+                        <label class="account-payment-method" data-payment-method="WALLET">
+
+                            <input type="radio" class="account-payment-method-radio" name="paymentMethod"
+                                value="WALLET">
+
+                            <div class="account-payment-method-content">
+
+                                <strong class="account-payment-method-title">
+                                    Billeteras digitales
+                                </strong>
+
+                                <div class="account-payment-method-logos account-payment-method-logos-wallets">
+
+                                    <img src="./assets/checkout/Plin-logo.svg" alt="Plin">
+
+                                    <img src="./assets/checkout/Scotiabank-logo.svg" alt="Scotiabank">
+
+                                    <img src="./assets/checkout/Interbank-logo.svg" alt="Interbank">
+
+                                    <img src="./assets/checkout/BBVA-logo.svg" alt="BBVA">
+
+                                    <img src="./assets/checkout/BanBif-logo.svg" alt="BanBif">
+
+                                    <img src="./assets/checkout/Ligo-logo.svg" alt="Ligo">
+
+                                    <img src="./assets/checkout/IziPay-logo.svg" alt="IziPay">
+
+                                </div>
+
+                            </div>
+
+                        </label>
+
+
+                        <!-- ==========================================================
+                            PAGO EFECTIVO
+                            ========================================================== -->
+
+                        <label class="account-payment-method" data-payment-method="PAGO_EFECTIVO">
+
+                            <input type="radio" class="account-payment-method-radio" name="paymentMethod"
+                                value="PAGO_EFECTIVO">
+
+                            <div class="account-payment-method-content">
+
+                                <strong class="account-payment-method-title">
+                                    PagoEfectivo
+                                </strong>
+
+                                <div class="account-payment-method-logos account-payment-method-logos-pago-efectivo">
+
+                                    <img src="./assets/checkout/Pago-Efectivo-logo.svg" alt="PagoEfectivo">
+
+                                </div>
+
+                            </div>
+
+                        </label>
+
+
+                        <!-- ==========================================================
+                            CUOTÉALO
+                            ========================================================== -->
+
+                        <label class="account-payment-method account-payment-method-disabled"
+                            data-payment-method="CUOTEALO">
+                            <input class="account-payment-method-radio" name="paymentMethod" value="CUOTEALO"
+                                type="radio">
+
+                            <div class="account-payment-method-content">
+                                <strong class="account-payment-method-title">
+                                    Cuotéalo
+                                </strong>
+
+                                <div class="account-payment-method-logos account-payment-method-logos-cuotealo">
+                                    <img src="./assets/checkout/Cuotealo-BCP-logo.svg" alt="Cuotéalo">
+                                </div>
+                            </div>
+                        </label>
+
+                    </div>
+
+                    <!-- ==============================================================
+                        TÉRMINOS Y CONDICIONES
+                        ============================================================== -->
+
+                    <div class="account-checkout-terms">
+
+                        <p class="account-checkout-terms-text">
+                            Tus datos personales se utilizarán para respaldar tu experiencia
+                            en este sitio web, para administrar el acceso a tu cuenta y para
+                            otros fines descritos en nuestra
+                            <a href="#" class="account-checkout-privacy-link">
+                                política de privacidad
+                            </a>.
+                        </p>
+
+                        <label class="account-checkout-terms-check">
+
+                            <input type="checkbox" id="checkoutTermsAccepted">
+
+                            <span class="account-checkout-terms-checkbox"></span>
+
+                            <span class="account-checkout-terms-label">
+                                He leído y estoy de acuerdo con los
+                                <a href="#" class="account-checkout-terms-link">
+                                    términos y condiciones
+                                </a>
+                                de la web
+                                <span class="account-checkout-required">
+                                    *
+                                </span>
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- ==============================================================
+                        BOTÓN REALIZAR PEDIDO
+                        ============================================================== -->
+
+                    <button type="button" id="checkoutSubmitOrder" class="account-checkout-submit">
+                        REALIZAR EL PAGO
+                    </button>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </section>
+
+    <!-- ==============================================================
+     PEDIDO COMPLETADO
+     ============================================================== -->
+
+    <section id="checkoutStepCompleted" class="checkout-step" style="display: none;">
+
+        <!-- ==========================================================
+     CONTENIDO PRINCIPAL
+     ========================================================== -->
+
+        <div class="checkout-completed-container">
+
+
+            <!-- ======================================================
+         CONFIRMACIÓN
+         ====================================================== -->
+
+            <div class="checkout-completed-header">
+
+                <div class="checkout-completed-icon" aria-hidden="true">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+
+                <h2 id="checkoutCompletedTitle" class="checkout-completed-title">
+                    ¡Pedido realizado correctamente!
+                </h2>
+
+
+                <p id="checkoutCompletedMessage" class="checkout-completed-message">
+                    Hemos recibido tu pedido y el pago se procesó correctamente.
+                </p>
+
+            </div>
+
+
+            <!-- ======================================================
+         INFORMACIÓN DEL PAGO
+         ====================================================== -->
+
+            <div id="checkoutCompletedPaymentInfo" class="checkout-completed-payment-info" style="display: none;">
+
+                <!--
+                El contenido será generado dinámicamente
+                por accountCheckoutCompleted.js según:
+
+                - paymentMethod
+                - paymentStatus
+                - paymentReference
+                - paymentExpiresAt
+                - paymentQrUrl
+                - paymentUrl
+            -->
+
+            </div>
+
+
+            <!-- ======================================================
+         INFORMACIÓN DEL PEDIDO
+         ====================================================== -->
+
+            <div class="checkout-completed-order">
+
+                <div class="checkout-completed-order-header">
+
+                    <h3>
+                        Detalles del pedido
+                    </h3>
+
+
+                    <span id="checkoutCompletedOrderStatus" class="checkout-completed-order-status">
+                        Pagado
+                    </span>
+
+                </div>
+
+
+                <div class="checkout-completed-order-info">
+
+
+                    <!-- ------------------------------------------------
+                 NÚMERO DE PEDIDO
+                 ------------------------------------------------ -->
+
+                    <div class="checkout-completed-info-item">
+
+                        <span class="checkout-completed-info-label">
+                            Número de pedido
+                        </span>
+
+                        <strong id="checkoutCompletedOrderId" class="checkout-completed-info-value">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ------------------------------------------------
+                 FECHA
+                 ------------------------------------------------ -->
+
+                    <div class="checkout-completed-info-item">
+
+                        <span class="checkout-completed-info-label">
+                            Fecha
+                        </span>
+
+                        <strong id="checkoutCompletedOrderDate" class="checkout-completed-info-value">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ------------------------------------------------
+                 MÉTODO DE PAGO
+                 ------------------------------------------------ -->
+
+                    <div class="checkout-completed-info-item">
+
+                        <span class="checkout-completed-info-label">
+                            Método de pago
+                        </span>
+
+                        <strong id="checkoutCompletedPaymentMethod" class="checkout-completed-info-value">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ------------------------------------------------
+                 TOTAL
+                 ------------------------------------------------ -->
+
+                    <div class="checkout-completed-info-item">
+
+                        <span class="checkout-completed-info-label">
+                            Total
+                        </span>
+
+                        <strong id="checkoutCompletedTotal" class="checkout-completed-info-value">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ======================================================
+         PRODUCTOS
+         ====================================================== -->
+
+            <div class="checkout-completed-products">
+
+                <div class="checkout-completed-section-header">
+
+                    <h3>
+                        Productos
+                    </h3>
+
+                </div>
+
+
+                <div id="checkoutCompletedProductsList" class="checkout-completed-products-list">
+
+                    <!--
+                    Los productos serán generados
+                    dinámicamente por accountCheckoutCompleted.js
+                -->
+
+                </div>
+
+            </div>
+
+
+            <!-- ======================================================
+         RESUMEN DE PAGO
+         ====================================================== -->
+
+            <div class="checkout-completed-summary">
+
+
+                <div class="checkout-completed-summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span id="checkoutCompletedSubtotal">
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="checkout-completed-summary-row">
+
+                    <span>
+                        Envío
+                    </span>
+
+                    <span id="checkoutCompletedShipping">
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="checkout-completed-summary-row checkout-completed-discount">
+
+                    <span>
+                        Descuento
+                    </span>
+
+                    <span id="checkoutCompletedDiscount">
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="checkout-completed-summary-row checkout-completed-total-row">
+
+                    <strong>
+                        Total
+                    </strong>
+
+                    <strong id="checkoutCompletedFinalTotal">
+                        —
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ======================================================
+         ACCIONES
+         ====================================================== -->
+
+            <div class="checkout-completed-actions">
+
+
+                <button type="button" id="checkoutCompletedViewOrders"
+                    class="checkout-completed-button checkout-completed-button-primary">
+
+                    <i class="fa-solid fa-box"></i>
+
+                    <span>
+                        Ver mis pedidos
+                    </span>
+
+                </button>
+
+
+                <button type="button" id="checkoutCompletedContinueShopping"
+                    class="checkout-completed-button checkout-completed-button-secondary">
+
+                    <i class="fa-solid fa-bag-shopping"></i>
+
+                    <span>
+                        Seguir comprando
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+
+
+</section>

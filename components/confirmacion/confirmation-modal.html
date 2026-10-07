@@ -1,0 +1,38 @@
+<div id="confirmationModal" class="confirmation-modal" hidden role="dialog" aria-modal="true"
+    aria-labelledby="confirmationModalTitle" aria-describedby="confirmationModalMessage">
+    <div class="confirmation-modal-backdrop"></div>
+
+    <div class="confirmation-modal-dialog">
+
+        <button type="button" id="confirmationModalClose" class="confirmation-modal-close" aria-label="Cerrar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div id="confirmationModalIcon" class="confirmation-modal-icon">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+
+        <h2 id="confirmationModalTitle">
+            ¿Confirmar acción?
+        </h2>
+
+        <p id="confirmationModalMessage">
+            ¿Estás seguro de que deseas continuar?
+        </p>
+
+        <div class="confirmation-modal-actions">
+
+            <button type="button" id="confirmationModalCancel"
+                class="confirmation-modal-btn confirmation-modal-btn-secondary">
+                Cancelar
+            </button>
+
+            <button type="button" id="confirmationModalConfirm"
+                class="confirmation-modal-btn confirmation-modal-btn-danger">
+                Confirmar
+            </button>
+
+        </div>
+
+    </div>
+</div>

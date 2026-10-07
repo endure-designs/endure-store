@@ -1,0 +1,278 @@
+/* ==========================================================================
+   RAPID FORM
+   ========================================================================== */
+
+.rapid-form {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   GRID PRINCIPAL
+   ========================================================================== */
+
+.rapid-form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px 20px;
+}
+
+
+/* ==========================================================================
+   CAMPOS
+   ========================================================================== */
+
+.rapid-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    min-width: 0;
+
+    /* Campo normal = 2 columnas */
+    grid-column: span 2;
+}
+
+.rapid-form-field-full {
+    grid-column: 1 / -1;
+}
+
+
+/*
+ * rapidBillingIdentity no debe crear un segundo grid.
+ * Sus campos pasan a formar parte directamente del grid principal.
+ */
+
+#rapidBillingIdentity {
+    display: contents;
+}
+
+
+/* ==========================================================================
+   TIPO DE COMPROBANTE
+   ========================================================================== */
+
+.rapid-form-document-type {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+
+    width: 100%;
+    min-height: 30px;
+}
+
+.rapid-document-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    width: auto;
+    margin: 0;
+    padding: 4px 0;
+
+    color: var(--royal-blue);
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.rapid-document-option input[type="radio"] {
+    appearance: none;
+
+    width: 18px;
+    height: 18px;
+    min-height: 18px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 1.5px solid var(--shellstone);
+    border-radius: 50%;
+
+    background: var(--white);
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+    position: relative;
+}
+
+.rapid-document-option input[type="radio"]:hover {
+    border-color: var(--sapphire);
+}
+
+.rapid-document-option input[type="radio"]:checked {
+    border-color: var(--sapphire);
+    background: var(--white);
+
+    box-shadow:
+        0 0 0 3px rgba(60, 80, 125, 0.10);
+}
+
+.rapid-document-option input[type="radio"]:checked::after {
+    content: '';
+
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: var(--sapphire);
+}
+
+.rapid-document-option input[type="radio"]:focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(60, 80, 125, 0.15);
+}
+
+
+/* ==========================================================================
+   IDENTIFICACIÓN — CAMPOS COMPACTOS
+   ========================================================================== */
+
+/*
+ * Tipo de identificación = 1 columna
+ * Número de identificación = 1 columna
+ */
+
+.rapid-form-field:has(#rapidIdentificationType),
+.rapid-form-field:has(#rapidIdentificationNumber) {
+    grid-column: span 1;
+}
+
+
+/* ==========================================================================
+   ETIQUETAS
+   ========================================================================== */
+
+.rapid-form-field label {
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+
+/* ==========================================================================
+   INPUTS
+   ========================================================================== */
+
+.rapid-form-field input {
+    width: 100%;
+    min-height: 46px;
+
+    padding: 11px 13px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+
+    background: var(--white);
+    color: var(--text-dark);
+
+    font-family: var(--font-primary);
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.rapid-form-field input:focus {
+    border-color: var(--sapphire);
+
+    box-shadow:
+        0 0 0 3px rgba(60, 80, 125, 0.10);
+}
+
+.rapid-form-field input::placeholder {
+    color: var(--text-muted);
+}
+
+
+/* ==========================================================================
+   SELECTORES
+   ========================================================================== */
+
+.rapid-form-selector {
+    width: 100%;
+    min-height: 46px;
+}
+
+
+/* ==========================================================================
+   DIVISIONES ADMINISTRATIVAS
+   ========================================================================== */
+
+.rapid-form-divisions {
+    display: contents;
+}
+
+
+/*
+ * Cada división administrativa ocupa 2 columnas,
+ * igual que un campo normal.
+ */
+
+.rapid-division-field {
+    grid-column: span 2;
+}
+
+
+
+/* ==========================================================================
+   OBLIGATORIEDAD
+   ========================================================================== */
+
+.rapid-required {
+    color: #C62828;
+    margin-left: 3px;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 700px) {
+
+    .rapid-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rapid-form-field,
+    .rapid-form-field-full,
+    .rapid-form-field:has(#rapidIdentificationType),
+    .rapid-form-field:has(#rapidIdentificationNumber),
+    .rapid-division-field {
+        grid-column: 1 / -1;
+    }
+
+    .rapid-form-document-type {
+        flex-direction: row;
+        gap: 20px;
+    }
+}

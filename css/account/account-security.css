@@ -1,0 +1,285 @@
+/* ==========================================================================
+   ACCOUNT SECURITY
+   ========================================================================== */
+
+.account-security {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   SECURITY CARD
+   ========================================================================== */
+
+.security-card {
+    padding: 32px;
+}
+
+.security-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.security-card-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: var(--swan-wing);
+    color: var(--sapphire);
+
+    font-size: 19px;
+}
+
+.security-card-header h3 {
+    margin: 0 0 6px;
+
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 600;
+
+    color: var(--text-dark);
+}
+
+.security-card-header p {
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   FORMULARIO
+   ========================================================================== */
+
+.password-form {
+    max-width: 620px;
+}
+
+.security-form-field {
+    margin-bottom: 22px;
+}
+
+.security-form-field>label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: var(--text-dark);
+}
+
+.security-form-field small {
+    display: block;
+
+    margin-top: 7px;
+
+    font-size: 12px;
+    line-height: 1.4;
+
+    color: var(--text-muted);
+}
+
+
+/* ==========================================================================
+   INPUT PASSWORD
+   ========================================================================== */
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    height: 46px;
+
+    box-sizing: border-box;
+
+    padding: 0 48px 0 14px;
+
+    border: 1px solid var(--gray-200);
+    border-radius: 9px;
+
+    background: var(--white);
+
+    color: var(--text-dark);
+
+    font-family: var(--font-primary);
+    font-size: 14px;
+
+    outline: none;
+
+    transition: var(--transition-smooth);
+}
+
+.password-input-wrapper input:focus {
+    border-color: var(--sapphire);
+
+    box-shadow:
+        0 0 0 3px rgba(60, 80, 125, 0.10);
+}
+
+.password-toggle {
+    position: absolute;
+
+    top: 50%;
+    right: 12px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+
+    color: var(--text-muted);
+
+    cursor: pointer;
+
+    border-radius: 6px;
+
+    transition: var(--transition-smooth);
+}
+
+.password-toggle:hover {
+    color: var(--sapphire);
+    background: var(--gray-100);
+}
+
+
+/* ==========================================================================
+   VALIDACIÓN DE CONTRASEÑA
+   ========================================================================== */
+
+.password-match-message {
+    margin-top: 7px;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.password-match-message.is-valid {
+    color: var(--success);
+}
+
+.password-match-message.is-invalid {
+    color: #dc2626;
+}
+
+
+/* ==========================================================================
+   ACCIONES
+   ========================================================================== */
+
+.security-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 30px;
+    padding-top: 24px;
+
+    border-top: 1px solid var(--gray-200);
+}
+
+.security-cancel-btn,
+.security-save-btn {
+    min-height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 8px;
+
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: var(--transition-smooth);
+}
+
+.security-cancel-btn {
+    border: 1px solid var(--gray-200);
+
+    background: var(--white);
+
+    color: var(--text-dark);
+}
+
+.security-cancel-btn:hover {
+    background: var(--gray-100);
+}
+
+.security-save-btn {
+    border: 1px solid var(--royal-blue);
+
+    background: var(--royal-blue);
+
+    color: var(--white);
+}
+
+.security-save-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+
+    box-shadow: var(--shadow-md);
+}
+
+.security-save-btn:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+}
+
+
+/* ==========================================================================
+   HIDDEN
+   ========================================================================== */
+
+#panel-security [hidden] {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 700px) {
+
+    .security-card {
+        padding: 22px;
+    }
+
+    .security-card-header {
+        gap: 14px;
+    }
+
+    .security-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .security-cancel-btn,
+    .security-save-btn {
+        width: 100%;
+    }
+}

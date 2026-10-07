@@ -1,0 +1,265 @@
+<!-- ==========================================================================
+     DETALLE DEL PEDIDO
+     ========================================================================== -->
+
+<div id="accountOrderDetail" class="account-order-detail" style="display: none;">
+
+    <!-- ======================================================================
+         ENCABEZADO
+         ====================================================================== -->
+
+    <div class="account-order-detail-header">
+
+        <button type="button" id="accountOrderDetailBack" class="account-order-detail-back">
+            <i class="fa-solid fa-arrow-left"></i>
+
+            <span>
+                Volver
+            </span>
+        </button>
+
+
+        <div class="account-order-detail-title">
+
+            <div>
+
+                <h2>
+                    <i class="fa-solid fa-box-open"></i>
+                    Detalle del pedido
+                </h2>
+
+                <p id="accountOrderDetailSubtitle">
+                    Información completa de tu pedido
+                </p>
+
+            </div>
+
+            <span id="accountOrderDetailStatus" class="account-order-detail-status">
+                —
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================================
+         IDENTIFICACIÓN DEL PEDIDO
+         ====================================================================== -->
+
+    <div class="panel-card account-order-detail-main">
+
+        <div class="account-order-detail-info" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; align-items: start;">
+
+            <div class="account-order-detail-info-item">
+                <span style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Número de pedido</span>
+                <strong id="accountOrderDetailOrderId" style="font-size: 1rem; color: var(--text-dark);">—</strong>
+            </div>
+
+            <div class="account-order-detail-info-item">
+                <span style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Método de pago</span>
+                <strong id="accountOrderDetailPaymentMethod" style="font-size: 1rem; color: var(--text-dark);">—</strong>
+            </div>
+
+            <div class="account-order-detail-info-item">
+                <span style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Método de entrega</span>
+                <strong id="accountOrderDetailDeliveryMethod" style="font-size: 1rem; color: var(--text-dark);">—</strong>
+            </div>
+
+            <div class="account-order-detail-info-item">
+                <span style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Fecha del pedido</span>
+                <strong id="accountOrderDetailOrderDate" style="font-size: 1rem; color: var(--text-dark);">—</strong>
+            </div>
+
+            <div id="accountOrderDetailTrackingContainer" class="account-order-detail-info-item" style="display: none;">
+                <span style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Código de seguimiento</span>
+                <strong id="accountOrderDetailTrackingCode" style="font-size: 1rem; color: var(--text-dark);">—</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ======================================================================
+         INFORMACIÓN DE PAGO (PENDIENTE)
+         ====================================================================== -->
+
+    <div id="accountOrderDetailPaymentSection" class="panel-card checkout-completed-payment" style="display: none; margin-bottom: 24px;">
+    </div>
+
+
+    <!-- ======================================================================
+         PRODUCTOS
+         ====================================================================== -->
+
+    <div class="panel-card account-order-detail-section">
+
+        <div class="account-order-detail-section-header">
+
+            <div>
+
+                <h3>
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Productos
+                </h3>
+
+                <span id="accountOrderDetailProductCount">
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div id="accountOrderDetailProducts" class="account-order-detail-products">
+
+            <!-- Productos generados dinámicamente -->
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================================
+         INFORMACIÓN DE ENTREGA
+         ====================================================================== -->
+
+    <div id="accountOrderDetailShippingSection" class="panel-card account-order-detail-section">
+
+        <div class="account-order-detail-section-header">
+
+            <h3>
+                <i class="fa-solid fa-location-dot"></i>
+                Dirección de entrega
+            </h3>
+
+        </div>
+
+
+        <div id="accountOrderDetailShipping" class="account-order-detail-address">
+
+            <!-- Dirección generada dinámicamente -->
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================================
+         INFORMACIÓN DE FACTURACIÓN
+         ========================================================================== -->
+
+    <div class="panel-card account-order-detail-section">
+
+        <div class="account-order-detail-section-header">
+
+            <h3>
+                <i class="fa-solid fa-file-invoice"></i>
+                Datos de facturación
+            </h3>
+
+        </div>
+
+
+        <div id="accountOrderDetailBilling" class="account-order-detail-billing">
+
+            <!-- Datos de facturación generados dinámicamente -->
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================================
+         RESUMEN ECONÓMICO
+         ========================================================================== -->
+
+    <div class="panel-card account-order-detail-section">
+
+        <div class="account-order-detail-section-header">
+
+            <h3>
+                <i class="fa-solid fa-receipt"></i>
+                Resumen del pedido
+            </h3>
+
+        </div>
+
+
+        <div id="accountOrderDetailSummary" class="account-order-detail-summary">
+
+            <div class="account-order-detail-summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong id="accountOrderDetailSubtotal">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="account-order-detail-summary-row">
+
+                <span>
+                    Envío
+                </span>
+
+                <strong id="accountOrderDetailShippingCost">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div id="accountOrderDetailDiscountRow"
+                class="account-order-detail-summary-row account-order-detail-discount" style="display: none;">
+
+                <span>
+                    Descuento
+                </span>
+
+                <strong id="accountOrderDetailDiscount">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="account-order-detail-summary-total">
+
+                <span>
+                    Total
+                </span>
+
+                <strong id="accountOrderDetailTotal">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================================
+         ACCIONES
+         ========================================================================== -->
+
+    <div class="account-order-detail-actions">
+
+        <button type="button" id="accountOrderDetailBackBottom" class="btn-secondary-action">
+            <i class="fa-solid fa-arrow-left"></i>
+
+            <span>
+                Volver
+            </span>
+        </button>
+
+    </div>
+
+</div>

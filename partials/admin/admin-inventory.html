@@ -1,0 +1,142 @@
+<div class="panel-card">
+
+    <!-- ============================================================== -->
+    <!-- CABECERA                                                       -->
+    <!-- ============================================================== -->
+
+    <div class="inventory-header">
+
+        <div>
+
+            <h3 id="inventoryViewTitle">
+                Productos Registrados en DB
+            </h3>
+
+            <p id="inventoryViewDescription" style="
+                    color:#64748b;
+                    font-size:0.9rem;
+                    margin-top:4px;
+                ">
+                Gestiona el catálogo, actualiza precios,
+                controla stock y edita prendas cargadas.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- SELECTOR DE VISTAS                                             -->
+    <!-- ============================================================== -->
+
+    <div class="inventory-view-tabs">
+
+        <button type="button" class="inventory-view-tab active" data-inventory-view="products">
+            <i class="fa-solid fa-box"></i>
+            Productos
+        </button>
+
+        <button type="button" class="inventory-view-tab" data-inventory-view="inventory">
+            <i class="fa-solid fa-warehouse"></i>
+            Control de inventario
+        </button>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================ -->
+    <!-- VISTA: PRODUCTOS                                               -->
+    <!-- ============================================================ -->
+
+    <div id="adminProductsView" class="inventory-view">
+
+        <!-- ---------------------------------------------------------- -->
+        <!-- BUSCADOR DE PRODUCTOS                                      -->
+        <!-- ---------------------------------------------------------- -->
+
+        <div class="inventory-search-box">
+
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+            <input type="text" id="inventorySearchInput" class="form-input"
+                placeholder="Buscar por nombre, SKU o tema..."
+                oninput="accountInventory.filtrarTablaInventario(this.value)">
+
+        </div>
+
+
+        <!-- ---------------------------------------------------------- -->
+        <!-- TABLA DE PRODUCTOS                                         -->
+        <!-- ---------------------------------------------------------- -->
+
+        <div id="adminProductsTableContainer" class="table-responsive">
+
+            <p style="
+                    padding:20px;
+                    text-align:center;
+                    color:var(--text-muted);
+                ">
+                Cargando productos...
+            </p>
+
+        </div>
+
+
+        <!-- ---------------------------------------------------------- -->
+        <!-- PAGINACIÓN                                                 -->
+        <!-- ---------------------------------------------------------- -->
+
+        <div id="inventoryPagination"></div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- ============================================================ -->
+    <!-- VISTA: CONTROL DE INVENTARIO                                  -->
+    <!-- ============================================================ -->
+
+    <div id="adminInventoryView" class="inventory-view" style="display:none;">
+
+        <!-- ---------------------------------------------------------- -->
+        <!-- BUSCADOR DE INVENTARIO                                     -->
+        <!-- ---------------------------------------------------------- -->
+
+        <div class="inventory-search-box">
+
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+            <input type="text" id="adminInventorySearchInput" class="form-input"
+                placeholder="Buscar por producto, variante o SKU...">
+
+        </div>
+
+
+        <!-- ---------------------------------------------------------- -->
+        <!-- TABLA DE CONTROL DE INVENTARIO                             -->
+        <!-- ---------------------------------------------------------- -->
+
+        <div id="adminInventoryTableContainer" class="table-responsive">
+
+            <p style="
+                    padding:20px;
+                    text-align:center;
+                    color:var(--text-muted);
+                ">
+                Cargando inventario...
+            </p>
+
+        </div>
+
+
+        <!-- ---------------------------------------------------------- -->
+        <!-- PAGINACIÓN DEL INVENTARIO                                  -->
+        <!-- ---------------------------------------------------------- -->
+
+        <div id="adminInventoryPagination"></div>
+
+    </div>
+
+</div>

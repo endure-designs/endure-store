@@ -1,0 +1,131 @@
+<!-- INFORMACIÓN PERSONAL -->
+<div id="panel-personal">
+
+    <div class="panel-header">
+        <div>
+            <h2>
+                <i class="fa-solid fa-user"></i>
+                Información Personal
+            </h2>
+            <p>Gestiona tus datos de perfil</p>
+        </div>
+
+        <button type="button" id="profileEditBtn" class="profile-edit-btn">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+        </button>
+    </div>
+
+    <div class="panel-card">
+
+        <!-- ============================================================= -->
+        <!-- MODO VISUALIZACIÓN                                            -->
+        <!-- ============================================================= -->
+
+        <div id="profileView">
+
+            <div class="info-grid">
+
+                <div class="info-item">
+                    <label>Nombre completo</label>
+                    <p id="profileFullName">-</p>
+                </div>
+
+                <div class="info-item">
+                    <label>Correo electrónico</label>
+                    <p id="profileEmail">-</p>
+                </div>
+
+                <div class="info-item">
+                    <label>Teléfono de contacto</label>
+                    <p id="profilePhone">No registrado</p>
+                </div>
+
+                <div class="info-item">
+                    <label>Miembro desde</label>
+                    <p id="profileCreatedAt">-</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ============================================================= -->
+        <!-- MODO EDICIÓN                                                  -->
+        <!-- ============================================================= -->
+
+        <form id="profileForm" class="profile-form" hidden>
+
+            <div class="profile-form-grid">
+
+                <div class="profile-form-field">
+                    <label for="profileFirstName">
+                        Nombres
+                    </label>
+
+                    <input type="text" id="profileFirstName" name="firstName" maxlength="50" autocomplete="given-name"
+                        required>
+                </div>
+
+                <div class="profile-form-field">
+                    <label for="profileLastName">
+                        Apellidos
+                    </label>
+
+                    <input type="text" id="profileLastName" name="lastName" maxlength="50" autocomplete="family-name"
+                        required>
+                </div>
+
+                <div class="profile-form-field">
+                    <label for="profileEmailEdit">
+                        Correo electrónico
+                    </label>
+
+                    <input type="email" id="profileEmailEdit" autocomplete="email" disabled>
+
+                    <small>
+                        El correo electrónico no puede modificarse desde aquí.
+                    </small>
+                </div>
+
+                <div class="profile-form-field">
+                    <label for="profilePhoneEdit">
+                        Teléfono de contacto
+                    </label>
+
+                    <input type="tel" id="profilePhoneEdit" name="phone" maxlength="20" autocomplete="tel"
+                        placeholder="No registrado">
+                </div>
+
+            </div>
+
+
+            <!-- ========================================================= -->
+            <!-- ACCIONES                                                  -->
+            <!-- ========================================================= -->
+
+            <div class="profile-form-actions">
+
+                <button type="button" id="profileCancelBtn" class="profile-cancel-btn">
+                    Cancelar
+                </button>
+
+                <button type="submit" id="profileSaveBtn" class="profile-save-btn">
+                    <span class="profile-save-text">
+                        Guardar cambios
+                    </span>
+
+                    <span class="profile-save-loader" hidden>
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        Guardando...
+                    </span>
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

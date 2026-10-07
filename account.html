@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENDURE | Mi Cuenta</title>
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tus estilos globales (para que la Navbar sea idéntica) -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Estilos específicos del Dashboard/Cuenta -->
+    <link rel="stylesheet" href="account.css">
+    <link rel="icon" type="image/webp" href="assets/ICONO_WEB.webp">
+</head>
+
+<body>
+
+    <!-- NAVBAR IDÉNTICA A INDEX -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="assets/ENDURE_LOGO.png" alt="ENDURE Logo">
+            </a>
+            <nav class="nav-menu">
+                <a href="index.html#productos" class="nav-link">Colección</a>
+                <a href="index.html#nosotros" class="nav-link">Nosotros</a>
+                <a href="index.html#faq" class="nav-link">Ayuda</a>
+            </nav>
+            <div class="nav-actions">
+                <!-- Estado Visitante (Oculto en cuenta) -->
+                <a href="auth.html" id="guestUserBtn" class="cart-trigger" style="display:none;">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+
+                <!-- Estado Autenticado -->
+                <div id="userDropdown" class="user-dropdown-container">
+                    <button class="cart-trigger user-btn-trigger" id="userMenuBtn">
+                        <i class="fa-solid fa-user"></i>
+                        <span id="navUserFirstName"></span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.7em;"></i>
+                    </button>
+
+                    <div id="userMenu" class="dropdown-menu" style="display: none;">
+                        <div class="dropdown-header">
+                            <span id="userFullNameHeader" class="user-name-title">-</span>
+                            <small id="userEmailHeader" class="user-email-subtitle">-</small>
+                        </div>
+                        <hr>
+                        <button id="navLogoutBtn" class="logout-item">
+                            <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+                <!-- Notificaciones -->
+                <div id="appNotificationsContainer"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SPINNER DE CARGA INICIAL -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Cargando información...</p>
+    </div>
+
+    <!-- CONTENEDOR DASHBOARD -->
+    <main id="accountContent" class="dashboard-container" style="display: none;">
+
+        <!-- SIDEBAR DE NAVEGACIÓN (IZQUIERDA) -->
+        <aside class="dashboard-sidebar">
+            <div class="user-summary-card">
+                <div class="avatar-circle">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h3 id="sidebarUserName">Ricardo</h3>
+                <p id="sidebarUserEmail">correo@ejemplo.com</p>
+            </div>
+
+            <nav class="sidebar-menu">
+
+                <!-- Botón de Admin (Oculto por defecto) -->
+                <button class="menu-tab admin-tab" id="adminMenuTab" data-tab="admin" style="display: none;">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    Panel Administración
+                </button>
+
+
+                <button class="menu-tab active" data-tab="personal">
+                    <i class="fa-solid fa-id-card"></i>
+                    Información Personal
+                </button>
+
+
+                <button class="menu-tab" data-tab="addresses">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Mis Direcciones
+                </button>
+
+
+                <button class="menu-tab" data-tab="security">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Seguridad
+                </button>
+
+
+                <button class="menu-tab" data-tab="cart">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Mi Carrito
+                </button>
+
+
+                <button class="menu-tab" data-tab="orders">
+                    <i class="fa-solid fa-box-archive"></i>
+                    Mis Compras
+                </button>
+
+
+                <hr class="menu-divider">
+
+
+                <button id="sidebarLogoutBtn" class="menu-tab logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Cerrar Sesión
+                </button>
+
+            </nav>
+        </aside>
+
+        <!-- PANEL DE CONTENIDO VARIABLE (DERECHA) -->
+        <section class="dashboard-panels">
+
+
+            <!-- ========================================================================== -->
+            <!-- APARTADO ADMIN CON SUB-PESTAÑAS                                           -->
+            <!-- ========================================================================== -->
+
+            <div id="panel-admin" class="tab-panel animate-fade-up">
+
+                <!-- ====================================================================== -->
+                <!-- CABECERA                                                               -->
+                <!-- ====================================================================== -->
+
+                <div class="panel-header">
+
+                    <h2>
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        Panel de Administración
+                    </h2>
+
+                    <p>
+                        Gestión del catálogo de productos e inventario de ENDURE
+                    </p>
+
+                </div>
+
+
+                <!-- ====================================================================== -->
+                <!-- NAVEGACIÓN SECUNDARIA                                                  -->
+                <!-- ====================================================================== -->
+
+                <div class="admin-subtabs">
+
+                    <button class="subtab-btn" data-subtab="product-types">
+                        <i class="fa-solid fa-sliders"></i>
+                        Tipos y Atributos
+                    </button>
+
+                    <button class="subtab-btn active" data-subtab="create-product">
+                        <i class="fa-solid fa-plus"></i>
+                        Crear Producto
+                    </button>
+
+                    <button class="subtab-btn" data-subtab="product-list">
+                        <i class="fa-solid fa-list-check"></i>
+                        Inventario & Lista
+                    </button>
+
+                </div>
+
+
+                <!-- ====================================================================== -->
+                <!-- BANNER MODO EDICIÓN                                                    -->
+                <!-- ====================================================================== -->
+
+                <div id="editingModeBanner" class="editing-banner" style="display:none;">
+
+                    <div class="editing-banner-info">
+
+                        <i class="fa-solid fa-pen-to-square"></i>
+
+                        <span>
+                            <strong>Modo Edición Activado:</strong>
+                            Editando
+                            <u id="editingProductName">"Nombre"</u>
+                        </span>
+
+                    </div>
+
+                    <button type="button" class="btn-cancel-edit" onclick="accountProductForm.cancelarModoEdicion()">
+                        <i class="fa-solid fa-xmark"></i>
+                        Cancelar Edición
+                    </button>
+
+                </div>
+
+
+
+                <!-- ====================================================================== -->
+                <!-- SUB-PANEL 1: TIPOS DE PRODUCTO Y ATRIBUTOS                            -->
+                <!-- ====================================================================== -->
+
+                <div id="subpanel-product-types" class="subtab-panel"></div>
+
+                <!-- ====================================================================== -->
+                <!-- SUB-PANEL 2: CREAR / EDITAR PRODUCTO                                  -->
+                <!-- ====================================================================== -->
+
+                <div id="subpanel-create-product" class="subtab-panel active"></div>
+
+                <!-- ====================================================================== -->
+                <!-- SUB-PANEL 3: LISTA E INVENTARIO                                       -->
+                <!-- ====================================================================== -->
+
+                <div id="subpanel-product-list" class="subtab-panel"></div>
+
+            </div>
+
+
+            <!-- ========================================================== -->
+            <!-- MODAL: DETALLE DEL PRODUCTO -->
+            <!-- ========================================================== -->
+
+            <div id="adminProductDetailModal" class="admin-modal" hidden>
+
+                <div class="admin-modal-backdrop"></div>
+
+                <div class="admin-modal-content" role="dialog" aria-modal="true"
+                    aria-labelledby="adminProductDetailModalTitle">
+
+                    <div class="admin-modal-header">
+
+                        <div>
+                            <h3 id="adminProductDetailModalTitle">
+                                Detalle del producto
+                            </h3>
+
+                            <p id="adminProductDetailModalDescription">
+                                Información detallada del producto y sus variantes.
+                            </p>
+                        </div>
+
+                        <button type="button" class="admin-modal-close" id="adminProductDetailModalClose"
+                            aria-label="Cerrar">
+
+                            <i class="fa-solid fa-xmark"></i>
+
+                        </button>
+
+                    </div>
+
+                    <div class="admin-modal-body">
+
+                        <div id="adminProductDetailContent">
+                            <!-- JS rellenará este contenido -->
+                        </div>
+
+                    </div>
+
+                    <div class="admin-modal-footer">
+
+                        <button type="button" class="btn-secondary" id="adminProductDetailModalCancel">
+
+                            Cerrar
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- APARTADO 1: MI PERFIL -->
+            <div id="panel-personal-information" class="tab-panel active animate-fade-up"></div>
+
+            <!-- APARTADO 2: SEGURIDAD -->
+            <div id="panel-security" class="tab-panel"></div>
+
+            <!-- APARTADO 3: DIRECCIONES -->
+            <div id="panel-addresses" class="tab-panel"></div>
+
+            <!-- APARTADO 4: MI CARRITO -->
+            <div id="panel-cart" class="tab-panel"></div>
+
+            <!-- APARTADO 5: MIS COMPRAS -->
+            <div id="panel-orders" class="tab-panel"></div>
+
+
+
+        </section>
+    </main>
+
+
+    <!-- COMPONENTES -->
+
+    <!-- Rapid Form -->
+    <div id="rapidFormContainer" hidden></div>
+
+    <!-- Detalle de pedido -->
+    <div id="accountOrderDetailContainer" hidden></div>
+
+    <!-- CONTENEDOR CHECKOUT -->
+    <main id="checkoutContent" class="checkout-container" style="display: none;">
+    </main>
+
+    <!-- MODALES -->
+    <div id="confirmationModalContainer"></div>
+
+    <div id="alertModalContainer"></div>
+
+    <div id="addressModalContainer"></div>
+
+    <script src="./account-main.js"></script>
+</body>
+
+</html>

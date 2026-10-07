@@ -1,0 +1,279 @@
+/* ==========================================================================
+   CATALOG CARD ANIMATION
+   Estados visuales de las tarjetas de producto
+   ========================================================================== */
+
+
+/* ==========================================================================
+   ESTADO: ENTRADA
+   ========================================================================== */
+
+.entrada {
+    animation: entrada 0.5s ease forwards;
+}
+
+@keyframes entrada {
+
+    /* Posición inicial: tarjeta muy abajo */
+    0% {
+        opacity: 0;
+        transform: translateY(800px);
+    }
+
+    /* Primer rebote: sube ligeramente por encima de su posición */
+    65% {
+        opacity: 1;
+        transform: translateY(-8px);
+    }
+
+    /* Rebote hacia abajo */
+    80% {
+        transform: translateY(4px);
+    }
+
+    /* Último rebote hacia arriba */
+    90% {
+        transform: translateY(-2px);
+    }
+
+    /* Posición final: tarjeta completamente estable */
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==========================================================================
+   ESTADO: NORMAL
+   ========================================================================== */
+
+.normal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   ESTADO: OFERTA
+   ========================================================================== */
+
+.oferta {
+    opacity: 1;
+    transform: translateY(0);
+
+    animation:
+        saltoOferta 10s 0.5s ease-in-out infinite;
+}
+
+@keyframes saltoOferta {
+
+    /* Reposo antes de comenzar el salto */
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    /* Empieza a despegar ligeramente */
+    5% {
+        transform: translateY(-6px) rotate(-1deg);
+    }
+
+    /* Sube rápidamente */
+    7% {
+        transform: translateY(-20px) rotate(1.5deg);
+    }
+
+    /* Punto más alto del salto */
+    9% {
+        transform: translateY(-28px) rotate(-1.5deg);
+    }
+
+    /* Se estabiliza momentáneamente en el aire */
+    11% {
+        transform: translateY(-24px) rotate(1deg);
+    }
+
+    /* Comienza a caer */
+    13.5% {
+        transform: translateY(-12px) rotate(-0.6deg);
+    }
+
+    /* Primer contacto con el suelo */
+    16% {
+        transform: translateY(2px) rotate(0.3deg);
+    }
+
+    /* Pequeño rebote después del impacto */
+    17.5% {
+        transform: translateY(-4px) rotate(-0.2deg);
+    }
+
+    /* Regresa a su posición de reposo */
+    19.5% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    /* Tiempo restante: permanece en reposo */
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+
+/* ==========================================================================
+   ESTADO: DESPEGUE
+   ========================================================================== */
+
+.despegue {
+
+    animation:
+        despegue 0.35s ease-in-out forwards;
+
+    pointer-events: none;
+}
+
+
+@keyframes despegue {
+
+    /* ----------------------------------------------------------------------
+       POSICIÓN INICIAL
+       ---------------------------------------------------------------------- */
+
+    /* Tarjeta en su posición original */
+    0% {
+        opacity: 1;
+        transform:
+            translateY(0) translateX(0) rotate(0deg) scale(1);
+    }
+
+
+    /* ----------------------------------------------------------------------
+       PRIMER IMPULSO
+       ---------------------------------------------------------------------- */
+
+    /* Pequeño desplazamiento hacia atrás */
+    15% {
+        opacity: 1;
+        transform:
+            translateY(1px) translateX(-2px) rotate(-0.5deg) scale(1);
+    }
+
+
+    /* ----------------------------------------------------------------------
+       TEMBLOR
+       ---------------------------------------------------------------------- */
+
+    /* Primer movimiento hacia el lado contrario */
+    30% {
+        opacity: 1;
+        transform:
+            translateY(-1px) translateX(3px) rotate(0.7deg) scale(1);
+    }
+
+
+    /* Segundo movimiento */
+    45% {
+        opacity: 1;
+        transform:
+            translateY(1px) translateX(-2px) rotate(-0.5deg) scale(1);
+    }
+
+
+    /* ----------------------------------------------------------------------
+       AMORTIGUACIÓN
+       ---------------------------------------------------------------------- */
+
+    /* El movimiento comienza a desaparecer */
+    65% {
+        opacity: 1;
+        transform:
+            translateY(0) translateX(1px) rotate(0.2deg) scale(1);
+    }
+
+
+    /* ----------------------------------------------------------------------
+       FINAL
+       ---------------------------------------------------------------------- */
+
+    /* Regresa exactamente a su posición original */
+    100% {
+        opacity: 1;
+        transform:
+            translateY(0) translateX(0) rotate(0deg) scale(1);
+    }
+}
+
+/* ==========================================================================
+   ESTADO: ATERRIZAJE
+   ========================================================================== */
+
+.aterrizaje {
+
+    animation:
+        aterrizaje 0.55s ease-out forwards;
+
+    pointer-events: none;
+}
+
+
+@keyframes aterrizaje {
+
+    /* ----------------------------------------------------------------------
+       INICIO
+       ---------------------------------------------------------------------- */
+
+    /* La tarjeta aparece en su posición original */
+    0% {
+        opacity: 1;
+        transform:
+            translateY(0) scaleX(1) scaleY(1);
+    }
+
+
+    /* ----------------------------------------------------------------------
+       IMPULSO
+       ---------------------------------------------------------------------- */
+
+    /* Pequeño impulso hacia arriba */
+    20% {
+        opacity: 1;
+        transform:
+            translateY(-12px) scaleX(0.99) scaleY(1.02);
+    }
+
+
+    /* ----------------------------------------------------------------------
+       CAÍDA
+       ---------------------------------------------------------------------- */
+
+    /* Regresa rápidamente hacia su posición */
+    45% {
+        opacity: 1;
+        transform:
+            translateY(2px) scaleX(1.02) scaleY(0.98);
+    }
+
+
+    /* ----------------------------------------------------------------------
+       AMORTIGUACIÓN
+       ---------------------------------------------------------------------- */
+
+    /* Pequeño rebote final */
+    65% {
+        opacity: 1;
+        transform:
+            translateY(-4px) scaleX(0.995) scaleY(1.01);
+    }
+
+
+    /* ----------------------------------------------------------------------
+       FINAL
+       ---------------------------------------------------------------------- */
+
+    /* Vuelve exactamente a la posición original */
+    100% {
+        opacity: 1;
+        transform:
+            translateY(0) scaleX(1) scaleY(1);
+    }
+}

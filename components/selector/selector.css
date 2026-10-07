@@ -1,0 +1,702 @@
+/* ==========================================================================
+   APP SELECTOR
+   ========================================================================== */
+
+.app-selector {
+    /* ----------------------------------------------------------------------
+       DIMENSIONS
+       ---------------------------------------------------------------------- */
+
+    --selector-width: 100%;
+    --selector-height: 40px;
+    --selector-radius: 6px;
+
+    /* ----------------------------------------------------------------------
+       COLORS
+       ---------------------------------------------------------------------- */
+
+    --selector-background: var(--white);
+    --selector-border: var(--shellstone);
+    --selector-border-hover: var(--sapphire);
+    --selector-border-active: var(--royal-blue);
+
+    --selector-text: var(--text-dark);
+    --selector-placeholder: var(--text-muted);
+
+    --selector-menu-background: var(--white);
+
+    --selector-option-hover: var(--swan-wing);
+    --selector-option-selected: var(--shellstone);
+
+    /* ----------------------------------------------------------------------
+       TYPOGRAPHY
+       ---------------------------------------------------------------------- */
+
+    --selector-font-size: 0.85rem;
+
+    position: relative;
+
+    width: var(--selector-width);
+
+    font-family: var(--font-primary);
+    font-size: var(--selector-font-size);
+}
+
+
+/* ==========================================================================
+   TRIGGER
+   ========================================================================== */
+
+.app-selector-trigger {
+
+    width: 100%;
+    height: var(--selector-height);
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 9px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--selector-border);
+    border-radius: var(--selector-radius);
+
+    background: var(--selector-background);
+    color: var(--selector-text);
+
+    cursor: pointer;
+
+    font: inherit;
+    text-align: left;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.app-selector-trigger:hover {
+    border-color: var(--selector-border-hover);
+}
+
+
+.app-selector.is-open .app-selector-trigger {
+    border-color: var(--selector-border-active);
+
+    box-shadow:
+        0 0 0 2px rgba(60, 80, 125, 0.10);
+}
+
+
+/* ==========================================================================
+   LABEL
+   ========================================================================== */
+
+.app-selector-label {
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+.app-selector:not(.has-value) .app-selector-label {
+    color: var(--selector-placeholder);
+}
+
+
+/* ==========================================================================
+   ARROW
+   ========================================================================== */
+
+.app-selector-arrow {
+    flex-shrink: 0;
+
+    margin-left: auto;
+
+    color: var(--sapphire);
+
+    font-size: 0.65rem;
+
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.app-selector.is-open .app-selector-arrow {
+    color: var(--royal-blue);
+
+    transform: rotate(180deg);
+}
+
+
+/* ==========================================================================
+   MENU
+   ========================================================================== */
+
+.app-selector-menu {
+    position: absolute;
+
+    top: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+    max-height: 240px;
+
+    overflow-y: auto;
+
+    padding: 4px;
+
+    border: 1px solid var(--selector-border);
+    border-radius: var(--selector-radius);
+
+    background: var(--selector-menu-background);
+
+    box-shadow: var(--shadow-md);
+
+    z-index: 1000;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-4px);
+
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease,
+        visibility 0.15s ease;
+}
+
+
+.app-selector.is-open .app-selector-menu {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   OPTIONS
+   ========================================================================== */
+
+.app-selector-option {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 10px;
+
+    border: 0;
+    border-radius: 4px;
+
+    background: transparent;
+    color: var(--selector-text);
+
+    cursor: pointer;
+
+    font: inherit;
+    text-align: left;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.app-selector-option:hover {
+    background: var(--selector-option-hover);
+}
+
+
+.app-selector-option.is-selected {
+    background: var(--selector-option-selected);
+
+    color: var(--royal-blue);
+}
+
+
+.app-selector-option:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+}
+
+
+/* ==========================================================================
+   OPTION ICON
+   ========================================================================== */
+
+.app-selector-option-icon {
+    flex-shrink: 0;
+
+    color: var(--sapphire);
+}
+
+
+/* ==========================================================================
+   OPTION COLOR
+   ========================================================================== */
+
+.app-selector-option-color {
+    width: 12px;
+    height: 12px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+
+/* ==========================================================================
+   OPTION LABEL
+   ========================================================================== */
+
+.app-selector-option-label {
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* ==========================================================================
+   DISABLED
+   ========================================================================== */
+
+.app-selector-trigger:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+}
+
+
+/* ==========================================================================
+   SCROLLBAR
+   ========================================================================== */
+
+.app-selector-menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.app-selector-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.app-selector-menu::-webkit-scrollbar-thumb {
+    background: var(--shellstone);
+
+    border-radius: 10px;
+}
+
+.app-selector-menu::-webkit-scrollbar-thumb:hover {
+    background: var(--sapphire);
+}
+
+
+/* ==========================================================================
+   SELECTED ICON
+   ========================================================================== */
+
+.app-selector-selected-icon {
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 18px;
+
+    width: 18px;
+    height: 18px;
+
+    color: var(--sapphire);
+
+    font-size: 0.82rem;
+}
+
+.app-selector-selected-icon.has-icon {
+    display: inline-flex;
+}
+
+
+
+/* ==========================================================================
+   APP SELECTOR — DIRECCIONES DEL CHECKOUT
+   ========================================================================== */
+
+
+/* ==========================================================================
+   SELECTOR COMPLETO
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector,
+#checkoutPickupAddressSelector .app-selector {
+
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   SELECTOR CERRADO
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-trigger,
+#checkoutPickupAddressSelector .app-selector-trigger {
+
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-height: 122px;
+
+    padding: 16px 18px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--sapphire);
+    border-radius: 10px;
+
+    background: var(--white);
+
+    color: var(--text-dark);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* ==========================================================================
+   ICONO DEL SELECTOR
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-selected-icon,
+#checkoutPickupAddressSelector .app-selector-selected-icon {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    margin-right: 14px;
+
+    border-radius: 9px;
+
+    background: var(--sapphire);
+
+    color: var(--white);
+
+    font-size: 16px;
+}
+
+
+/* ==========================================================================
+   CONTENIDO SELECCIONADO
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-label,
+#checkoutPickupAddressSelector .app-selector-label {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    flex: 1;
+
+    min-width: 0;
+
+    white-space: normal;
+
+    text-align: left;
+}
+
+
+#checkoutShippingAddressSelector .app-selector-label.has-content,
+#checkoutPickupAddressSelector .app-selector-label.has-content {
+
+    display: flex;
+}
+
+
+/* ==========================================================================
+   DATOS DE LA DIRECCIÓN
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .checkout-selector-address-name,
+#checkoutPickupAddressSelector .checkout-selector-address-name {
+
+    display: block;
+
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+
+#checkoutShippingAddressSelector .checkout-selector-address-line,
+#checkoutPickupAddressSelector .checkout-selector-address-line {
+
+    display: block;
+
+    color: var(--text-muted);
+
+    font-family: var(--font-primary);
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   FLECHA
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-arrow,
+#checkoutPickupAddressSelector .app-selector-arrow {
+
+    flex-shrink: 0;
+
+    margin-left: 15px;
+
+    color: var(--sapphire);
+
+    font-size: 13px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+#checkoutShippingAddressSelector .app-selector.is-open .app-selector-arrow,
+#checkoutPickupAddressSelector .app-selector.is-open .app-selector-arrow {
+
+    transform: rotate(180deg);
+}
+
+
+/* ==========================================================================
+   HOVER
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-trigger:hover,
+#checkoutPickupAddressSelector .app-selector-trigger:hover {
+
+    background: var(--light-bg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* ==========================================================================
+   MENÚ DESPLEGABLE
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-menu,
+#checkoutPickupAddressSelector .app-selector-menu {
+
+    width: 100%;
+
+    margin-top: 6px;
+
+    padding: 6px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+
+    background: var(--white);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* ==========================================================================
+   OPCIONES
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-option,
+#checkoutPickupAddressSelector .app-selector-option {
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    width: 100%;
+
+    min-height: 100px;
+
+    padding: 14px 15px;
+
+    box-sizing: border-box;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--white);
+
+    color: var(--text-dark);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease;
+}
+
+
+/* ==========================================================================
+   ICONO DE CADA OPCIÓN
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-option-icon,
+#checkoutPickupAddressSelector .app-selector-option-icon {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background: var(--swan-wing);
+
+    color: var(--sapphire);
+
+    font-size: 16px;
+}
+
+
+/* ==========================================================================
+   CONTENIDO DE CADA OPCIÓN
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-option-content,
+#checkoutPickupAddressSelector .app-selector-option-content {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* ==========================================================================
+   HOVER DE OPCIÓN
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-option:hover,
+#checkoutPickupAddressSelector .app-selector-option:hover {
+
+    background: var(--light-bg);
+}
+
+
+/* ==========================================================================
+   OPCIÓN SELECCIONADA
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-option.is-selected,
+#checkoutPickupAddressSelector .app-selector-option.is-selected {
+
+    background: var(--light-bg);
+}
+
+
+#checkoutShippingAddressSelector .app-selector-option.is-selected .app-selector-option-icon,
+#checkoutPickupAddressSelector .app-selector-option.is-selected .app-selector-option-icon {
+
+    background: var(--sapphire);
+
+    color: var(--white);
+}
+
+/* ==========================================================================
+   CHECKOUT — ICONO DEL SELECTOR DE DIRECCIÓN CERRADO
+   ========================================================================== */
+
+#checkoutShippingAddressSelector .app-selector-selected-icon,
+#checkoutPickupAddressSelector .app-selector-selected-icon {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    min-width: 38px;
+    height: 38px;
+    min-height: 38px;
+
+    flex-shrink: 0;
+
+    margin-right: 14px;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    border-radius: 9px;
+
+    background: var(--sapphire);
+
+    color: var(--white);
+
+    font-size: 16px;
+
+    line-height: 1;
+}
+
+#checkoutShippingAddressSelector .app-selector-selected-icon i,
+#checkoutPickupAddressSelector .app-selector-selected-icon i {
+
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    line-height: 1;
+
+    font-size: 16px;
+}

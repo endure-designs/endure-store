@@ -1,0 +1,143 @@
+<div class="account-security">
+
+    <div class="panel-header">
+        <div>
+            <h2>
+                <i class="fa-solid fa-shield-halved"></i>
+                Seguridad
+            </h2>
+
+            <p>
+                Gestiona la seguridad y las credenciales de tu cuenta
+            </p>
+        </div>
+    </div>
+
+
+    <!-- ============================================================= -->
+    <!-- CAMBIAR CONTRASEÑA                                            -->
+    <!-- ============================================================= -->
+
+    <div class="panel-card security-card">
+
+        <div class="security-card-header">
+
+            <div class="security-card-icon">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <div>
+                <h3>Cambiar contraseña</h3>
+
+                <p>
+                    Actualiza periódicamente tu contraseña para mantener
+                    tu cuenta protegida.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form id="passwordForm" class="password-form">
+
+            <!-- CONTRASEÑA ACTUAL -->
+
+            <div class="security-form-field">
+
+                <label for="currentPassword">
+                    Contraseña actual
+                </label>
+
+                <div class="password-input-wrapper">
+
+                    <input type="password" id="currentPassword" name="currentPassword" autocomplete="current-password"
+                        required>
+
+                    <button type="button" class="password-toggle" data-target="currentPassword"
+                        aria-label="Mostrar contraseña">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NUEVA CONTRASEÑA -->
+
+            <div class="security-form-field">
+
+                <label for="newPassword">
+                    Nueva contraseña
+                </label>
+
+                <div class="password-input-wrapper">
+
+                    <input type="password" id="newPassword" name="newPassword" autocomplete="new-password" minlength="8"
+                        maxlength="100" required>
+
+                    <button type="button" class="password-toggle" data-target="newPassword"
+                        aria-label="Mostrar contraseña">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+
+                </div>
+
+                <small>
+                    La contraseña debe tener entre 8 y 100 caracteres.
+                </small>
+
+            </div>
+
+
+            <!-- CONFIRMAR CONTRASEÑA -->
+
+            <div class="security-form-field">
+
+                <label for="confirmPassword">
+                    Confirmar nueva contraseña
+                </label>
+
+                <div class="password-input-wrapper">
+
+                    <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password"
+                        minlength="8" maxlength="100" required>
+
+                    <button type="button" class="password-toggle" data-target="confirmPassword"
+                        aria-label="Mostrar contraseña">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+
+                </div>
+
+                <small id="passwordMatchMessage" class="password-match-message" hidden></small>
+
+            </div>
+
+
+            <!-- ACCIONES -->
+
+            <div class="security-form-actions">
+
+                <button type="button" id="passwordCancelBtn" class="security-cancel-btn">
+                    Cancelar
+                </button>
+
+                <button type="submit" id="passwordSaveBtn" class="security-save-btn">
+                    <span id="passwordSaveText">
+                        Cambiar contraseña
+                    </span>
+
+                    <span id="passwordSaveLoader" hidden>
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        Actualizando...
+                    </span>
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

@@ -1,0 +1,85 @@
+<!-- ==========================================================================
+     ENDURE — Account Addresses
+     Gestión de direcciones del usuario
+     ========================================================================== -->
+
+<div class="account-addresses">
+
+    <!-- ======================================================================
+         HEADER
+         ====================================================================== -->
+
+    <div class="panel-header addresses-header">
+
+        <div>
+            <h2>
+                <i class="fa-solid fa-location-dot"></i>
+                Mis direcciones
+            </h2>
+
+            <p>
+                Gestiona tus direcciones de entrega.
+            </p>
+        </div>
+
+        <button type="button" id="addAddressBtn" class="addresses-add-btn">
+            <i class="fa-solid fa-plus"></i>
+            Agregar dirección
+        </button>
+
+    </div>
+
+
+    <!-- ======================================================================
+         LISTA DE DIRECCIONES
+         ====================================================================== -->
+
+    <div id="addressesList" class="addresses-list">
+
+        <!--
+            Las tarjetas de dirección serán generadas
+            dinámicamente por accountAddresses.js.
+        -->
+
+    </div>
+
+
+    <!-- ======================================================================
+         ESTADO VACÍO
+         ====================================================================== -->
+
+    <div id="addressesEmpty" class="addresses-empty" hidden>
+
+        <div class="addresses-empty-icon">
+            <i class="fa-solid fa-location-dot"></i>
+        </div>
+
+        <h3>No tienes direcciones guardadas</h3>
+
+        <p>
+            Agrega una dirección para facilitar tus próximas compras.
+        </p>
+
+        <button type="button" id="addFirstAddressBtn" class="addresses-empty-btn">
+            <i class="fa-solid fa-plus"></i>
+            Agregar dirección
+        </button>
+
+    </div>
+
+
+    <!-- ======================================================================
+         ESTADO DE CARGA
+         ====================================================================== -->
+
+    <div id="addressesLoading" class="addresses-loading" hidden>
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        <span>Cargando direcciones...</span>
+
+    </div>
+
+
+
+</div>

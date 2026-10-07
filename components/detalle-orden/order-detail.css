@@ -1,0 +1,813 @@
+/* ==========================================================================
+   ENDURE - ORDER DETAIL
+   ========================================================================== */
+
+/* ==========================================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================================== */
+
+#accountOrderDetailContainer {
+    position: fixed;
+    inset: 0;
+
+    z-index: 900;
+
+    overflow-y: auto;
+
+    background: var(--gray-100);
+
+    box-sizing: border-box;
+}
+
+body.order-detail-open {
+    overflow: hidden;
+
+}
+
+.account-order-detail {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: calc(var(--header-height) + 32px) 36px 48px;
+    box-sizing: border-box;
+    color: var(--text-dark);
+    font-family: var(--font-primary);
+}
+
+
+/* ==========================================================================
+   ENCABEZADO
+   ========================================================================== */
+
+.account-order-detail-header {
+    margin-bottom: 24px;
+}
+
+.account-order-detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: var(--royal-blue);
+
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: var(--transition-smooth);
+}
+
+.account-order-detail-back:hover {
+    color: var(--sapphire);
+    transform: translateX(-3px);
+}
+
+.account-order-detail-back i {
+    font-size: 13px;
+}
+
+
+.account-order-detail-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.account-order-detail-title h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: 0;
+
+    color: var(--text-dark);
+
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.account-order-detail-title h2 i {
+    color: var(--royal-blue);
+    font-size: 24px;
+}
+
+.account-order-detail-title p {
+    margin: 8px 0 0;
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   ESTADO DEL PEDIDO
+   ========================================================================== */
+
+.account-order-detail-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 32px;
+    padding: 6px 14px;
+
+    border-radius: 999px;
+
+    background: rgba(16, 185, 129, 0.10);
+    color: var(--success);
+
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.account-order-detail-status-pending {
+    background: rgba(224, 197, 143, 0.20);
+    color: var(--text-dark);
+}
+
+.account-order-detail-status-paid {
+    background: rgba(16, 185, 129, 0.10);
+    color: var(--success);
+}
+
+.account-order-detail-status-cancelled {
+    background: rgba(239, 68, 68, 0.10);
+    color: #ef4444;
+}
+
+
+/* ==========================================================================
+   TARJETAS GENERALES
+   ========================================================================== */
+
+.account-order-detail-main,
+.account-order-detail-section {
+    width: 100%;
+    margin-bottom: 20px;
+
+    padding: 24px;
+
+    background: var(--white);
+
+    border: 1px solid var(--gray-200);
+    border-radius: 14px;
+
+    box-shadow: var(--shadow-sm);
+
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN PRINCIPAL DEL PEDIDO
+   ========================================================================== */
+
+.account-order-detail-order-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--gray-200);
+}
+
+
+.account-order-detail-order-number,
+.account-order-detail-order-date {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.account-order-detail-order-number span,
+.account-order-detail-order-date span {
+    color: var(--text-muted);
+
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.account-order-detail-order-number strong,
+.account-order-detail-order-date strong {
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+.account-order-detail-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+    padding-top: 20px;
+}
+
+.account-order-detail-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.account-order-detail-info-item span {
+    color: var(--text-muted);
+
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.account-order-detail-info-item strong {
+    color: var(--text-dark);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* ==========================================================================
+   ENCABEZADOS DE SECCIÓN
+   ========================================================================== */
+
+.account-order-detail-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.account-order-detail-section-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 0;
+
+    color: var(--text-dark);
+
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.account-order-detail-section-header h3 i {
+    color: var(--royal-blue);
+    font-size: 15px;
+}
+
+.account-order-detail-section-header>div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#accountOrderDetailProductCount {
+    color: var(--text-muted);
+
+    font-size: 12px;
+}
+
+
+/* ==========================================================================
+   PRODUCTOS
+   ========================================================================== */
+
+.account-order-detail-products {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.account-order-detail-product {
+    display: grid;
+    grid-template-columns: 82px minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 18px 0;
+
+    border-top: 1px solid var(--gray-200);
+}
+
+.account-order-detail-product:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+
+.account-order-detail-product:last-child {
+    padding-bottom: 0;
+}
+
+
+/* ==========================================================================
+   IMAGEN DEL PRODUCTO
+   ========================================================================== */
+
+.account-order-detail-product-image-container {
+    width: 82px;
+    height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: var(--gray-100);
+
+    border-radius: 10px;
+}
+
+
+.account-order-detail-product-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+.account-order-detail-product-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    color: var(--text-muted);
+
+    font-size: 20px;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN DEL PRODUCTO
+   ========================================================================== */
+
+.account-order-detail-product-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.account-order-detail-product-name {
+    margin: 0;
+
+    color: var(--text-dark);
+
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.35;
+}
+
+
+.account-order-detail-product-sku {
+    color: var(--text-muted);
+
+    font-size: 11px;
+}
+
+
+.account-order-detail-product-attributes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    margin-top: 3px;
+}
+
+
+.account-order-detail-product-attributes span {
+    padding: 4px 8px;
+
+    background: var(--gray-100);
+
+    border-radius: 5px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+
+.account-order-detail-product-attributes strong {
+    color: var(--text-dark);
+}
+
+
+.account-order-detail-product-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    margin-top: 4px;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+}
+
+
+.account-order-detail-product-meta strong {
+    color: var(--royal-blue);
+
+    font-weight: 700;
+}
+
+
+/* ==========================================================================
+   PRECIOS
+   ========================================================================== */
+
+.account-order-detail-product-price-old {
+    margin-right: 5px;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--text-muted);
+}
+
+
+.account-order-detail-product-total {
+    min-width: 90px;
+
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+
+    text-align: right;
+}
+
+
+/* ==========================================================================
+   DIRECCIÓN DE ENTREGA
+   ========================================================================== */
+
+.account-order-detail-address {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.account-order-detail-billing-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    padding: 11px 0;
+
+    border-top: 1px solid var(--gray-200);
+}
+
+
+.account-order-detail-billing-row:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+
+.account-order-detail-billing-row:last-child {
+    padding-bottom: 0;
+}
+
+
+.account-order-detail-billing-row span {
+    flex: 0 0 180px;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+}
+
+
+.account-order-detail-billing-row strong {
+    flex: 1;
+
+    color: var(--text-dark);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-align: right;
+}
+
+
+/* ==========================================================================
+   DATOS DE FACTURACIÓN
+   ========================================================================== */
+
+.account-order-detail-billing {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ==========================================================================
+   RESUMEN DEL PEDIDO
+   ========================================================================== */
+
+.account-order-detail-summary {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.account-order-detail-summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid var(--gray-200);
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+}
+
+
+.account-order-detail-summary-row strong {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+
+.account-order-detail-discount {
+    color: var(--success);
+}
+
+
+.account-order-detail-discount strong {
+    color: var(--success);
+}
+
+
+.account-order-detail-summary-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-top: 18px;
+}
+
+
+.account-order-detail-summary-total span {
+    color: var(--text-dark);
+
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+.account-order-detail-summary-total strong {
+    color: var(--royal-blue);
+
+    font-family: var(--font-heading);
+    font-size: 21px;
+    font-weight: 700;
+}
+
+
+/* ==========================================================================
+   ESTADO VACÍO
+   ========================================================================== */
+
+.account-order-detail-empty {
+    padding: 24px;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   BOTONES / ACCIONES
+   ========================================================================== */
+
+.account-order-detail-actions {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 28px;
+}
+
+
+.account-order-detail-actions .btn-secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 42px;
+    padding: 10px 18px;
+
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+
+    background: var(--white);
+    color: var(--royal-blue);
+
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: var(--transition-smooth);
+}
+
+
+.account-order-detail-actions .btn-secondary-action:hover {
+    border-color: var(--royal-blue);
+
+    background: var(--royal-blue);
+    color: var(--white);
+
+    transform: translateY(-1px);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* ==========================================================================
+   RESPONSIVE — TABLET
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .account-order-detail {
+        padding: 28px 24px 40px;
+    }
+
+
+    .account-order-detail-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .account-order-detail-product {
+        grid-template-columns: 72px minmax(0, 1fr) auto;
+    }
+
+
+    .account-order-detail-product-image-container {
+        width: 72px;
+        height: 72px;
+    }
+
+}
+
+
+/* ==========================================================================
+   RESPONSIVE — MÓVIL
+   ========================================================================== */
+
+@media (max-width: 600px) {
+
+    .account-order-detail {
+        padding: 22px 16px 32px;
+    }
+
+
+    .account-order-detail-title {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .account-order-detail-title h2 {
+        font-size: 23px;
+    }
+
+
+    .account-order-detail-title h2 i {
+        font-size: 20px;
+    }
+
+
+    .account-order-detail-status {
+        align-self: flex-start;
+    }
+
+
+    .account-order-detail-main,
+    .account-order-detail-section {
+        padding: 18px;
+        border-radius: 11px;
+    }
+
+
+    .account-order-detail-order-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+
+    .account-order-detail-info {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+
+    .account-order-detail-product {
+        grid-template-columns: 64px minmax(0, 1fr);
+
+        gap: 12px;
+    }
+
+
+    .account-order-detail-product-image-container {
+        width: 64px;
+        height: 64px;
+    }
+
+
+    .account-order-detail-product-total {
+        grid-column: 2;
+
+        min-width: 0;
+
+        text-align: left;
+    }
+
+
+    .account-order-detail-product-meta {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+
+    .account-order-detail-billing-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+
+    .account-order-detail-billing-row span {
+        flex: none;
+    }
+
+
+    .account-order-detail-billing-row strong {
+        text-align: left;
+    }
+
+}
+
+
+/* ==========================================================================
+   ACCESIBILIDAD
+   ========================================================================== */
+
+.account-order-detail-back:focus-visible,
+.account-order-detail-actions .btn-secondary-action:focus-visible {
+    outline: 2px solid var(--royal-blue);
+    outline-offset: 3px;
+}

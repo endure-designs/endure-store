@@ -1,0 +1,60 @@
+<div class="filter-container">
+
+    <!-- Categorías -->
+    <select id="categorySelect" class="filter-select native-select">
+        <option value="all">Todos los productos</option>
+    </select>
+
+    <div class="custom-dropdown" data-select-id="categorySelect">
+    </div>
+
+
+    <!-- Colecciones -->
+    <select id="collectionSelect" class="filter-select native-select">
+        <option value="all">Todas las colecciones</option>
+    </select>
+
+    <div class="custom-dropdown" data-select-id="collectionSelect">
+    </div>
+
+
+    <!-- Ordenamiento -->
+    <select id="sortSelect" class="filter-select native-select">
+        <option value="" disabled selected>
+            Ordenar por
+        </option>
+
+        <option value="date-asc">
+            Fecha ↑
+        </option>
+
+        <option value="date-desc">
+            Fecha ↓
+        </option>
+
+        <option value="price-asc">
+            Precio ↑
+        </option>
+
+        <option value="price-desc">
+            Precio ↓
+        </option>
+    </select>
+
+    <div class="custom-dropdown" data-select-id="sortSelect">
+    </div>
+
+</div>
+
+
+
+
+<!-- ============================================================= -->
+<!-- SUBFILTROS DINÁMICOS                                         -->
+<!-- ============================================================= -->
+
+<div id="catalogSubfilters" class="catalog-subfilters">
+
+    <!-- Aquí se generarán dinámicamente los subfiltros -->
+
+</div>
