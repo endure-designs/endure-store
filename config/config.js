@@ -6,7 +6,7 @@ const CONFIG = {
 
     // URL base del backend
     //API_BASE_URL: "http://localhost:3000/api",
-    API_BASE_URL: "https://intense-airplane-del-advised.trycloudflare.com/api",
+    API_BASE_URL: "https://api.endure.com.pe/api",
 
     // Tiempo máximo de espera para peticiones
     REQUEST_TIMEOUT: 10000,
