@@ -713,7 +713,7 @@ body.order-detail-open {
     /* Contenedor: comienza debajo del navbar */
     #accountOrderDetailContainer {
         top: var(--header-height);
-        inset: var(--header-height) 0 0;
+        inset: calc(var(--header-height) - 20px) 0 0;
         height: auto;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
