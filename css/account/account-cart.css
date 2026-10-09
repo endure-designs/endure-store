@@ -941,13 +941,29 @@
 /* Responsive */
 @media (max-width: 600px) {
     .account-cart-pending-item {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+
+    .account-cart-pending-info {
+        flex: 1;
+        min-width: 0;
+        flex-wrap: wrap;
+        gap: 5px;
+        font-size: 0.7rem;
     }
 
     .account-cart-pending-actions {
-        width: 100%;
-        justify-content: space-between;
-        margin-top: 4px;
+        width: auto;
+        flex: 0 0 auto;
+        justify-content: center;
+        margin-top: 0;
+    }
+
+    .account-cart-pending-btn {
+        flex-shrink: 0;
     }
 }
