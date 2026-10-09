@@ -700,3 +700,101 @@
 
     font-size: 16px;
 }
+
+
+/* ==========================================================
+   CHECKOUT — SELECTOR DE DIRECCIÓN EN MÓVILES
+   Mostrar todos los datos sin recortarlos
+   ========================================================== */
+
+@media (max-width: 480px) {
+
+    /* Selector cerrado */
+    #checkoutShippingAddressSelector .app-selector-trigger,
+    #checkoutPickupAddressSelector .app-selector-trigger {
+        height: auto;
+        min-height: 122px;
+        padding: 12px;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Icono de dirección */
+    #checkoutShippingAddressSelector .app-selector-selected-icon,
+    #checkoutPickupAddressSelector .app-selector-selected-icon {
+        flex: 0 0 32px;
+        width: 32px;
+        min-width: 32px;
+        height: 32px;
+        min-height: 32px;
+        margin-right: 0;
+        font-size: 14px;
+    }
+
+    /* Contenedor de los datos */
+    #checkoutShippingAddressSelector .app-selector-label,
+    #checkoutPickupAddressSelector .app-selector-label {
+        flex: 1 1 auto;
+        min-width: 0;
+        width: 0;
+        overflow: visible;
+        white-space: normal;
+        text-overflow: clip;
+        overflow-wrap: anywhere;
+    }
+
+    /* Nombre del destinatario */
+    #checkoutShippingAddressSelector .checkout-selector-address-name,
+    #checkoutPickupAddressSelector .checkout-selector-address-name {
+        white-space: normal;
+        overflow: visible;
+        overflow-wrap: anywhere;
+        font-size: 13px;
+        line-height: 1.35;
+    }
+
+    /* DNI, dirección, referencia y demás datos */
+    #checkoutShippingAddressSelector .checkout-selector-address-line,
+    #checkoutPickupAddressSelector .checkout-selector-address-line {
+        white-space: normal;
+        overflow: visible;
+        overflow-wrap: anywhere;
+        word-break: normal;
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    /* Flecha del selector */
+    #checkoutShippingAddressSelector .app-selector-arrow,
+    #checkoutPickupAddressSelector .app-selector-arrow {
+        flex: 0 0 auto;
+        margin-left: 0;
+        font-size: 11px;
+    }
+
+    /* Opciones del menú desplegable */
+    #checkoutShippingAddressSelector .app-selector-option,
+    #checkoutPickupAddressSelector .app-selector-option {
+        min-height: 0;
+        padding: 12px 10px;
+        gap: 10px;
+    }
+
+    /* Icono de cada dirección del menú */
+    #checkoutShippingAddressSelector .app-selector-option-icon,
+    #checkoutPickupAddressSelector .app-selector-option-icon {
+        flex: 0 0 30px;
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+    }
+
+    /* Contenido de cada opción */
+    #checkoutShippingAddressSelector .app-selector-option-content,
+    #checkoutPickupAddressSelector .app-selector-option-content {
+        flex: 1 1 auto;
+        min-width: 0;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}

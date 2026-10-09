@@ -357,3 +357,91 @@
         pointer-events: auto;
     }
 }
+
+
+
+/* =========================================
+   FILTROS DEL CATÁLOGO — MÓVILES
+   ========================================= */
+
+@media (max-width: 480px) {
+    #productFilters {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .filter-container {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding-bottom: 220px;
+        margin-bottom: -220px;
+        pointer-events: none;
+    }
+
+    .filter-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .custom-dropdown {
+        display: inline-flex;
+        align-items: center;
+        flex: 0 0 auto;
+        min-width: max-content;
+        max-width: none;
+        width: auto;
+        padding: 8px 28px 8px 12px;
+        font-size: 0.7rem;
+        line-height: 1.2;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        border-radius: 18px;
+        pointer-events: auto;
+    }
+
+    .custom-dropdown::after {
+        right: 10px;
+        width: 8px;
+        height: 6px;
+        background-size: 8px 6px;
+    }
+
+    .custom-dropdown .dropdown-list {
+        white-space: normal;
+        max-height: 180px;
+        border-radius: 10px;
+    }
+
+    .custom-dropdown .dropdown-item {
+        padding: 8px 12px;
+        font-size: 0.78rem;
+        letter-spacing: normal;
+        white-space: normal;
+    }
+
+    #catalogSubfilters {
+        min-width: 155px;
+        max-width: 190px;
+        padding: 6px;
+        border-radius: 10px;
+    }
+
+    .catalog-subfilter-title {
+        padding: 7px 9px 5px;
+        font-size: 0.68rem;
+    }
+
+    .catalog-subfilter-item {
+        min-height: 32px;
+        padding: 7px 9px;
+        font-size: 0.75rem;
+    }
+}

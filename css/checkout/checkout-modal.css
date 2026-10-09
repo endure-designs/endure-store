@@ -126,3 +126,29 @@
         max-height: 95vh;
     }
 }
+
+/* ==========================================================
+   CHECKOUT MÓVIL — BOTÓN CERRAR EN LA ESQUINA
+   ========================================================== */
+
+@media (max-width: 480px) {
+
+    /* Mantener el banner centrado y a todo el ancho */
+    .checkout-status {
+        width: 100%;
+        max-width: 100%;
+        margin-right: 0;
+    }
+
+    /* Botón de cerrar superpuesto, sin desplazar las etapas */
+    .checkout-modal-close {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        font-size: 17px;
+        z-index: 20;
+    }
+}

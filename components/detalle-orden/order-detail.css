@@ -710,97 +710,109 @@ body.order-detail-open {
 
 @media (max-width: 600px) {
 
-    .account-order-detail {
-        padding: 22px 16px 32px;
+    /* Contenedor: comienza debajo del navbar */
+    #accountOrderDetailContainer {
+        top: var(--header-height);
+        inset: var(--header-height) 0 0;
+        height: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
+    /* Contenido principal */
+    .account-order-detail {
+        width: 100%;
+        margin: 0 auto;
+        padding: 16px 12px 28px;
+        box-sizing: border-box;
+    }
+
+    /* Encabezado y botón Volver */
+    .account-order-detail-header {
+        margin-bottom: 18px;
+    }
+
+    .account-order-detail-back {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        margin-bottom: 16px;
+    }
 
     .account-order-detail-title {
+        display: flex;
         align-items: flex-start;
         flex-direction: column;
+        gap: 12px;
     }
-
 
     .account-order-detail-title h2 {
         font-size: 23px;
     }
 
-
     .account-order-detail-title h2 i {
         font-size: 20px;
     }
-
 
     .account-order-detail-status {
         align-self: flex-start;
     }
 
-
+    /* Tarjetas */
     .account-order-detail-main,
     .account-order-detail-section {
         padding: 18px;
         border-radius: 11px;
     }
 
-
+    /* Información del pedido */
     .account-order-detail-order-header {
         align-items: flex-start;
         flex-direction: column;
         gap: 14px;
     }
 
-
     .account-order-detail-info {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 15px;
     }
 
-
+    /* Productos */
     .account-order-detail-product {
         grid-template-columns: 64px minmax(0, 1fr);
-
         gap: 12px;
     }
-
 
     .account-order-detail-product-image-container {
         width: 64px;
         height: 64px;
     }
 
-
     .account-order-detail-product-total {
         grid-column: 2;
-
         min-width: 0;
-
         text-align: left;
     }
-
 
     .account-order-detail-product-meta {
         flex-direction: column;
         gap: 4px;
     }
 
-
+    /* Dirección y facturación */
     .account-order-detail-billing-row {
         flex-direction: column;
         gap: 5px;
     }
 
-
     .account-order-detail-billing-row span {
         flex: none;
     }
 
-
     .account-order-detail-billing-row strong {
         text-align: left;
     }
-
 }
-
 
 /* ==========================================================================
    ACCESIBILIDAD

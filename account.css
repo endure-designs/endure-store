@@ -408,19 +408,6 @@
     opacity: 0.9;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .dashboard-container {
-        grid-template-columns: 1fr;
-    }
-
-    .info-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-
 /* --- ESTILOS DE SUB-PESTAÑAS ADMIN --- */
 .admin-subtabs {
     display: flex;
@@ -2318,15 +2305,6 @@
 }
 
 
-@media (max-width: 768px) {
-
-    .admin-tags-price-row {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
 .form-help {
     font-size: 11px;
 }
@@ -2558,16 +2536,6 @@
     color: var(--royal-blue);
 }
 
-
-@media (max-width: 768px) {
-
-    .attributes-list {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
 .inventory-search-box {
     position: relative;
     margin-top: 16px;
@@ -2724,16 +2692,6 @@
     color: var(--danger, #dc2626);
 }
 
-
-@media (max-width: 768px) {
-
-    .attributes-list {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
 /* ==========================================================================
    LISTA DE TIPOS DE PRODUCTO
    ========================================================================== */
@@ -2828,20 +2786,6 @@
 .product-type-actions .btn-danger {
     color: var(--danger, #dc2626);
 }
-
-
-/* ==========================================================================
-   RESPONSIVE
-   ========================================================================== */
-
-@media (max-width: 768px) {
-
-    .product-types-list {
-        grid-template-columns: 1fr;
-    }
-
-}
-
 
 
 #adminCreateProductTypeBtn {
@@ -4702,4 +4646,276 @@
 /* Click */
 .table-actions .btn-publish:active {
     transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   RESPONSIVE — CUENTA DE USUARIO
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
+    /* Contenedor principal */
+    .dashboard-container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        margin: 80px auto 24px;
+        padding: 0 10px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+        min-width: 0;
+        padding: 12px;
+        box-sizing: border-box;
+        border-radius: 12px;
+    }
+
+    /* Resumen de usuario con el diseño de referencia */
+    .user-summary-card {
+        position: relative;
+        text-align: left;
+        padding: 4px 0 16px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #1e293b;
+    }
+
+    /* Título de la sección */
+    .dashboard-sidebar::before {
+        content: "Mi cuenta";
+        display: block;
+        margin: 0 28px 16px 0;
+        color: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .user-summary-card h3 {
+        margin: 0 0 4px;
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    .user-summary-card p {
+        margin: 0;
+        font-size: 0.82rem;
+        overflow-wrap: anywhere;
+    }
+
+    .user-summary-card .avatar-circle {
+        width: 44px;
+        height: 44px;
+        margin: 0;
+        flex-shrink: 0;
+        font-size: 1.15rem;
+    }
+
+    /* Alinear avatar y datos sin centrar el resumen */
+    .user-summary-card {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        align-items: center;
+        column-gap: 12px;
+    }
+
+    /* Icono decorativo de la esquina superior derecha */
+    .dashboard-sidebar {
+        position: relative;
+    }
+
+    .dashboard-sidebar::after {
+        content: "\f2bd";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 400;
+        position: absolute;
+        top: 16px;
+        right: 18px;
+        font-size: 17px;
+        color: #64748b;
+        pointer-events: none;
+    }
+
+    /* Menú: tres columnas */
+    .sidebar-menu {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        width: 100%;
+        overflow: visible;
+    }
+
+    .menu-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        width: 100%;
+        min-width: 0;
+        min-height: 72px;
+        padding: 8px 4px;
+        box-sizing: border-box;
+        border-radius: 9px;
+        text-align: center;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        font-size: 0.78rem;
+        line-height: 1.25;
+    }
+
+    .menu-tab i {
+        display: block;
+        flex: 0 0 auto;
+        width: auto;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .menu-tab.active {
+        background-color: #0f172a;
+        color: #fff;
+    }
+
+    .menu-divider {
+        display: none;
+    }
+
+    /* Ocultar cierre de sesión solo en móvil */
+    .sidebar-menu .logout-btn,
+    .dashboard-sidebar .logout-btn {
+        display: none !important;
+    }
+
+    /* Paneles */
+    .dashboard-panels {
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+    }
+
+    .panel-card {
+        min-width: 0;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+
+    .panel-header {
+        margin-bottom: 16px;
+    }
+
+    .panel-header h2 {
+        font-size: 1.2rem;
+        flex-wrap: wrap;
+    }
+
+    .info-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    /* Inventario */
+    .inventory-header {
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+
+    .inventory-search-box {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .table-responsive {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .inventory-table {
+        min-width: 600px;
+    }
+
+    .editing-banner {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .editing-banner-info {
+        min-width: 0;
+        flex: 1 1 180px;
+    }
+
+    .user-summary-card {
+        grid-template-columns: 44px minmax(0, 1fr);
+        column-gap: 12px;
+        align-items: center;
+    }
+
+    .user-summary-card .avatar-circle {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+
+    .user-summary-card h3 {
+        grid-column: 2;
+        grid-row: 1;
+        min-width: 0;
+        margin: 0 0 4px;
+    }
+
+    .user-summary-card p {
+        grid-column: 2;
+        grid-row: 2;
+        min-width: 0;
+        width: 100%;
+        margin: 0;
+        overflow-wrap: anywhere;
+        word-break: normal;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .dashboard-container {
+        margin-top: 76px;
+        padding: 0 10px;
+        gap: 12px;
+    }
+
+    .dashboard-sidebar {
+        padding: 12px;
+    }
+
+    .user-summary-card {
+        padding-bottom: 14px;
+        margin-bottom: 12px;
+    }
+
+    .sidebar-menu {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .menu-tab {
+        min-height: 68px;
+        padding: 8px 3px;
+        font-size: 0.73rem;
+    }
+
+    .menu-tab i {
+        font-size: 0.95rem;
+    }
+
+    .panel-card {
+        padding: 14px;
+    }
+
+    .panel-header h2 {
+        font-size: 1.1rem;
+    }
 }

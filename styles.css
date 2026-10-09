@@ -501,18 +501,6 @@ img {
     gap: 20px;
 }
 
-@media (max-width: 768px) {
-    .products-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
 /* Pagination tabs */
 .pagination-tabs {
     display: flex;
@@ -895,77 +883,6 @@ footer {
         grid-column: 1 / -1;
     }
 }
-
-@media (max-width: 768px) {
-    .navbar {
-        height: 70px;
-    }
-
-    .nav-menu {
-        display: none;
-        /* In a production, we'd add a burger menu, but for single page navigation, simple icons or visible links work best. Let's make it look clean */
-    }
-
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-    }
-
-
-
-
-    .footer-container {
-        grid-template-columns: 1fr;
-        gap: 32px;
-    }
-
-    .footer-links {
-        margin-bottom: 32px;
-        /* Espacio separador entre Enlaces y Contacto */
-    }
-
-    .footer-contact {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        /* Evita que los items (email, tel, dir) se vean amontonados */
-    }
-
-    .footer-contact p {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        /* Separación perfecta entre el icono y el texto */
-        word-break: break-word;
-        overflow-wrap: anywhere;
-        font-size: 0.95rem;
-        /* Un poco más grande para mejorar la legibilidad */
-        max-width: 100%;
-    }
-
-    /* Reduce font size on small screens */
-    @media (max-width: 600px) {
-        .footer-contact p {
-            font-size: 0.8rem;
-        }
-    }
-
-
-
-    .hero h1 {
-        font-size: 3rem;
-    }
-
-    .catalog-section,
-    .about-section,
-    .faq-section {
-        padding: 60px 16px;
-    }
-}
-
-
 
 /* ============================================================== */
 /* ADMIN PANEL — BTN SECONDARY / DANGER                          */
@@ -1743,4 +1660,158 @@ footer {
 
 .admin-catalog-toggle[hidden] {
     display: none;
+}
+
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .navbar {
+        height: 70px;
+    }
+
+    .nav-menu {
+        display: none;
+        /* In a production, we'd add a burger menu, but for single page navigation, simple icons or visible links work best. Let's make it look clean */
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+
+
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .footer-links {
+        margin-bottom: 32px;
+        /* Espacio separador entre Enlaces y Contacto */
+    }
+
+    .footer-contact {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        /* Evita que los items (email, tel, dir) se vean amontonados */
+    }
+
+    .footer-contact p {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        /* Separación perfecta entre el icono y el texto */
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        font-size: 0.95rem;
+        /* Un poco más grande para mejorar la legibilidad */
+        max-width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .catalog-section,
+    .about-section,
+    .faq-section {
+        padding: 60px 16px;
+    }
+}
+
+/* Reduce font size on small screens */
+@media (max-width: 600px) {
+    .footer-contact p {
+        font-size: 0.8rem;
+    }
+}
+
+
+
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* HERO */
+    .hero h1 {
+        font-size: clamp(2rem, 8vw, 2.5rem);
+        line-height: 1.05;
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1.75rem;
+        padding: 0 8px;
+    }
+
+    .hero-actions {
+        gap: 10px;
+    }
+
+    .hero-actions .btn {
+        padding: 11px 20px;
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+    }
+
+    .badge {
+        padding: 5px 10px;
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.75rem;
+    }
+
+    /* HEADER */
+    .nav-container {
+        padding: 0 14px;
+    }
+
+    .nav-actions {
+        gap: 10px;
+    }
+
+    .user-btn-trigger {
+        gap: 5px;
+        font-size: 0.95rem;
+        padding: 5px;
+    }
+
+    #userFirstName {
+        font-size: 0.95rem !important;
+        line-height: 1.2;
+    }
+
+    .user-btn-trigger i,
+    .user-btn-trigger svg {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+    }
+
+    .cart-trigger {
+        font-size: 1.15rem;
+        padding: 6px;
+    }
+
+    .cart-count {
+        width: 16px;
+        height: 16px;
+        font-size: 0.65rem;
+    }
+
+    .nav-actions button,
+    .nav-actions a {
+        min-width: 0;
+    }
 }

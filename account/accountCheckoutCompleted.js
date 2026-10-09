@@ -73,6 +73,90 @@ function bindEvents() {
 
 }
 
+// ==========================================================================
+// DESPLAZAR AL INICIO DEL CHECKOUT COMPLETADO
+// Funciona en modal y en checkout dentro de una página
+// ==========================================================================
+
+function scrollToCompletedStepTop() {
+    const completedSection = document.getElementById(
+        'checkoutStepCompleted'
+    );
+
+    if (!completedSection) {
+        console.warn(
+            'No se encontró #checkoutStepCompleted.'
+        );
+        return;
+    }
+
+    // Buscar el ancestro que realmente tiene el scroll vertical.
+    let scrollContainer = completedSection.parentElement;
+
+    while (scrollContainer && scrollContainer !== document.body) {
+        const styles = window.getComputedStyle(scrollContainer);
+        const overflowY = styles.overflowY;
+
+        const allowsScroll =
+            ['auto', 'scroll', 'overlay'].includes(overflowY);
+
+        const hasScrollableContent =
+            scrollContainer.scrollHeight >
+            scrollContainer.clientHeight + 1;
+
+        if (allowsScroll && hasScrollableContent) {
+            break;
+        }
+
+        scrollContainer = scrollContainer.parentElement;
+    }
+
+    // Si se encontró un contenedor desplazable, calcular
+    // la posición exacta de la etapa dentro de él.
+    if (
+        scrollContainer &&
+        scrollContainer !== document.body
+    ) {
+        const containerRect =
+            scrollContainer.getBoundingClientRect();
+
+        const sectionRect =
+            completedSection.getBoundingClientRect();
+
+        const targetScrollTop =
+            scrollContainer.scrollTop +
+            sectionRect.top -
+            containerRect.top;
+
+        scrollContainer.scrollTo({
+            top: Math.max(0, targetScrollTop),
+            behavior: 'auto'
+        });
+
+        console.log(
+            'Scroll del checkout aplicado al contenedor:',
+            scrollContainer
+        );
+
+        return;
+    }
+
+    // Si no existe un contenedor interno desplazable,
+    // utilizar el scroll de la página.
+    const sectionTop =
+        completedSection.getBoundingClientRect().top +
+        window.scrollY;
+
+    window.scrollTo({
+        top: Math.max(0, sectionTop),
+        behavior: 'auto'
+    });
+
+    console.log(
+        'Scroll del checkout aplicado a la página.'
+    );
+}
+
 
 // ==========================================================================
 // CARGAR ETAPA COMPLETADA
@@ -161,6 +245,11 @@ async function loadCompletedStep() {
 
     renderSummary(order);
 
+
+    // Llevar la vista al inicio al completar la compra.
+    requestAnimationFrame(() => {
+        scrollToCompletedStepTop();
+    });
 
     console.log(
         '✅ Etapa de pedido completado cargada.'
