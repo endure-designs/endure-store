@@ -707,7 +707,7 @@ body.order-detail-open {
 
     /* Contenedor: comienza debajo del navbar */
     #accountOrderDetailContainer {
-        top: var(--header-height);
+        top: calc(var(--header-height) - 20px);
         inset-inline: 0;
         bottom: 0;
         height: auto;
