@@ -220,7 +220,7 @@ body.order-detail-open {
 
     gap: 20px;
 
-    padding-top: 20px;
+    padding-top: 0px;
 }
 
 .account-order-detail-info-item {
@@ -680,27 +680,22 @@ body.order-detail-open {
    ========================================================================== */
 
 @media (max-width: 900px) {
-
     .account-order-detail {
         padding: 28px 24px 40px;
     }
 
-
     .account-order-detail-info {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
 
     .account-order-detail-product {
         grid-template-columns: 72px minmax(0, 1fr) auto;
     }
 
-
     .account-order-detail-product-image-container {
         width: 72px;
         height: 72px;
     }
-
 }
 
 
@@ -708,12 +703,13 @@ body.order-detail-open {
    RESPONSIVE — MÓVIL
    ========================================================================== */
 
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
 
     /* Contenedor: comienza debajo del navbar */
     #accountOrderDetailContainer {
         top: var(--header-height);
-        inset: calc(var(--header-height) - 20px) 0 0;
+        inset-inline: 0;
+        bottom: 0;
         height: auto;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
@@ -765,16 +761,41 @@ body.order-detail-open {
         border-radius: 11px;
     }
 
-    /* Información del pedido */
+    /* Encabezado del pedido */
     .account-order-detail-order-header {
         align-items: flex-start;
         flex-direction: column;
         gap: 14px;
     }
 
-    .account-order-detail-info {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 15px 12px;
+    /* Información del pedido: siempre dos columnas */
+    #accountOrderDetailContainer .account-order-detail-info {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px 8px !important;
+    }
+
+    #accountOrderDetailContainer .account-order-detail-info-item {
+        min-width: 0;
+        gap: 3px;
+    }
+
+    #accountOrderDetailContainer .account-order-detail-info-item span {
+        font-size: 8px !important;
+        line-height: 1.2;
+        letter-spacing: 0;
+    }
+
+    #accountOrderDetailContainer .account-order-detail-info-item strong {
+        font-size: 12px !important;
+        line-height: 1.25;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+
+    /* Evita que los valores cortos se partan innecesariamente */
+    #accountOrderDetailContainer .account-order-detail-info-item strong {
+        white-space: normal;
     }
 
     /* Productos */
