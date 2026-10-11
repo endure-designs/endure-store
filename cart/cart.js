@@ -36,6 +36,16 @@ function getCartSelectedItemIds() {
 }
 
 
+let lastCartMutationTime = 0;
+
+function notifyCartMutation() {
+    lastCartMutationTime = Date.now();
+}
+
+function getCartMutationTime() {
+    return lastCartMutationTime;
+}
+
 // Reemplazar completamente el carrito
 
 function setCart(newCart) {
@@ -45,6 +55,8 @@ function setCart(newCart) {
             ? [...newCart]
             : [];
 
+    notifyCartMutation();
+
 }
 
 
@@ -53,6 +65,7 @@ function setCart(newCart) {
 function addCartItem(item) {
 
     cart.push(item);
+    notifyCartMutation();
 
 }
 
@@ -62,6 +75,7 @@ function addCartItem(item) {
 function resetCart() {
 
     cart = [];
+    notifyCartMutation();
 
 }
 
@@ -85,3 +99,5 @@ window.getCartCount = getCartCount;
 
 window.getCartSelectedItems = getCartSelectedItems;
 window.getCartSelectedItemIds = getCartSelectedItemIds;
+window.notifyCartMutation = notifyCartMutation;
+window.getCartMutationTime = getCartMutationTime;

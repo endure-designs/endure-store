@@ -102,6 +102,12 @@ async function loadCheckoutMarkup() {
 
 async function openCheckoutModal() {
 
+    // Asegurar que los módulos de checkout diferidos estén cargados
+    if (window.resourceLoader && typeof window.resourceLoader.load === 'function') {
+        await window.resourceLoader.load('appCheckoutModal');
+        await window.resourceLoader.load('checkout');
+    }
+
     const {
         modal,
         loginRequired,
@@ -112,9 +118,9 @@ async function openCheckoutModal() {
         return;
     }
 
-
-
-    window.checkout.setCheckoutCartSource('index');
+    if (window.checkout && typeof window.checkout.setCheckoutCartSource === 'function') {
+        window.checkout.setCheckoutCartSource('index');
+    }
 
     // ==============================================================
     // CERRAR CARRITO

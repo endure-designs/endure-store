@@ -2,7 +2,18 @@
 // SINCRONIZACIÓN DEL CARRITO
 // ==========================================================================
 
+let isCartSyncing = false;
+let isCartSyncQueued = false;
+
 async function syncCartFromBackend() {
+
+    if (isCartSyncing) {
+        isCartSyncQueued = true;
+        return;
+    }
+
+    isCartSyncing = true;
+    const syncStartTime = Date.now();
 
     try {
 
@@ -170,29 +181,52 @@ async function syncCartFromBackend() {
 
 
         // ------------------------------------------------------------------
-        // 6. La BD pasa a ser la fuente activa del carrito
+        // 6. Reconciliación Segura:
+        //    Comprobar si el usuario realizó modificaciones locales
+        //    mientras la petición de red estuvo en vuelo.
         // ------------------------------------------------------------------
 
-        setCart(finalCart);
+        const lastMutation =
+            typeof window.getCartMutationTime === 'function'
+                ? window.getCartMutationTime()
+                : 0;
 
+        if (lastMutation > syncStartTime) {
+            console.log("🔄 Mutaciones locales detectadas durante la sincronización. Reconciliando...");
 
-        // ------------------------------------------------------------------
-        // 7. El carrito local ya fue sincronizado correctamente
-        // ------------------------------------------------------------------
+            const currentLocalCart = getCart();
 
-        clearCartStorage();
+            // Preservar ítems o cantidades modificadas por el usuario
+            currentLocalCart.forEach(localItem => {
+                const existingInFinal = finalCart.find(f =>
+                    String(f.variantId) === String(localItem.variantId)
+                );
 
+                if (!existingInFinal) {
+                    finalCart.push(localItem);
+                } else if (Number(localItem.qty) !== Number(existingInFinal.qty)) {
+                    existingInFinal.qty = localItem.qty;
+                }
+            });
 
-        // ------------------------------------------------------------------
-        // 8. Actualizar interfaz
-        // ------------------------------------------------------------------
+            setCart(finalCart);
+            if (typeof saveCart === 'function') {
+                saveCart();
+            }
+            updateCartUI();
 
-        updateCartUI();
+            // Encolar sincronización para reflejar cambios más recientes
+            isCartSyncQueued = true;
+        } else {
+            // No hubo cambios del usuario: la BD es la fuente de verdad definitiva
+            setCart(finalCart);
+            clearCartStorage();
+            updateCartUI();
 
-
-        console.log(
-            "✅ Carrito local sincronizado correctamente con DB."
-        );
+            console.log(
+                "✅ Carrito local sincronizado correctamente con DB."
+            );
+        }
 
     }
     catch (err) {
@@ -207,6 +241,13 @@ async function syncCartFromBackend() {
         // El carrito local queda intacto para poder intentar sincronizarlo
         // nuevamente.
 
+    } finally {
+        isCartSyncing = false;
+
+        if (isCartSyncQueued) {
+            isCartSyncQueued = false;
+            syncCartFromBackend().catch(() => {});
+        }
     }
 }
 

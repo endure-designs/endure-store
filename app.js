@@ -1,19 +1,19 @@
 // ==========================================================================
 // APP.JS — ORQUESTADOR PRINCIPAL PARA INDEX.HTML
 // ==========================================================================
-
+// Optimizado para renderizado prioritario del catálogo:
+// - Carga paralela de filtros y productos del catálogo.
+// - Sincronización del carrito fuera de la ruta crítica de renderizado.
+// - Operaciones secundarias (Culqi, eventos de pago SSE, notificaciones)
+//   movidas a fases diferidas.
 // ==========================================================================
-// APP.JS — ORQUESTADOR PRINCIPAL
-// ==========================================================================
-
-
 
 async function initApp() {
 
     console.log("🚀 Inicializando lógica modular de app.js...");
 
     // ----------------------------------------------------------------------
-    // 1. Cargar carrito y sincronizar
+    // 1. Cargar carrito local de inmediato (sin bloqueo de red)
     // ----------------------------------------------------------------------
 
     if (typeof loadCart === 'function') {
@@ -24,13 +24,9 @@ async function initApp() {
         updateCartUI();
     }
 
-    if (typeof syncCartFromBackend === 'function') {
-        await syncCartFromBackend();
-    }
-
     // ----------------------------------------------------------------------
-    // 2. Inicializar eventos principales
-    //    Filtros, botones, modales, etc.
+    // 2. Configurar listeners de interfaz inmediatamente
+    //    Permite interacción instantánea mientras se obtienen datos del backend
     // ----------------------------------------------------------------------
 
     if (
@@ -40,22 +36,12 @@ async function initApp() {
         appEvents.setupEventListeners();
     }
 
-
-    // ----------------------------------------------------------------------
-    // 3. Inicializar acordeón de FAQ
-    // ----------------------------------------------------------------------
-
     if (
         window.appFAQ &&
         typeof appFAQ.setupFAQAccordion === 'function'
     ) {
         appFAQ.setupFAQAccordion();
     }
-
-
-    // ----------------------------------------------------------------------
-    // 4. Inicializar listeners de filtros y selectores nativos
-    // ----------------------------------------------------------------------
 
     if (
         window.appFilters &&
@@ -64,11 +50,6 @@ async function initApp() {
         appFilters.setupSelectListeners();
     }
 
-
-    // ----------------------------------------------------------------------
-    // 5. Inicializar dropdowns personalizados
-    // ----------------------------------------------------------------------
-
     if (
         window.appDropdowns &&
         typeof appDropdowns.initCustomDropdowns === 'function'
@@ -76,9 +57,10 @@ async function initApp() {
         appDropdowns.initCustomDropdowns();
     }
 
-
     // ----------------------------------------------------------------------
-    // 6. Cargar catálogo y renderizar productos
+    // 3. Cargar filtros y productos del catálogo EN PARALELO
+    //    Optimización crítica: ambas consultas son independientes y no tienen
+    //    efectos secundarios colaterales entre sí.
     // ----------------------------------------------------------------------
 
     if (
@@ -86,16 +68,29 @@ async function initApp() {
         typeof catalogManager.loadProducts === 'function' &&
         typeof catalogManager.loadCatalogFilters === 'function'
     ) {
-        await catalogManager.loadCatalogFilters();
-        await catalogManager.loadProducts();
+        console.log("⚡ Consultando filtros y productos en paralelo...");
 
-        catalogUI.populateProductTypeSelect();
-        catalogUI.populateCollectionSelect();
-        catalogSubfilters.init();
+        await Promise.all([
+            catalogManager.loadCatalogFilters(),
+            catalogManager.loadProducts()
+        ]);
+
+        if (window.catalogUI) {
+            if (typeof catalogUI.populateProductTypeSelect === 'function') {
+                catalogUI.populateProductTypeSelect();
+            }
+            if (typeof catalogUI.populateCollectionSelect === 'function') {
+                catalogUI.populateCollectionSelect();
+            }
+        }
+
+        if (window.catalogSubfilters && typeof catalogSubfilters.init === 'function') {
+            catalogSubfilters.init();
+        }
     }
 
     // ----------------------------------------------------------------------
-    // Render inicial del catálogo
+    // 4. Render inicial del catálogo
     // ----------------------------------------------------------------------
 
     if (
@@ -105,9 +100,8 @@ async function initApp() {
         catalogUI.renderCurrentProducts();
     }
 
-
     // ----------------------------------------------------------------------
-    // 7. Inicializar zoom de escritorio del modal
+    // 5. Inicializar zoom de escritorio del modal
     // ----------------------------------------------------------------------
 
     if (
@@ -117,9 +111,8 @@ async function initApp() {
         catalogCardModalZoom.setupDesktopZoom();
     }
 
-
     // ----------------------------------------------------------------------
-    // 8. Inicializar modal de alertas
+    // 6. Inicializar modal de alertas
     // ----------------------------------------------------------------------
 
     if (
@@ -129,9 +122,21 @@ async function initApp() {
         alertModal.init();
     }
 
+    // ----------------------------------------------------------------------
+    // 7. Sincronización del carrito fuera de la ruta crítica
+    //    Se ejecuta en segundo plano con reconciliación segura contra
+    //    mutaciones locales recientes sin bloquear el renderizado.
+    // ----------------------------------------------------------------------
+
+    if (typeof syncCartFromBackend === 'function') {
+        syncCartFromBackend().catch(err => {
+            console.warn("⚠️ Sincronización en segundo plano de carrito:", err);
+        });
+    }
 
     // ----------------------------------------------------------------------
-    // 9. Inicializar checkout modal
+    // 8. Inicializar checkout modal y etapas si ya están disponibles
+    //    (También se inicializan automáticamente al culminar la etapa diferida)
     // ----------------------------------------------------------------------
 
     if (
@@ -140,11 +145,6 @@ async function initApp() {
     ) {
         window.initCheckoutModal();
     }
-
-
-    // ----------------------------------------------------------------------
-    // 10. Inicializar checkout
-    // ----------------------------------------------------------------------
 
     if (
         window.accountCheckout &&
@@ -157,7 +157,7 @@ async function initApp() {
         window.accountCheckoutSummary &&
         typeof accountCheckoutSummary.init === 'function'
     ) {
-        await accountCheckoutSummary.init();
+        accountCheckoutSummary.init().catch(() => {});
     }
 
     if (
@@ -181,9 +181,8 @@ async function initApp() {
         accountCheckoutOrderSummary.init();
     }
 
-
     // ----------------------------------------------------------------------
-    // 11. Inicializar centro de notificaciones
+    // 9. Inicializar notificaciones si el usuario está autenticado y disponible
     // ----------------------------------------------------------------------
 
     if (
@@ -191,9 +190,10 @@ async function initApp() {
         window.appNotifications &&
         typeof appNotifications.init === 'function'
     ) {
-        await appNotifications.init();
+        appNotifications.init().catch(err => {
+            console.warn("⚠️ Error en inicialización de notificaciones:", err);
+        });
     }
-
 
     // ----------------------------------------------------------------------
     // 10. Evitar click derecho sobre imágenes
@@ -228,46 +228,27 @@ async function startApp() {
         window.authManager &&
         typeof authManager.checkAuthSession === 'function'
     ) {
-        window.currentUser = await authManager.checkAuthSession();
+        try {
+            window.currentUser = await authManager.checkAuthSession();
+        } catch (error) {
+            console.warn("⚠️ Error verificando sesión inicial:", error);
+            window.currentUser = null;
+        }
     }
 
-
-
-    if (
-        window.checkout &&
-        typeof window.checkout.init === 'function'
-    ) {
-        await window.checkout.init(window.currentUser);
-    }
-
-
     // ----------------------------------------------------------------------
-    // 1.2 Inicializar eventos SSE
-    // ----------------------------------------------------------------------
-    if (
-        window.currentUser &&
-        window.checkout &&
-        typeof checkout.initializePaymentEvents === 'function'
-    ) {
-        checkout.initializePaymentEvents();
-    }
-
-
-    // ----------------------------------------------------------------------
-    // 2. Inicializar catálogo según usuario
+    // 2. Inicializar catálogo según rol de usuario (PÚBLICO vs ADMINISTRADOR)
     // ----------------------------------------------------------------------
 
     if (
         window.catalogManager &&
         typeof catalogManager.init === 'function'
     ) {
-        catalogManager.init(currentUser);
+        catalogManager.init(window.currentUser);
     }
 
-
     // ----------------------------------------------------------------------
-    // 3. Eventos del navbar
-    //    Menú de usuario y logout
+    // 3. Eventos del navbar (Menú desplegable de usuario y logout)
     // ----------------------------------------------------------------------
 
     const userMenuBtn =
@@ -307,7 +288,6 @@ async function startApp() {
         });
     }
 
-
     // ----------------------------------------------------------------------
     // 4. Logout
     // ----------------------------------------------------------------------
@@ -322,14 +302,13 @@ async function startApp() {
         );
     }
 
-
     // ----------------------------------------------------------------------
-    // 5. Iniciar aplicación central
+    // 5. Iniciar aplicación central (muestra catálogo de inmediato)
     // ----------------------------------------------------------------------
 
     await initApp();
 
 }
 
-// Iniciar la app directamente ya que los scripts se cargan dinámicamente al final
+// Iniciar orquestador
 startApp();

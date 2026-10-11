@@ -506,6 +506,15 @@ function init(user) {
                     ? 'ADMIN'
                     : 'PUBLIC';
 
+            // Cargar recursos administrativos bajo demanda si se ingresa a modo ADMIN
+            if (newMode === 'ADMIN' && window.resourceLoader && typeof window.resourceLoader.load === 'function') {
+                try {
+                    await window.resourceLoader.load('accountInventory');
+                } catch (e) {
+                    console.warn('⚠️ No se pudieron cargar módulos de inventario:', e);
+                }
+            }
+
             // --------------------------------------------------------------
             // Cambiar modo y reiniciar paginación
             // --------------------------------------------------------------

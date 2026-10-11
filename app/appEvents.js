@@ -55,10 +55,10 @@ function setupEventListeners() {
             if (!validation.valid) {
 
                 if (
-                    window.alert - modal &&
-                    typeof alert - modal.show === 'function'
+                    window.alertModal &&
+                    typeof alertModal.show === 'function'
                 ) {
-                    alert - modal.show({
+                    alertModal.show({
                         title: 'Combinación no disponible',
                         message: validation.message,
                         type: 'warning'
