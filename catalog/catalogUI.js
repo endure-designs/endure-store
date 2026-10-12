@@ -143,17 +143,6 @@ function renderCurrentProducts() {
     const productsGrid = document.getElementById('productsGrid');
     if (!productsGrid) return;
 
-    // Controlar visibilidad del carrusel de anime
-    const animeGallery = document.getElementById('anime-gallery');
-
-    if (animeGallery) {
-        if (appState.currentCollection === 'anime') {
-            animeGallery.style.display = 'block';
-        } else {
-            animeGallery.style.display = 'none';
-        }
-    }
-
     // Obtener productos actuales desde catalogManager
     // (ya vienen paginados, filtrados y ordenados desde el backend)
     const productList = catalogManager.getProducts();

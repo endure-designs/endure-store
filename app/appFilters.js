@@ -124,9 +124,6 @@ function setupSelectListeners() {
 
         collectionSelect.addEventListener('change', async () => {
 
-            const prevCollection =
-                appState.currentCollection;
-
             appState.currentCollection =
                 collectionSelect.value;
 
@@ -138,39 +135,6 @@ function setupSelectListeners() {
             if (window.catalogSubfilters) {
                 catalogSubfilters.clear();
             }
-
-
-            // --------------------------------------------------------------
-            // Galería especial de Anime
-            // --------------------------------------------------------------
-
-            if (
-                appState.currentCollection === 'anime' &&
-                prevCollection !== 'anime'
-            ) {
-
-                const container =
-                    document.getElementById('anime-gallery');
-
-                if (container) {
-
-                    const newContainer =
-                        container.cloneNode(false);
-
-                    container.parentNode.replaceChild(
-                        newContainer,
-                        container
-                    );
-
-                    if (
-                        window.appAnime &&
-                        typeof appAnime.initAnimeGallery === 'function'
-                    ) {
-                        appAnime.initAnimeGallery();
-                    }
-                }
-            }
-
 
             appState.currentPage =
                 CONFIG.DEFAULT_PAGE;

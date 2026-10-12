@@ -45,13 +45,6 @@ const RESOURCE_REGISTRY = [
         phase: 'critical'
     },
     {
-        id: 'cssAnimeGallery',
-        type: 'css',
-        src: './anime-gallery.css',
-        dependsOn: [],
-        phase: 'critical'
-    },
-    {
         id: 'cssAlertModal',
         type: 'css',
         src: './components/alerta/alert-modal.css',
