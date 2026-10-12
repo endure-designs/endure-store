@@ -938,4 +938,19 @@ function waitForGoogleIdentityServices() {
     );
 }
 
+// ================================================================
+// VISTA INICIAL SEGÚN EL PARÁMETRO DE LA URL
+// ================================================================
+
+(function initializeAuthView() {
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get('mode');
+
+    if (mode === 'register') {
+        switchView('register');
+    } else {
+        switchView('login');
+    }
+})();
+
 waitForGoogleIdentityServices();

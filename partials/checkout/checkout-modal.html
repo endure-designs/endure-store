@@ -8,9 +8,58 @@
             <i class="fas fa-times"></i>
         </button>
 
+        <!-- Pantalla para visitantes no autenticados -->
+        <section id="checkoutLoginRequired" class="checkout-login-required" aria-labelledby="checkoutLoginTitle"
+            style="display: none;">
+            <div class="checkout-login-brand">
+                <span class="checkout-login-brand-name">ENDURE</span>
+                <span class="checkout-login-brand-subtitle">
+                    DISEÑOS PERSONALIZADOS
+                </span>
+            </div>
+
+            <div class="checkout-login-icon">
+                <i class="fas fa-user-lock" aria-hidden="true"></i>
+            </div>
+
+            <span class="checkout-login-eyebrow">
+                TU EXPERIENCIA ENDURE
+            </span>
+
+            <h2 id="checkoutLoginTitle">
+                Un paso más para completar tu compra
+            </h2>
+
+            <p class="checkout-login-description">
+                Inicia sesión en tu cuenta para continuar con tu pedido,
+                gestionar tus direcciones y consultar tus compras.
+            </p>
+
+            <button id="checkoutLoginButton" class="checkout-login-button" type="button">
+                Iniciar sesión
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </button>
+
+            <p class="checkout-login-register">
+                ¿Todavía no tienes una cuenta?
+                <a href="auth.html?mode=register">
+                    Crear una cuenta
+                </a>
+            </p>
+
+            <div class="checkout-login-divider">
+                <span></span>
+                <span>ENDURE</span>
+                <span></span>
+            </div>
+
+            <p class="checkout-login-footer">
+                Tus diseños personalizados empiezan aquí.
+            </p>
+        </section>
+
+        <!-- Contenido del checkout para usuarios autenticados -->
         <div id="checkoutModalContent"></div>
-        <!-- Rapid Form -->
 
     </div>
-
 </div>

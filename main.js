@@ -17,27 +17,6 @@ const RESOURCE_REGISTRY = [
     // Imprescindibles para el diseño inicial del catálogo y la navegación
     // ----------------------------------------------------------------------
     {
-        id: 'cssAnimeGallery',
-        type: 'css',
-        src: './anime-gallery.css',
-        dependsOn: [],
-        phase: 'critical'
-    },
-    {
-        id: 'cssAlertModal',
-        type: 'css',
-        src: './components/alerta/alert-modal.css',
-        dependsOn: [],
-        phase: 'critical'
-    },
-    {
-        id: 'cssCartModal',
-        type: 'css',
-        src: './css/cart/cart-modal.css',
-        dependsOn: [],
-        phase: 'critical'
-    },
-    {
         id: 'cssProductCardModal',
         type: 'css',
         src: './css/catalog/product-card-modal.css',
@@ -58,7 +37,34 @@ const RESOURCE_REGISTRY = [
         dependsOn: [],
         phase: 'critical'
     },
-
+    {
+        id: 'cssContacto',
+        type: 'css',
+        src: './components/contacto/contacto.css',
+        dependsOn: [],
+        phase: 'critical'
+    },
+    {
+        id: 'cssAnimeGallery',
+        type: 'css',
+        src: './anime-gallery.css',
+        dependsOn: [],
+        phase: 'critical'
+    },
+    {
+        id: 'cssAlertModal',
+        type: 'css',
+        src: './components/alerta/alert-modal.css',
+        dependsOn: [],
+        phase: 'critical'
+    },
+    {
+        id: 'cssCartModal',
+        type: 'css',
+        src: './css/cart/cart-modal.css',
+        dependsOn: [],
+        phase: 'critical'
+    },
     // ----------------------------------------------------------------------
     // ESTILOS CSS — FASE DIFERIDA
     // Estilos para modales secundarios, notificaciones y checkout
@@ -149,6 +155,14 @@ const RESOURCE_REGISTRY = [
         dependsOn: [],
         phase: 'critical'
     },
+    {
+        id: 'contactoHTML',
+        type: 'html',
+        src: './components/contacto/contacto.html',
+        target: 'contactoContainer',
+        dependsOn: ['cssContacto'],
+        phase: 'critical'
+    },
 
     // ----------------------------------------------------------------------
     // FRAGMENTOS HTML — FASE DIFERIDA
@@ -158,7 +172,7 @@ const RESOURCE_REGISTRY = [
         type: 'html',
         src: './partials/checkout/checkout-modal.html',
         target: 'checkoutModalContainer',
-        dependsOn: [],
+        dependsOn: ['cssCheckoutModal'],
         phase: 'deferred'
     },
     {
@@ -166,7 +180,7 @@ const RESOURCE_REGISTRY = [
         type: 'html',
         src: './partials/app/app-notifications.html',
         target: 'appNotificationsContainer',
-        dependsOn: [],
+        dependsOn: ['cssAppNotifications'],
         phase: 'deferred'
     },
     {
@@ -373,13 +387,6 @@ const RESOURCE_REGISTRY = [
         phase: 'critical'
     },
     {
-        id: 'appModal',
-        type: 'js',
-        src: './app/appModal.js',
-        dependsOn: [],
-        phase: 'critical'
-    },
-    {
         id: 'appZoom',
         type: 'js',
         src: './app/appZoom.js',
@@ -407,6 +414,13 @@ const RESOURCE_REGISTRY = [
             'authManager',
             'catalogCardModalZoom'
         ],
+        phase: 'critical'
+    },
+    {
+        id: 'contacto',
+        type: 'js',
+        src: './components/contacto/contacto.js',
+        dependsOn: ['contactoHTML'],
         phase: 'critical'
     },
 
@@ -955,7 +969,7 @@ async function initializeApp() {
                     }
 
                     if (window.accountCheckoutSummary && typeof accountCheckoutSummary.init === 'function') {
-                        accountCheckoutSummary.init().catch(() => {});
+                        accountCheckoutSummary.init().catch(() => { });
                     }
 
                     if (window.accountCheckoutPurchase && typeof accountCheckoutPurchase.init === 'function') {

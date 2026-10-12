@@ -1,0 +1,206 @@
+/* =========================================================
+   ENDURE - WIDGET DE CONTACTO POR WHATSAPP
+   ========================================================= */
+
+/* Contenedor flotante */
+.whatsapp-widget {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 10000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+
+    width: max-content;
+    height: auto;
+
+    font-family: var(--font-primary, Arial, sans-serif);
+
+    /* El contenedor no bloquea los clics de la página */
+    pointer-events: none;
+}
+
+/* =========================================================
+   BOTÓN PERMANENTE DE WHATSAPP
+   ========================================================= */
+
+.whatsapp-float-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 60px;
+    height: 60px;
+    box-sizing: border-box;
+
+    border: 2px solid var(--swan-wing, #F5F0E9);
+    border-radius: 50%;
+
+    color: var(--swan-wing, #F5F0E9);
+    background: var(--royal-blue, #112250);
+
+    box-shadow: 0 5px 18px rgba(10, 15, 29, 0.22);
+
+    font-size: 30px;
+    text-decoration: none;
+
+    pointer-events: auto;
+
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.whatsapp-float-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(10, 15, 29, 0.3);
+}
+
+.whatsapp-float-button:focus-visible,
+.whatsapp-bubble-link:focus-visible,
+.whatsapp-bubble-close:focus-visible {
+    outline: 2px solid var(--quicksand, #E0C58F);
+    outline-offset: 4px;
+}
+
+/* =========================================================
+   VIÑETA DE CONTACTO
+   ========================================================= */
+
+.whatsapp-bubble {
+    position: relative;
+
+    width: min(300px, calc(100vw - 40px));
+    box-sizing: border-box;
+
+    padding: 20px 38px 19px 20px;
+
+    border: 1px solid var(--shellstone, #D9CBC2);
+    border-radius: 12px;
+
+    color: var(--text-dark, #0a0f1d);
+    background: var(--light-bg, #FAF9F6);
+
+    box-shadow: 0 8px 30px rgba(10, 15, 29, 0.14);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translateY(8px);
+
+    transition:
+        opacity 200ms ease,
+        transform 200ms ease,
+        visibility 200ms ease;
+}
+
+/* La viñeta solo recibe clics cuando está visible */
+.whatsapp-bubble.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform: translateY(0);
+}
+
+/* Título */
+.whatsapp-bubble-title {
+    margin: 0 0 7px;
+
+    color: var(--royal-blue, #112250);
+    font-family: var(--font-heading, sans-serif);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Descripción */
+.whatsapp-bubble-text {
+    margin: 0 0 14px;
+
+    color: var(--text-muted, #6b7280);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Enlace de contacto */
+.whatsapp-bubble-link {
+    display: inline-block;
+
+    color: var(--royal-blue, #112250);
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* Botón para cerrar la viñeta */
+.whatsapp-bubble-close {
+    position: absolute;
+    top: 7px;
+    right: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    color: var(--text-muted, #6b7280);
+    background: transparent;
+
+    font-size: 23px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.whatsapp-bubble-close:hover {
+    color: var(--royal-blue, #112250);
+    background: var(--gray-100, #f1efeb);
+}
+
+/* =========================================================
+   DISEÑO RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .whatsapp-widget {
+        right: 16px;
+        bottom: 16px;
+        gap: 12px;
+    }
+
+    .whatsapp-float-button {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+    }
+
+    .whatsapp-bubble {
+        width: min(280px, calc(100vw - 32px));
+    }
+}
+
+/* =========================================================
+   ACCESIBILIDAD: MOVIMIENTO REDUCIDO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .whatsapp-float-button,
+    .whatsapp-bubble {
+        transition: none;
+    }
+}

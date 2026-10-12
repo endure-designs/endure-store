@@ -1,85 +1,66 @@
-// ==========================================================================
-// APP CHECKOUT MODAL
-// ==========================================================================
+
+/* ==========================================================================
+   APP CHECKOUT MODAL
+   ========================================================================== */
 
 let checkoutModalInitialized = false;
 let checkoutMarkupLoaded = false;
+let checkoutOpenRequest = 0;
 
 
-// ==========================================================================
-// ELEMENTOS
-// ==========================================================================
+/* ==========================================================================
+   ELEMENTOS
+   ========================================================================== */
 
 function getCheckoutModalElements() {
-
-    const modal =
-        document.getElementById('checkoutModal');
-
-    const overlay =
-        modal?.querySelector('.checkout-modal-overlay');
-
-    const closeButton =
-        document.getElementById('checkoutModalClose');
-
-    const loginRequired =
-        document.getElementById('checkoutLoginRequired');
-
-    const loginButton =
-        document.getElementById('checkoutLoginButton');
-
-    const checkoutContent =
-        document.getElementById('checkoutModalContent');
+    const modal = document.getElementById('checkoutModal');
 
     return {
         modal,
-        overlay,
-        closeButton,
-        loginRequired,
-        loginButton,
-        checkoutContent
+        overlay: modal?.querySelector('.checkout-modal-overlay'),
+        closeButton: document.getElementById('checkoutModalClose'),
+        loginRequired: document.getElementById('checkoutLoginRequired'),
+        loginButton: document.getElementById('checkoutLoginButton'),
+        checkoutContent: document.getElementById('checkoutModalContent')
     };
 }
 
 
-async function loadCheckoutMarkup() {
+/* ==========================================================================
+   CARGAR CONTENIDO DEL CHECKOUT AUTENTICADO
+   ========================================================================== */
 
+async function loadCheckoutMarkup() {
     if (checkoutMarkupLoaded) {
         return true;
     }
 
-    const container =
-        document.getElementById(
-            'checkoutModalContent'
-        );
+    const container = document.getElementById('checkoutModalContent');
 
     if (!container) {
-
         console.error(
             '❌ No existe #checkoutModalContent.'
         );
-
         return false;
     }
 
     try {
-
-        const response =
-            await fetch(
-                './partials/account/account-checkout.html'
-            );
+        const response = await fetch(
+            './partials/account/account-checkout.html'
+        );
 
         if (!response.ok) {
-
-            throw new Error(
-                `HTTP ${response.status}`
-            );
+            throw new Error(`HTTP ${response.status}`);
         }
 
-        const html =
-            await response.text();
+        const html = await response.text();
+
+        // Evitar marcar como cargado si el contenedor fue eliminado.
+        if (!document.getElementById('checkoutModalContent')) {
+            return false;
+        }
 
         container.innerHTML = html;
-
         checkoutMarkupLoaded = true;
 
         console.log(
@@ -89,7 +70,6 @@ async function loadCheckoutMarkup() {
         return true;
 
     } catch (error) {
-
         console.error(
             '❌ Error cargando account-checkout.html:',
             error
@@ -100,12 +80,33 @@ async function loadCheckoutMarkup() {
 }
 
 
-async function openCheckoutModal() {
+/* ==========================================================================
+   ABRIR MODAL
+   ========================================================================== */
 
-    // Asegurar que los módulos de checkout diferidos estén cargados
-    if (window.resourceLoader && typeof window.resourceLoader.load === 'function') {
-        await window.resourceLoader.load('appCheckoutModal');
-        await window.resourceLoader.load('checkout');
+async function openCheckoutModal() {
+    const requestId = ++checkoutOpenRequest;
+
+    // Asegurar que estén cargados los recursos necesarios.
+    if (
+        window.resourceLoader &&
+        typeof window.resourceLoader.load === 'function'
+    ) {
+        try {
+            await window.resourceLoader.load('appCheckoutModal');
+            await window.resourceLoader.load('checkout');
+        } catch (error) {
+            console.error(
+                '❌ No se pudieron cargar los recursos del checkout:',
+                error
+            );
+            return;
+        }
+    }
+
+    // Si el usuario cerró el modal durante la carga, cancelar.
+    if (requestId !== checkoutOpenRequest) {
+        return;
     }
 
     const {
@@ -115,27 +116,19 @@ async function openCheckoutModal() {
     } = getCheckoutModalElements();
 
     if (!modal) {
+        console.error('❌ No existe #checkoutModal.');
         return;
     }
-
-    if (window.checkout && typeof window.checkout.setCheckoutCartSource === 'function') {
-        window.checkout.setCheckoutCartSource('index');
-    }
-
-    // ==============================================================
-    // CERRAR CARRITO
-    // ==============================================================
 
     if (typeof closeCart === 'function') {
         closeCart();
     }
 
-    // ==============================================================
-    // VALIDAR SESIÓN
-    // ==============================================================
+    // ==========================================================
+    // USUARIO NO AUTENTICADO
+    // ==========================================================
 
     if (!window.currentUser) {
-
         if (checkoutContent) {
             checkoutContent.style.display = 'none';
         }
@@ -145,89 +138,99 @@ async function openCheckoutModal() {
         }
 
         modal.classList.add('open');
-
         document.body.style.overflow = 'hidden';
 
         return;
     }
 
-    // ==============================================================
+    // ==========================================================
     // USUARIO AUTENTICADO
-    // ==============================================================
+    // ==========================================================
 
     if (loginRequired) {
         loginRequired.style.display = 'none';
-    }
-
-    const loaded =
-        await loadCheckoutMarkup();
-
-    if (!loaded) {
-        return;
-    }
-
-    // Ocultar "Volver al carrito" del checkout de cuenta
-    const backButton =
-        document.getElementById('accountCheckoutBack');
-
-    if (backButton) {
-        backButton.style.display = 'none';
     }
 
     if (checkoutContent) {
         checkoutContent.style.display = 'block';
     }
 
-    // ==============================================================
-    // USAR EL CHECKOUT REAL
-    // ==============================================================
+    const loaded = await loadCheckoutMarkup();
+
+    // La petición puede haber quedado obsoleta mientras esperaba.
+    if (requestId !== checkoutOpenRequest) {
+        return;
+    }
+
+    if (!loaded) {
+        return;
+    }
 
     if (
-        window.accountCheckout &&
-        typeof window.accountCheckout.showCheckout === 'function'
+        !window.accountCheckout ||
+        typeof window.accountCheckout.showCheckout !== 'function'
     ) {
-
-        window.accountCheckout.showCheckout('modal');
-
-    } else {
-
         console.error(
-            '❌ accountCheckout no está disponible.'
+            '❌ accountCheckout.showCheckout no está disponible.'
         );
+        return;
+    }
 
+    if (
+        window.checkout &&
+        typeof window.checkout.setCheckoutCartSource === 'function'
+    ) {
+        window.checkout.setCheckoutCartSource('index');
+    }
+
+    const backButton = document.getElementById('accountCheckoutBack');
+
+    if (backButton) {
+        backButton.style.display = 'none';
+    }
+
+    try {
+        await window.accountCheckout.showCheckout('modal');
+    } catch (error) {
+        console.error(
+            '❌ Error mostrando el checkout:',
+            error
+        );
+        return;
+    }
+
+    // No abrir si el usuario cerró durante la preparación.
+    if (requestId !== checkoutOpenRequest) {
         return;
     }
 
     modal.classList.add('open');
-
     document.body.style.overflow = 'hidden';
 }
 
 
-function closeCheckoutModal() {
+/* ==========================================================================
+   CERRAR MODAL
+   ========================================================================== */
 
-    const {
-        modal
-    } = getCheckoutModalElements();
+function closeCheckoutModal() {
+    // Invalida cualquier apertura que siga pendiente.
+    checkoutOpenRequest++;
+
+    const { modal } = getCheckoutModalElements();
 
     if (!modal) {
         return;
     }
 
     modal.classList.remove('open');
-
     document.body.style.overflow = '';
 
-    const backButton =
-        document.getElementById('accountCheckoutBack');
+    const backButton = document.getElementById('accountCheckoutBack');
 
     if (backButton) {
         backButton.style.display = '';
     }
-
-    // ==============================================================
-    // FINALIZAR CHECKOUT ACTUAL
-    // ==============================================================
 
     if (
         window.accountCheckout &&
@@ -235,29 +238,28 @@ function closeCheckoutModal() {
     ) {
         window.accountCheckout.resetCheckoutState();
     }
-
-
 }
 
+
+/* ==========================================================================
+   REDIRECCIÓN AL LOGIN
+   ========================================================================== */
 
 function handleCheckoutLogin() {
+    sessionStorage.setItem('returnToCheckout', 'true');
 
-    sessionStorage.setItem(
-        'returnToCheckout',
-        'true'
-    );
-
-    window.location.href = 'auth.html';
+    window.location.href = 'auth.html?mode=login';
 }
 
 
-function initCheckoutModal() {
+/* ==========================================================================
+   INICIALIZACIÓN
+   ========================================================================== */
 
+function initCheckoutModal() {
     if (checkoutModalInitialized) {
         return;
     }
-
-    checkoutModalInitialized = true;
 
     const {
         overlay,
@@ -265,42 +267,27 @@ function initCheckoutModal() {
         loginButton
     } = getCheckoutModalElements();
 
-    if (closeButton) {
-
-        closeButton.addEventListener(
-            'click',
-            closeCheckoutModal
+    if (!document.getElementById('checkoutModal')) {
+        console.warn(
+            '⚠️ No se puede inicializar checkout: el HTML aún no existe.'
         );
-
+        return;
     }
 
-    if (overlay) {
+    checkoutModalInitialized = true;
 
-        overlay.addEventListener(
-            'click',
-            closeCheckoutModal
-        );
+    closeButton?.addEventListener('click', closeCheckoutModal);
+    overlay?.addEventListener('click', closeCheckoutModal);
+    loginButton?.addEventListener('click', handleCheckoutLogin);
 
-    }
-
-    if (loginButton) {
-
-        loginButton.addEventListener(
-            'click',
-            handleCheckoutLogin
-        );
-
-    }
-
+    console.log('✅ Modal de checkout inicializado.');
 }
 
 
+/* ==========================================================================
+   API GLOBAL
+   ========================================================================== */
 
-window.openCheckoutModal =
-    openCheckoutModal;
-
-window.closeCheckoutModal =
-    closeCheckoutModal;
-
-window.initCheckoutModal =
-    initCheckoutModal;
+window.openCheckoutModal = openCheckoutModal;
+window.closeCheckoutModal = closeCheckoutModal;
+window.initCheckoutModal = initCheckoutModal;
