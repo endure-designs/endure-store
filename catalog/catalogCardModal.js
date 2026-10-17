@@ -10,9 +10,13 @@ function openProductModal(productId) {
 
     const productList = catalogManager.getProducts();
 
-    const product = productList.find(
-        p => String(p.id) === String(productId)
-    );
+    const product = (
+        productId && typeof productId === 'object'
+    )
+        ? productId
+        : productList.find(
+            p => String(p.id) === String(productId)
+        );
 
     if (!product) return;
 
@@ -91,6 +95,18 @@ function openProductModal(productId) {
         modalTitle.textContent =
             product.name || '';
 
+    }
+
+    const modalFullPageLink =
+        document.getElementById('modalFullPageLink');
+
+    if (modalFullPageLink) {
+
+        const productURL = window.appRouter
+            ? appRouter.getProductURL(product)
+            : `/producto/${product.slug || product.id}`;
+
+        modalFullPageLink.href = productURL;
     }
 
 
@@ -649,6 +665,42 @@ function openProductModal(productId) {
 
 }
 
+// ==========================================================================
+// ABRIR PRODUCTO DESDE URL SEO
+// ==========================================================================
+
+async function openProductModalBySlug(slug) {
+
+    try {
+
+        const response =
+            await catalogApi.getProductBySlug(slug);
+
+        if (!response.success || !response.data) {
+            return false;
+        }
+
+        const product = response.data;
+
+        if (product.slug !== slug) {
+            return false;
+        }
+
+        openProductModal(product);
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            'Error al abrir producto por slug:',
+            error
+        );
+
+        return false;
+    }
+}
+
 
 // ==========================================================================
 // CERRAR MODAL
@@ -796,6 +848,8 @@ function validateSelectedVariant() {
 window.catalogCardModal = {
 
     openProductModal,
+
+    openProductModalBySlug,
 
     closeProductModal,
 

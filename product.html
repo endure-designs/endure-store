@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+
+    <!-- SEO: Serán reemplazados dinámicamente por JS -->
+    <title>Producto | ENDURE</title>
+    <meta name="description" content="Descubre este producto en ENDURE - Streetwear & Urban Archives. Diseño urbano, calidad heavyweight.">
+    <link rel="canonical" href="https://endure.com.pe/">
+    <link rel="icon" type="image/webp" href="/assets/ICONO_WEB.webp">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="product">
+    <meta property="og:site_name" content="ENDURE">
+    <meta property="og:title" content="Producto | ENDURE">
+    <meta property="og:description" content="Descubre este producto en ENDURE - Streetwear & Urban Archives.">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Producto | ENDURE">
+    <meta name="twitter:description" content="Descubre este producto en ENDURE - Streetwear & Urban Archives.">
+    <meta name="twitter:image" content="">
+
+    <!-- JSON-LD Schema (se llenará dinámicamente) -->
+    <script type="application/ld+json" id="productJsonLd">{}</script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos globales -->
+    <link rel="stylesheet" href="/styles.css">
+    <!-- Estilos del modal (reutilizados para consistencia) -->
+    <link rel="stylesheet" href="/css/catalog/product-card-modal.css">
+    <!-- Estilos de la página de producto -->
+    <link rel="stylesheet" href="/css/catalog/product-page.css">
+    <!-- Estilos del carrito -->
+    <link rel="stylesheet" href="/css/cart/cart-modal.css">
+    <!-- Estilos de alerta -->
+    <link rel="stylesheet" href="/components/alerta/alert-modal.css">
+</head>
+
+<body>
+
+    <!-- NAV BAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="/" class="brand-logo"><img src="/assets/ENDURE_LOGO.png" alt="ENDURE Logo"></a>
+            <nav class="nav-menu">
+                <a href="/#productos" class="nav-link">Colección</a>
+                <a href="/#nosotros" class="nav-link">Nosotros</a>
+                <a href="/#faq" class="nav-link">Ayuda</a>
+            </nav>
+            <div class="nav-actions">
+                <!-- 1. VISITANTE -->
+                <a href="/auth.html" id="guestUserBtn" class="cart-trigger" aria-label="Mi cuenta"
+                    style="text-decoration:none;">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+
+                <!-- 2. AUTENTICADO -->
+                <div id="userDropdown" class="user-dropdown-container" style="display: none;">
+                    <button class="cart-trigger user-btn-trigger" id="userMenuBtn" aria-label="Menú de usuario">
+                        <i class="fa-solid fa-user"></i>
+                        <span id="userFirstName">Usuario</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.7em; margin-left: 2px;"></i>
+                    </button>
+                    <div id="userMenu" class="dropdown-menu" style="display: none;">
+                        <div class="dropdown-header">
+                            <span id="userFullName" class="user-name-title">Nombre Usuario</span>
+                            <small id="userEmail" class="user-email-subtitle">correo@ejemplo.com</small>
+                        </div>
+                        <hr>
+                        <a href="/account.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
+                        <button id="logoutBtn" class="logout-item">
+                            <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Carrito -->
+                <button class="cart-trigger" id="cartBtn" aria-label="Ver carrito">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- BREADCRUMBS -->
+    <nav class="product-page-breadcrumbs" aria-label="Migas de pan">
+        <div class="breadcrumbs-container">
+            <a href="/" class="breadcrumb-link">
+                <i class="fa-solid fa-house"></i> Inicio
+            </a>
+            <i class="fa-solid fa-chevron-right breadcrumb-separator"></i>
+            <a href="/#productos" class="breadcrumb-link">Catálogo</a>
+            <i class="fa-solid fa-chevron-right breadcrumb-separator"></i>
+            <span class="breadcrumb-current" id="breadcrumbProductName">Cargando...</span>
+        </div>
+    </nav>
+
+    <!-- PRODUCT PAGE CONTENT -->
+    <main class="product-page" id="productPage">
+
+        <!-- Estado de carga -->
+        <div class="product-page-loading" id="productPageLoading">
+            <div class="product-page-loading__spinner"></div>
+            <p>Cargando producto...</p>
+        </div>
+
+        <!-- Contenido del producto (oculto hasta carga) -->
+        <div class="product-page-content" id="productPageContent" style="display: none;">
+
+            <div class="product-page-grid">
+
+                <!-- Imagen -->
+                <div class="product-page-image-container">
+                    <img src="" alt="" id="pageProductImg" class="product-page-image">
+                </div>
+
+                <!-- Info -->
+                <div class="product-page-info">
+
+                    <span class="modal-category" id="pageProductCategory">CATEGORÍA</span>
+
+                    <h1 class="product-page-title" id="pageProductTitle">Nombre del Producto</h1>
+
+                    <div class="modal-price" id="pageProductPrice">$0.00</div>
+
+                    <p class="modal-description" id="pageProductDescription">
+                        Descripción detallada del producto...
+                    </p>
+
+                    <div class="modal-attributes" id="pageProductAttributes">
+                        <!-- Atributos generados dinámicamente -->
+                    </div>
+
+                    <div class="quantity-group">
+                        <label>Cantidad:</label>
+                        <div class="qty-selector">
+                            <button id="pageQtyMinus">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <span id="pageQtyVal">1</span>
+                            <button id="pageQtyPlus">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" id="pageAddBtn">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Añadir al Carrito
+                    </button>
+
+                    <!-- Detalles extra -->
+                    <div class="product-page-extras">
+                        <div class="product-page-feature">
+                            <i class="fa-solid fa-truck-fast"></i>
+                            <span>Envío a todo el Perú</span>
+                        </div>
+                        <div class="product-page-feature">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>Calidad Heavyweight 300g+</span>
+                        </div>
+                        <div class="product-page-feature">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            <span>Cambio de talla disponible</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- PRODUCTOS RELACIONADOS -->
+            <section class="related-products-section" id="relatedProductsSection" style="display: none;">
+                <h2 class="related-products-title">También te podría interesar</h2>
+                <div class="related-products-grid" id="relatedProductsGrid"></div>
+            </section>
+
+        </div>
+
+        <!-- Error state -->
+        <div class="product-page-error" id="productPageError" style="display: none;">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <h2>Producto no encontrado</h2>
+            <p>El producto que buscas no existe o fue eliminado.</p>
+            <a href="/#productos" class="btn btn-primary">Ver Catálogo</a>
+        </div>
+
+    </main>
+
+    <!-- SHOPPING CART (contenedor para cargar el partial dinámicamente) -->
+    <div id="cartModalContainer"></div>
+    <div id="productModalContainer"></div>
+    <div id="alertModalContainer"></div>
+    <div id="contactoContainer"></div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="/" class="brand-logo"><img src="/assets/ENDURE_LOGO.png" alt="ENDURE Logo"></a>
+                <p>Estilo urbano atemporal. Diseñado con carácter.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Enlaces</h4>
+                <a href="/#productos">Catálogo</a>
+                <a href="/#nosotros">Nosotros</a>
+                <a href="/#faq">Preguntas Frecuentes</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contacto</h4>
+                <p><i class="fa-solid fa-envelope"></i> <a
+                        href="mailto:contacto@endure.com.pe">contacto@endure.com.pe</a>
+                </p>
+                <p><i class="fa-solid fa-phone"></i> <a href="https://wa.me/51996440579" target="_blank">+51 996 440
+                        579</a></p>
+                <p><i class="fa-solid fa-location-dot"></i> Lima, Perú</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ENDURE. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        window.process = {
+            env: {
+                NODE_ENV: "production"
+            }
+        };
+    </script>
+
+    <!-- Scripts necesarios para la página de producto -->
+    <script src="/config/config.js"></script>
+    <script src="/debugger.js"></script>
+    <script src="/app/appState.js"></script>
+    <script src="/catalog/catalogApi.js"></script>
+    <script src="/catalog/catalogManager.js"></script>
+    <script src="/modules/auth/authApi.js"></script>
+    <script src="/modules/auth/authUI.js"></script>
+    <script src="/modules/auth/authManager.js"></script>
+    <script src="/cart/cart.js"></script>
+    <script src="/cart/cartStorage.js"></script>
+    <script src="/cart/cartApi.js"></script>
+    <script src="/cart/cartDrawer.js"></script>
+    <script src="/cart/cartUI.js"></script>
+    <script src="/cart/cartActions.js"></script>
+    <script src="/cart/cartSync.js"></script>
+    <script src="/components/alerta/alert-modal.js"></script>
+    <script src="/router.js"></script>
+    <script src="/catalog/productPage.js"></script>
+</body>
+
+</html>

@@ -101,6 +101,26 @@ async function initApp() {
     }
 
     // ----------------------------------------------------------------------
+    // 4.1. Abrir producto cuando se ingresa mediante una URL SEO
+    // ----------------------------------------------------------------------
+
+    const productRouteMatch = window.location.pathname.match(
+        /^\/producto\/([^/]+)\/?$/
+    );
+
+    if (productRouteMatch) {
+
+        const slug = decodeURIComponent(productRouteMatch[1]);
+
+        if (
+            window.catalogCardModal &&
+            typeof catalogCardModal.openProductModalBySlug === 'function'
+        ) {
+            await catalogCardModal.openProductModalBySlug(slug);
+        }
+    }
+
+    // ----------------------------------------------------------------------
     // 5. Inicializar zoom de escritorio del modal
     // ----------------------------------------------------------------------
 
@@ -157,7 +177,7 @@ async function initApp() {
         window.accountCheckoutSummary &&
         typeof accountCheckoutSummary.init === 'function'
     ) {
-        accountCheckoutSummary.init().catch(() => {});
+        accountCheckoutSummary.init().catch(() => { });
     }
 
     if (

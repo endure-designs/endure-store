@@ -1,8 +1,9 @@
 # Estructura del Proyecto
 **Carpeta principal:** `C:\Users\Ricardo\.gemini\antigravity\scratch\clothing-brand-store`
-**Fecha de generación:** 7/10/2026 03:51:19
+**Fecha de generación:** 16/10/2026 20:00:21
 
 ```text
+📄 404.html
 📄 account-main.js
     ⚡ loadScript()
     ⚡ loadAccountPartials()
@@ -13,8 +14,6 @@
 📄 account.js
     ⚡ initializeAccountLogic()
     ⚡ loadAdminProducts()
-📄 anime-gallery.css
-📄 anime-gallery.jsx
 📄 app-old.js
 📄 app.js
     ⚡ initApp()
@@ -36,19 +35,32 @@
     ⚡ initializeGoogleLogin()
     ⚡ handleGoogleCredential()
     ⚡ waitForGoogleIdentityServices()
+    ⚡ initializeAuthView()
+📄 CNAME
 📄 debugger.js
     ⚡ logDestacado()
     ⚡ mostrarEnConsola()
 📄 firebase-messaging-sw.js
 📄 index.html
 📄 main.js
-    ⚡ loadStylesheet()
-    ⚡ loadScript()
-    ⚡ loadCatalogComponents()
+    ⚡ dfs()
     ⚡ initializeApp()
+📄 product.html
 📄 products.json
 📄 README.md
+📄 robots.txt
+📄 router.js
+    ⚡ checkSavedRoute()
+    ⚡ resolveRoute()
+    ⚡ navigateToRoute()
+    ⚡ initRouter()
+    ⚡ getProductURL()
+    ⚡ generateSlugFromName()
+    ⚡ setupLinkInterception()
+📄 sitemap.xml
 📄 styles.css
+📄 vercel.json
+📄 _redirects
 📁 account/
     📄 accountAddresses.js
         ⚡ initAddressTypeSelector()
@@ -175,6 +187,7 @@
     📄 accountCheckoutCompleted.js
         ⚡ init()
         ⚡ bindEvents()
+        ⚡ scrollToCompletedStepTop()
         ⚡ loadCompletedStep()
         ⚡ renderCompletionState()
         ⚡ renderOrderInfo()
@@ -396,8 +409,6 @@
         ⚡ escapeHtml()
         ⚡ escapeAttribute()
 📁 app/
-    📄 appAnime.js
-        ⚡ initAnimeGallery()
     📄 appCheckout.js
         ⚡ sendOrderToWhatsApp()
     📄 appCheckoutModal.js
@@ -434,7 +445,6 @@
         ⚡ listCountryDivisions()
         ⚡ listDivisionChildren()
         ⚡ getDivision()
-    📄 appModal.js
     📄 appNotifications.js
         ⚡ cacheElements()
         ⚡ init()
@@ -544,6 +554,8 @@
         ⚡ getCart()
         ⚡ getCartSelectedItems()
         ⚡ getCartSelectedItemIds()
+        ⚡ notifyCartMutation()
+        ⚡ getCartMutationTime()
         ⚡ setCart()
         ⚡ addCartItem()
         ⚡ resetCart()
@@ -596,6 +608,7 @@
         ⚡ getAdminProducts()
         ⚡ getCatalogFilters()
         ⚡ getAdminCatalogFilters()
+        ⚡ getProductBySlug()
     📄 catalogCard.js
         ⚡ createProductCard()
         ⚡ launchProductCard()
@@ -614,6 +627,7 @@
         ⚡ getAttributeValue()
         ⚡ getAttributeColor()
         ⚡ updateSelectedVariant()
+        ⚡ openProductModalBySlug()
         ⚡ closeProductModal()
         ⚡ validateSelectedVariant()
     📄 catalogCardModalZoom.js
@@ -625,6 +639,8 @@
         ⚡ setCatalogMode()
         ⚡ getProducts()
         ⚡ getProductById()
+        ⚡ getProductBySlug()
+        ⚡ registerProduct()
         ⚡ getCollections()
         ⚡ getCategories()
         ⚡ getProductTypes()
@@ -649,6 +665,25 @@
         ⚡ updatePaginationTabs()
         ⚡ renderCurrentProducts()
         ⚡ initResizeObserver()
+    📄 productPage.js
+        ⚡ generateSlug()
+        ⚡ normalizeImagePath()
+        ⚡ getSlugFromURL()
+        ⚡ updateSEOMetaTags()
+        ⚡ updateJsonLd()
+        ⚡ renderProduct()
+        ⚡ getAttributeKey()
+        ⚡ getAttributeName()
+        ⚡ getAttributeValue()
+        ⚡ getAttributeColor()
+        ⚡ renderPrice()
+        ⚡ updateSelectedVariant()
+        ⚡ setupQuantityControls()
+        ⚡ setupAddToCart()
+        ⚡ loadCartPartials()
+        ⚡ initNavbar()
+        ⚡ initProductPage()
+        ⚡ loadRelatedProducts()
 📁 components/
     📁 alerta/
         📄 alert-modal.css
@@ -666,6 +701,14 @@
             ⚡ resolveConfirmation()
             ⚡ applyConfirmationType()
             ⚡ handleConfirmationKeydown()
+    📁 contacto/
+        📄 contacto.css
+        📄 contacto.html
+        📄 contacto.js
+            ⚡ initContacto()
+            ⚡ showBubble()
+            ⚡ hideBubble()
+            ⚡ scheduleBubble()
     📁 detalle-orden/
         📄 order-detail.css
         📄 order-detail.html
@@ -770,6 +813,7 @@
         📄 product-card-modal.css
         📄 product-card.css
         📄 product-filters.css
+        📄 product-page.css
     📁 checkout/
         📄 checkout-modal.css
 📁 modules/

@@ -464,3 +464,28 @@
         margin-top: 0;
     }
 }
+
+/* Enlace a página completa de producto desde el modal */
+.modal-product-full-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--sapphire);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: var(--transition-smooth);
+}
+
+.modal-product-full-link:hover {
+    color: var(--royal-blue);
+    background-color: var(--gray-100);
+}
+
+.modal-product-full-link i {
+    font-size: 0.75rem;
+}

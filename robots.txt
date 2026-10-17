@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://endure.com.pe/sitemap.xml

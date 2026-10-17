@@ -210,6 +210,21 @@ function getProductById(id) {
 }
 
 
+function getProductBySlug(slug) {
+    return PRODUCTS.find(
+        product => product.slug === slug || String(product.id) === String(slug)
+    );
+}
+
+function registerProduct(product) {
+    if (!product || !product.id) return;
+    const exists = PRODUCTS.some(p => String(p.id) === String(product.id));
+    if (!exists) {
+        PRODUCTS.push(product);
+    }
+}
+
+
 // ==========================================================================
 // OBTENER COLECCIONES
 // ==========================================================================
@@ -611,6 +626,8 @@ window.catalogManager = {
 
     getProductById,
 
+    getProductBySlug,
+
     getCollections,
 
     getCategories,
@@ -619,5 +636,7 @@ window.catalogManager = {
 
     getFilters,
 
-    getCatalogFilters
+    getCatalogFilters,
+
+    registerProduct
 };

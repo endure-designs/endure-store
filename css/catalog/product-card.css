@@ -222,6 +222,17 @@
     line-height: 1.3;
 }
 
+/* Enlace SEO del nombre del producto */
+.product-name-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.product-name-link:hover .product-name {
+    color: var(--sapphire);
+}
+
 /* Ajuste para pantallas pequeñas */
 @media (max-width: 480px) {
     .product-name {

@@ -104,6 +104,11 @@ function createProductCard(product) {
     // HTML de la tarjeta
     // ----------------------------------------------------------------------
 
+    // Generar URL de la página dedicada del producto
+    const productURL = window.appRouter
+        ? appRouter.getProductURL(product)
+        : `/producto/${(product.slug || product.id)}`;
+
     card.innerHTML = `
 
         <div
@@ -137,15 +142,15 @@ function createProductCard(product) {
             </span>
 
 
-            <h3
-                class="product-name"
-                onclick="catalogCard.launchProductCard(
-                    this.closest('.product-card'),
-                    '${product.id}'
-                )"
+            <a
+                href="${productURL}"
+                class="product-name-link"
+                title="Ver ${product.name}"
             >
-                ${product.name}
-            </h3>
+                <h3 class="product-name">
+                    ${product.name}
+                </h3>
+            </a>
 
 
             ${priceHTML}

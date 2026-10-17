@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página no encontrada | ENDURE</title>
+    <link rel="icon" type="image/webp" href="/assets/ICONO_WEB.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ================================================================
+         SPA REDIRECT PARA GITHUB PAGES
+         Antes de mostrar el 404, verificar si es una ruta de producto
+         válida (ej: /producto/slug) y redirigir al index con la ruta
+         preservada para que el router.js del SPA la procese.
+         ================================================================ -->
+    <script>
+        (function () {
+            var path = window.location.pathname;
+
+            // Si la ruta es de producto (/producto/algo o /product/algo)
+            var match = path.match(/^\/(?:producto|product)\/([^/]+)\/?$/i);
+            if (match) {
+                var slug = match[1];
+                var search = window.location.search || '';
+                var target = '/product.html?slug=' + encodeURIComponent(slug);
+                if (search) {
+                    target += '&' + search.replace(/^\?/, '');
+                }
+                window.location.replace(target);
+                return;
+            }
+        })();
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sapphire: #3C507D;
+            --royal-blue: #112250;
+            --quicksand: #E0C58F;
+            --swan-wing: #F5F0E9;
+            --shellstone: #D9CBC2;
+            --dark-bg: #090e1a;
+            --light-bg: #FAF9F6;
+            --white: #ffffff;
+            --gray-100: #f1efeb;
+            --gray-200: #e5e2db;
+            --text-dark: #0a0f1d;
+            --text-light: #F5F0E9;
+            --text-muted: #6b7280;
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Fondo animado con partículas */
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 1px 1px, rgba(224, 197, 143, 0.06) 1px, transparent 0);
+            background-size: 40px 40px;
+            animation: gridDrift 20s linear infinite;
+        }
+
+        @keyframes gridDrift {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(40px, 40px);
+            }
+        }
+
+        /* Resplandor sutil */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .glow-orb--1 {
+            width: 500px;
+            height: 500px;
+            background: var(--sapphire);
+            top: -150px;
+            right: -100px;
+            animation: orbFloat 8s ease-in-out infinite alternate;
+        }
+
+        .glow-orb--2 {
+            width: 400px;
+            height: 400px;
+            background: var(--quicksand);
+            bottom: -100px;
+            left: -100px;
+            animation: orbFloat 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+        }
+
+        .error-container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 24px;
+            max-width: 600px;
+        }
+
+        /* Número 404 gigante */
+        .error-code {
+            font-family: var(--font-heading);
+            font-size: clamp(100px, 20vw, 200px);
+            font-weight: 700;
+            line-height: 1;
+            color: transparent;
+            background: linear-gradient(135deg, var(--quicksand) 0%, var(--sapphire) 50%, var(--royal-blue) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -4px;
+            position: relative;
+        }
+
+        .error-code::after {
+            content: '404';
+            position: absolute;
+            inset: 0;
+            font-size: inherit;
+            font-weight: inherit;
+            font-family: inherit;
+            letter-spacing: inherit;
+            line-height: inherit;
+            color: transparent;
+            background: linear-gradient(135deg, var(--quicksand) 0%, var(--sapphire) 50%, var(--royal-blue) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: blur(30px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .error-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 6px 16px;
+            border: 1px solid rgba(224, 197, 143, 0.3);
+            border-radius: 100px;
+            color: var(--quicksand);
+            margin-bottom: 24px;
+        }
+
+        .error-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 700;
+            color: var(--swan-wing);
+            margin-bottom: 16px;
+        }
+
+        .error-description {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-404 {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-family: var(--font-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-404--primary {
+            background: linear-gradient(135deg, var(--quicksand), var(--shellstone));
+            color: var(--royal-blue);
+            box-shadow: 0 4px 20px rgba(224, 197, 143, 0.3);
+        }
+
+        .btn-404--primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(224, 197, 143, 0.4);
+        }
+
+        .btn-404--outline {
+            background: transparent;
+            color: var(--swan-wing);
+            border: 1px solid rgba(245, 240, 233, 0.2);
+        }
+
+        .btn-404--outline:hover {
+            background: rgba(245, 240, 233, 0.08);
+            border-color: rgba(245, 240, 233, 0.4);
+            transform: translateY(-3px);
+        }
+
+        /* Footer mínimo */
+        .error-footer {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .error-footer a {
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .error-footer img {
+            height: 28px;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-footer img:hover {
+            opacity: 0.7;
+        }
+
+        /* Animación de entrada */
+        .error-container {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-404 {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Fondo visual -->
+    <div class="bg-grid"></div>
+    <div class="glow-orb glow-orb--1"></div>
+    <div class="glow-orb glow-orb--2"></div>
+
+    <!-- Contenido principal -->
+    <main class="error-container">
+
+        <div class="error-code">404</div>
+
+        <div class="error-badge">Ruta no encontrada</div>
+
+        <h1 class="error-title">Esta página no existe</h1>
+
+        <p class="error-description">
+            La página que buscas pudo haber sido movida, eliminada o simplemente
+            no existe. Vuelve al inicio para explorar nuestro catálogo.
+        </p>
+
+        <div class="error-actions">
+            <a href="/" class="btn-404 btn-404--primary">
+                <i class="fa-solid fa-house"></i>
+                Ir al Inicio
+            </a>
+            <a href="/#productos" class="btn-404 btn-404--outline">
+                <i class="fa-solid fa-shirt"></i>
+                Ver Catálogo
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Logo footer -->
+    <footer class="error-footer">
+        <a href="/">
+            <img src="/assets/ENDURE_LOGO.png" alt="ENDURE">
+        </a>
+    </footer>
+
+</body>
+
+</html>
