@@ -1,6 +1,6 @@
 # Estructura del Proyecto
 **Carpeta principal:** `C:\Users\Ricardo\.gemini\antigravity\scratch\clothing-brand-store`
-**Fecha de generación:** 16/10/2026 20:00:21
+**Fecha de generación:** 16/10/2026 21:36:21
 
 ```text
 📄 404.html
@@ -21,6 +21,7 @@
 📄 auth.css
 📄 auth.html
 📄 auth.js
+    ⚡ getPostLoginDestination()
     ⚡ switchView()
     ⚡ showAlert()
     ⚡ hideAlert()
@@ -417,6 +418,7 @@
         ⚡ openCheckoutModal()
         ⚡ closeCheckoutModal()
         ⚡ handleCheckoutLogin()
+        ⚡ resumeCheckoutAfterLogin()
         ⚡ initCheckoutModal()
     📄 appDropdowns.js
         ⚡ positionSubfilters()
@@ -668,6 +670,8 @@
     📄 productPage.js
         ⚡ generateSlug()
         ⚡ normalizeImagePath()
+        ⚡ getDedicatedProductURL()
+        ⚡ escapeHTML()
         ⚡ getSlugFromURL()
         ⚡ updateSEOMetaTags()
         ⚡ updateJsonLd()
@@ -679,9 +683,13 @@
         ⚡ renderPrice()
         ⚡ updateSelectedVariant()
         ⚡ setupQuantityControls()
-        ⚡ setupAddToCart()
-        ⚡ loadCartPartials()
+        ⚡ showSelectionWarning()
+        ⚡ updateAppStateFromProductPage()
+        ⚡ addCurrentProductToCart()
+        ⚡ setupProductActions()
+        ⚡ loadProductPartials()
         ⚡ initNavbar()
+        ⚡ initProductCheckout()
         ⚡ initProductPage()
         ⚡ loadRelatedProducts()
 📁 components/
