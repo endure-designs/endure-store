@@ -30,7 +30,7 @@ async function addToCart(productId, variant, quantity = 1) {
             console.error(
                 `Producto con ID ${productId} no encontrado.`
             );
-            return;
+            return false;
         }
 
         // ------------------------------------------------------------------
@@ -41,7 +41,7 @@ async function addToCart(productId, variant, quantity = 1) {
             console.error(
                 'No se recibió una variante válida.'
             );
-            return;
+            return false;
         }
 
         // ------------------------------------------------------------------
@@ -58,7 +58,7 @@ async function addToCart(productId, variant, quantity = 1) {
             console.error(
                 `La variante ${variant.id} no pertenece al producto ${productId}.`
             );
-            return;
+            return false;
         }
 
         // ------------------------------------------------------------------
@@ -99,12 +99,28 @@ async function addToCart(productId, variant, quantity = 1) {
                 console.warn(
                     `⚠️ Error agregando al carrito: HTTP ${res.status}`
                 );
-                return;
+                return false;
             }
 
             console.log(
                 "✅ Producto agregado al carrito de DB."
             );
+
+            // Todo producto que se añade queda seleccionado por defecto.
+            // Así, «Comprar ahora» puede continuar al checkout con la
+            // variante elegida sin depender de una selección previa.
+            if (typeof apiUpdateItemSelection === 'function') {
+                const selectionRes = await apiUpdateItemSelection(
+                    exactVariantId,
+                    true
+                );
+
+                if (!selectionRes.ok) {
+                    console.warn(
+                        `⚠️ Producto agregado, pero no se pudo seleccionar para checkout: HTTP ${selectionRes.status}`
+                    );
+                }
+            }
 
             // Obtener nuevamente el carrito desde BD
             const cartRes = await apiGetCart();
@@ -113,7 +129,7 @@ async function addToCart(productId, variant, quantity = 1) {
                 console.warn(
                     `⚠️ Producto agregado, pero no se pudo actualizar la vista: HTTP ${cartRes.status}`
                 );
-                return;
+                return false;
             }
 
             const cartData = await cartRes.json();
@@ -134,7 +150,7 @@ async function addToCart(productId, variant, quantity = 1) {
             setCart(backendCart);
             updateCartUI();
 
-            return;
+            return true;
         }
 
         // ==================================================================
@@ -155,6 +171,8 @@ async function addToCart(productId, variant, quantity = 1) {
                 Number(cart[existingIndex].qty || 0) +
                 Number(quantity);
 
+            cart[existingIndex].isSelected = true;
+
         } else {
 
             cart.push({
@@ -165,7 +183,8 @@ async function addToCart(productId, variant, quantity = 1) {
                 compareAtPrice,
                 image: product.image || '',
                 attributes,
-                qty: Number(quantity)
+                qty: Number(quantity),
+                isSelected: true
             });
         }
 
@@ -176,12 +195,16 @@ async function addToCart(productId, variant, quantity = 1) {
             "🛒 Producto agregado al carrito local."
         );
 
+        return true;
+
     } catch (err) {
 
         console.error(
             "Error agregando producto:",
             err
         );
+
+        return false;
     }
 }
 

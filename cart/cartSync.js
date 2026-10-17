@@ -98,28 +98,39 @@ async function syncCartFromBackend() {
                 const dbQty =
                     Number(dbItem.qty);
 
-                // Ya tienen la misma cantidad.
-                // No necesitamos hacer ninguna petición.
-                if (localQty === dbQty) {
-                    continue;
+                if (localQty !== dbQty) {
+                    const updateRes =
+                        await apiUpdateItem(
+                            localItem.variantId,
+                            localQty
+                        );
+
+                    if (!updateRes.ok) {
+
+                        throw new Error(
+                            `No se pudo actualizar la variante ${localItem.variantId}. HTTP ${updateRes.status}`
+                        );
+                    }
+
+                    console.log(
+                        `✅ Variante ${localItem.variantId} actualizada: ${dbQty} → ${localQty}`
+                    );
                 }
 
-                const updateRes =
-                    await apiUpdateItem(
+                const selected = localItem.isSelected !== false;
+
+                if (dbItem.isSelected !== selected) {
+                    const selectionRes = await apiUpdateItemSelection(
                         localItem.variantId,
-                        localQty
+                        selected
                     );
 
-                if (!updateRes.ok) {
-
-                    throw new Error(
-                        `No se pudo actualizar la variante ${localItem.variantId}. HTTP ${updateRes.status}`
-                    );
+                    if (!selectionRes.ok) {
+                        throw new Error(
+                            `No se pudo actualizar la selección de la variante ${localItem.variantId}. HTTP ${selectionRes.status}`
+                        );
+                    }
                 }
-
-                console.log(
-                    `✅ Variante ${localItem.variantId} actualizada: ${dbQty} → ${localQty}`
-                );
 
             }
 
@@ -147,6 +158,17 @@ async function syncCartFromBackend() {
                 console.log(
                     `✅ Variante ${localItem.variantId} agregada: ×${localItem.qty}`
                 );
+
+                const selectionRes = await apiUpdateItemSelection(
+                    localItem.variantId,
+                    localItem.isSelected !== false
+                );
+
+                if (!selectionRes.ok) {
+                    throw new Error(
+                        `No se pudo seleccionar la variante ${localItem.variantId}. HTTP ${selectionRes.status}`
+                    );
+                }
             }
         }
 

@@ -96,31 +96,13 @@
 
     function navigateToRoute(route) {
 
-        // Construir la URL destino con los parámetros como query string
-        // para que la página dedicada los pueda leer
-        let targetUrl = route.page;
+        if (route.name !== 'product') return;
 
-        // Preservar el path original en la URL para que la página de producto
-        // pueda extraer el slug directamente del pathname
-        const originalPath = window.location.pathname;
+        const targetUrl = getProductURL({ slug: route.params.slug });
 
-        // Si ya estamos en la página correcta, no redirigir
-        if (window.location.pathname === route.page) return;
+        if (window.location.pathname === targetUrl) return;
 
-        // Para la página de producto, queremos que la URL se mantenga
-        // como /producto/{slug}, así que usamos history.replaceState
-        // solo si estamos en la raíz (viniendo de un redirect del 404.html)
-        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-
-            // Redirigir a la página dedicada preservando el slug en la URL
-            const slug = route.params.slug;
-            const productPageUrl = `/producto/${slug}`;
-
-            // Usar la página de producto con el path original
-            window.location.replace(
-                route.page + '?slug=' + encodeURIComponent(slug)
-            );
-        }
+        window.location.replace(targetUrl);
     }
 
 
@@ -182,7 +164,21 @@
     function getProductURL(product) {
 
         const slug = product.slug || generateSlugFromName(product.name);
-        return `/producto/${slug}`;
+        const encodedSlug = encodeURIComponent(slug);
+
+        // Un servidor estático simple (por ejemplo, python -m http.server en
+        // localhost) no aplica rewrites para /producto/:slug. En desarrollo
+        // usamos el archivo real para que recargar o pegar la URL funcione.
+        const localHost = [
+            'localhost',
+            '127.0.0.1',
+            '::1',
+            '[::1]'
+        ].includes(window.location.hostname);
+
+        return localHost
+            ? `/product.html?slug=${encodedSlug}`
+            : `/producto/${encodedSlug}`;
     }
 
     function generateSlugFromName(text) {
@@ -227,7 +223,7 @@
             if (match) {
                 e.preventDefault();
                 const slug = match[1];
-                window.location.href = `/product.html?slug=${encodeURIComponent(slug)}`;
+                window.location.href = getProductURL({ slug });
             }
         });
     }

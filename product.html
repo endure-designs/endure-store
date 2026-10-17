@@ -45,6 +45,13 @@
     <link rel="stylesheet" href="/css/catalog/product-page.css">
     <!-- Estilos del carrito -->
     <link rel="stylesheet" href="/css/cart/cart-modal.css">
+    <!-- Estilos del checkout reutilizado desde el catálogo -->
+    <link rel="stylesheet" href="/css/checkout/checkout-modal.css">
+    <link rel="stylesheet" href="/css/account/account-checkout.css">
+    <link rel="stylesheet" href="/css/account/accountCheckoutOrderSummary.css">
+    <link rel="stylesheet" href="/css/account/account-addresses.css">
+    <link rel="stylesheet" href="/components/selector/selector.css">
+    <link rel="stylesheet" href="/components/formulario/rapid-form.css">
     <!-- Estilos de alerta -->
     <link rel="stylesheet" href="/components/alerta/alert-modal.css">
 </head>
@@ -158,10 +165,17 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary btn-block" id="pageAddBtn">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                        Añadir al Carrito
-                    </button>
+                    <div class="product-page-actions">
+                        <button class="btn product-page-add-button" id="pageAddBtn" type="button">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            Añadir al Carrito
+                        </button>
+
+                        <button class="btn btn-primary product-page-checkout-button" id="pageCheckoutBtn" type="button">
+                            <i class="fa-solid fa-lock"></i>
+                            Comprar ahora
+                        </button>
+                    </div>
 
                     <!-- Detalles extra -->
                     <div class="product-page-extras">
@@ -203,6 +217,9 @@
 
     <!-- SHOPPING CART (contenedor para cargar el partial dinámicamente) -->
     <div id="cartModalContainer"></div>
+    <div id="checkoutModalContainer"></div>
+    <div id="addressModalContainer"></div>
+    <div id="rapidFormContainer" hidden></div>
     <div id="productModalContainer"></div>
     <div id="alertModalContainer"></div>
     <div id="contactoContainer"></div>
@@ -265,6 +282,23 @@
     <script src="/cart/cartActions.js"></script>
     <script src="/cart/cartSync.js"></script>
     <script src="/components/alerta/alert-modal.js"></script>
+    <script src="/components/selector/selector.js"></script>
+    <script src="/app/appLocationApi.js"></script>
+    <script src="/app/appLocation.js"></script>
+    <script src="/components/services/addressMapService.js"></script>
+    <script src="/account/accountAddressesApi.js"></script>
+    <script src="/components/formulario/rapid-form.js"></script>
+    <script src="/account/accountAddresses.js"></script>
+    <script src="https://3ds.culqi.com"></script>
+    <script src="https://js.culqi.com/checkout-js"></script>
+    <script src="/modules/checkout/checkoutApi.js"></script>
+    <script src="/modules/checkout/checkout.js"></script>
+    <script src="/account/accountCheckoutSummary.js"></script>
+    <script src="/account/accountCheckoutPurchase.js"></script>
+    <script src="/account/accountCheckoutCompleted.js"></script>
+    <script src="/account/accountCheckoutOrderSummary.js"></script>
+    <script src="/account/accountCheckout.js"></script>
+    <script src="/app/appCheckoutModal.js"></script>
     <script src="/router.js"></script>
     <script src="/catalog/productPage.js"></script>
 </body>

@@ -43,6 +43,28 @@
         return '/' + src;
     }
 
+    function getDedicatedProductURL(product) {
+        if (
+            window.appRouter &&
+            typeof window.appRouter.getProductURL === 'function'
+        ) {
+            return window.appRouter.getProductURL(product);
+        }
+
+        const slug = product.slug || generateSlug(product.name);
+        return `/product.html?slug=${encodeURIComponent(slug)}`;
+    }
+
+    function escapeHTML(value) {
+        return String(value ?? '').replace(/[&<>"']/g, character => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[character]));
+    }
+
 
     /**
      * Extrae el slug de la URL actual.
@@ -411,8 +433,8 @@
         // --- Cantidad ---
         setupQuantityControls();
 
-        // --- Botón Añadir al Carrito ---
-        setupAddToCart(product);
+        // --- Acciones de compra ---
+        setupProductActions(product);
     }
 
 
@@ -525,60 +547,99 @@
 
 
     // ======================================================================
-    // 8. AÑADIR AL CARRITO
+    // 8. ACCIONES DE COMPRA
     // ======================================================================
 
-    function setupAddToCart(product) {
+    function showSelectionWarning() {
+
+        if (window.alertModal && typeof alertModal.show === 'function') {
+            alertModal.show({
+                type: 'warning',
+                title: 'Selecciona una opción',
+                message: 'Por favor, selecciona todas las opciones del producto antes de continuar.',
+                duration: 4000
+            });
+        }
+    }
+
+    function updateAppStateFromProductPage(product, state, variant) {
+
+        if (!window.appState) return;
+
+        appState.selectedProduct = product;
+        appState.selectedQty = state.selectedQty;
+        appState.selectedAttributes = state.selectedAttributes;
+        appState.selectedVariant = variant;
+    }
+
+    async function addCurrentProductToCart(product, { openDrawer = false, openCheckout = false } = {}) {
+
+        const state = window._productPageState;
+        const variants = Array.isArray(product.variants) ? product.variants : [];
+        const variant = state?.selectedVariant;
+
+        if (variants.length > 0 && !variant) {
+            showSelectionWarning();
+            return false;
+        }
+
+        const effectiveVariant = variant || {
+            id: product.id,
+            price: product.price
+        };
+
+        if (!effectiveVariant?.id || typeof window.addToCart !== 'function') {
+            console.error('❌ El carrito no está disponible para añadir este producto.');
+            return false;
+        }
+
+        updateAppStateFromProductPage(product, state, effectiveVariant);
+
+        const added = await window.addToCart(
+            product.id,
+            effectiveVariant,
+            state?.selectedQty || 1
+        );
+
+        if (!added) {
+            if (window.alertModal && typeof alertModal.show === 'function') {
+                alertModal.show({
+                    type: 'error',
+                    title: 'No se pudo añadir el producto',
+                    message: 'Inténtalo nuevamente en unos segundos.',
+                    duration: 4000
+                });
+            }
+
+            return false;
+        }
+
+        if (openCheckout && typeof window.openCheckoutModal === 'function') {
+            await window.openCheckoutModal();
+            return true;
+        }
+
+        if (openDrawer && typeof window.openCart === 'function') {
+            window.openCart();
+        }
+
+        return true;
+    }
+
+    function setupProductActions(product) {
 
         const addBtn = document.getElementById('pageAddBtn');
-        if (!addBtn) return;
 
-        addBtn.addEventListener('click', () => {
+        if (addBtn) {
+            addBtn.addEventListener('click', async () => {
+                addBtn.disabled = true;
 
-            const state = window._productPageState;
-            const variant = state.selectedVariant;
-            const variants = Array.isArray(product.variants) ? product.variants : [];
-
-            // Si hay variantes pero no se seleccionó una válida
-            if (variants.length > 0 && !variant) {
-
-                if (window.alertModal && typeof alertModal.show === 'function') {
-                    alertModal.show({
-                        type: 'warning',
-                        title: 'Selecciona una opción',
-                        message: 'Por favor, selecciona todas las opciones del producto antes de añadir al carrito.',
-                        duration: 4000
-                    });
-                }
-                return;
-            }
-
-            // Sincronizar con appState para que addToCart funcione
-            if (window.appState) {
-                appState.selectedProduct = product;
-                appState.selectedQty = state.selectedQty;
-                appState.selectedAttributes = state.selectedAttributes;
-                appState.selectedVariant = variant;
-            }
-
-            // Llamar a la función global de agregar al carrito
-            (async () => {
                 try {
-                    const effectiveVariant = variant || (variants.length > 0 ? variants[0] : { id: product.id, price: product.price });
+                    const added = await addCurrentProductToCart(product, {
+                        openDrawer: true
+                    });
 
-                    if (typeof addToCart === 'function') {
-                        await addToCart(product.id, effectiveVariant, state.selectedQty || 1);
-                    } else if (typeof quickAdd === 'function') {
-                        await quickAdd(product.id);
-                    }
-
-                    // Abrir drawer del carrito
-                    if (typeof openCartDrawer === 'function') {
-                        openCartDrawer();
-                    }
-
-                    // Notificación visual de éxito
-                    if (window.alertModal && typeof alertModal.show === 'function') {
+                    if (added && window.alertModal && typeof alertModal.show === 'function') {
                         alertModal.show({
                             type: 'success',
                             title: '¡Añadido al carrito!',
@@ -588,9 +649,29 @@
                     }
                 } catch (cartErr) {
                     console.error('❌ Error añadiendo al carrito:', cartErr);
+                } finally {
+                    addBtn.disabled = false;
                 }
-            })();
-        });
+            });
+        }
+
+        const checkoutBtn = document.getElementById('pageCheckoutBtn');
+
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', async () => {
+                checkoutBtn.disabled = true;
+
+                try {
+                    await addCurrentProductToCart(product, {
+                        openCheckout: true
+                    });
+                } catch (checkoutError) {
+                    console.error('❌ Error iniciando checkout desde producto:', checkoutError);
+                } finally {
+                    checkoutBtn.disabled = false;
+                }
+            });
+        }
     }
 
 
@@ -598,26 +679,30 @@
     // 9. CARGAR PARTIALS DEL CARRITO
     // ======================================================================
 
-    async function loadCartPartials() {
+    async function loadProductPartials() {
 
         try {
-            // Cargar HTML del carrito
-            const cartContainer = document.getElementById('cartModalContainer');
-            if (cartContainer && cartContainer.innerHTML.trim() === '') {
-                const response = await fetch('/partials/cart/cart-modal.html');
-                if (response.ok) {
-                    cartContainer.innerHTML = await response.text();
-                }
-            }
+            const partials = [
+                ['cartModalContainer', '/partials/cart/cart-modal.html'],
+                ['alertModalContainer', '/components/alerta/alert-modal.html'],
+                ['checkoutModalContainer', '/partials/checkout/checkout-modal.html'],
+                ['addressModalContainer', '/partials/account/address-modal.html'],
+                ['rapidFormContainer', '/components/formulario/rapid-form.html']
+            ];
 
-            // Cargar HTML del alert modal
-            const alertContainer = document.getElementById('alertModalContainer');
-            if (alertContainer && alertContainer.innerHTML.trim() === '') {
-                const response = await fetch('/components/alerta/alert-modal.html');
-                if (response.ok) {
-                    alertContainer.innerHTML = await response.text();
+            await Promise.all(partials.map(async ([containerId, url]) => {
+                const container = document.getElementById(containerId);
+
+                if (!container || container.innerHTML.trim() !== '') return;
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`No se pudo cargar ${url}: HTTP ${response.status}`);
                 }
-            }
+
+                container.innerHTML = await response.text();
+            }));
         } catch (err) {
             console.warn('⚠️ Error cargando partials:', err);
         }
@@ -644,10 +729,29 @@
         if (typeof loadCart === 'function') loadCart();
         if (typeof updateCartUI === 'function') updateCartUI();
 
+        // Para usuarios autenticados, el backend es la fuente de verdad.
+        if (window.currentUser && typeof window.syncCartFromBackend === 'function') {
+            try {
+                await window.syncCartFromBackend();
+            } catch (error) {
+                console.warn('⚠️ No se pudo sincronizar el carrito en la página de producto:', error);
+            }
+        }
+
         // Eventos del carrito drawer
-        const cartBtn = document.getElementById('cartBtn');
-        if (cartBtn && typeof openCartDrawer === 'function') {
-            cartBtn.addEventListener('click', openCartDrawer);
+        if (typeof window.initCartDrawer === 'function') {
+            window.initCartDrawer();
+        } else {
+            const cartBtn = document.getElementById('cartBtn');
+            cartBtn?.addEventListener('click', window.openCart);
+        }
+
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn && !checkoutBtn.dataset.checkoutBound) {
+            checkoutBtn.dataset.checkoutBound = 'true';
+            checkoutBtn.addEventListener('click', () => {
+                window.openCheckoutModal?.();
+            });
         }
 
         // Eventos navbar del usuario
@@ -677,6 +781,26 @@
     }
 
 
+    async function initProductCheckout() {
+
+        window.initCheckoutModal?.();
+        window.accountCheckout?.init?.();
+        await window.accountCheckoutSummary?.init?.();
+        window.accountCheckoutPurchase?.init?.();
+        window.accountCheckoutCompleted?.init?.();
+        window.accountCheckoutOrderSummary?.init?.();
+
+        if (window.currentUser) {
+            try {
+                await window.accountAddresses?.init?.();
+                await window.checkout?.init?.(window.currentUser);
+            } catch (error) {
+                console.warn('⚠️ No se pudo inicializar completamente el checkout:', error);
+            }
+        }
+    }
+
+
     // ======================================================================
     // 11. INIT PRINCIPAL — CARGAR PRODUCTO
     // ======================================================================
@@ -688,10 +812,13 @@
         const errorEl = document.getElementById('productPageError');
 
         // Cargar partials necesarios
-        await loadCartPartials();
+        await loadProductPartials();
 
         // Inicializar navbar y sesión
         await initNavbar();
+
+        // La página de producto usa el mismo checkout que el catálogo.
+        await initProductCheckout();
 
         // Obtener slug de la URL
         const slug = getSlugFromURL();
@@ -725,11 +852,12 @@
             updateSEOMetaTags(product);
             updateJsonLd(product);
 
-            // Actualizar URL limpia en el navegador si soporta history API
-            const canonicalSlug = product.slug || generateSlug(product.name);
-            if (window.history && window.history.replaceState && canonicalSlug) {
+            // En local se conserva la URL del archivo real para soportar
+            // recargas sin que el servidor estático responda 404.
+            const productUrl = getDedicatedProductURL(product);
+            if (window.history && window.history.replaceState && productUrl) {
                 try {
-                    window.history.replaceState(null, '', `/producto/${encodeURIComponent(canonicalSlug)}`);
+                    window.history.replaceState(null, '', productUrl);
                 } catch (e) {
                     // Ignorar si hay restricciones locales
                 }
@@ -741,6 +869,10 @@
 
             // Cargar productos relacionados
             loadRelatedProducts(product);
+
+            // Tras el login, se regresa a la misma página y se reabre el
+            // checkout con el carrito ya sincronizado.
+            await window.resumeCheckoutAfterLogin?.();
 
         } catch (error) {
 
@@ -763,32 +895,32 @@
         if (!section || !grid) return;
 
         try {
-            let list = [];
-            if (window.catalogManager && typeof catalogManager.getProducts === 'function') {
-                list = catalogManager.getProducts() || [];
-            }
+            const response = await window.catalogApi.getProducts(1, 8);
+            const list = Array.isArray(response?.data?.items)
+                ? response.data.items
+                : [];
 
-            if (!list || list.length <= 1) {
-                const res = await fetch('/products.json');
-                if (res.ok) list = await res.json();
-            }
-
-            const related = (list || [])
+            const related = list
                 .filter(p => String(p.id) !== String(currentProduct.id))
+                .sort((first, second) => {
+                    const firstMatchesTheme = first.theme?.id === currentProduct.theme?.id ? 1 : 0;
+                    const secondMatchesTheme = second.theme?.id === currentProduct.theme?.id ? 1 : 0;
+                    return secondMatchesTheme - firstMatchesTheme;
+                })
                 .slice(0, 4);
 
             if (related.length === 0) return;
 
             grid.innerHTML = related.map(p => {
-                const pSlug = p.slug || generateSlug(p.name);
                 const price = p.price != null ? Number(p.price).toFixed(2) : '0.00';
+                const productUrl = getDedicatedProductURL(p);
                 return `
                     <div class="related-card">
-                        <a href="/producto/${pSlug}" class="related-card-img-link">
-                            <img src="${normalizeImagePath(p.image)}" alt="${p.name}" loading="lazy">
+                        <a href="${productUrl}" class="related-card-img-link">
+                            <img src="${escapeHTML(normalizeImagePath(p.image))}" alt="${escapeHTML(p.name)}" loading="lazy">
                         </a>
                         <div class="related-card-info">
-                            <a href="/producto/${pSlug}" class="related-card-title">${p.name}</a>
+                            <a href="${productUrl}" class="related-card-title">${escapeHTML(p.name)}</a>
                             <span class="related-card-price">S/${price}</span>
                         </div>
                     </div>

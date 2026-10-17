@@ -45,6 +45,19 @@ const matchIndicator = document.getElementById('matchIndicator');
 const passwordRequirements = document.getElementById('passwordRequirements');
 const passwordValidIndicator = document.getElementById('passwordValidIndicator');
 
+
+function getPostLoginDestination() {
+    const savedPath = sessionStorage.getItem('checkoutReturnUrl');
+
+    // Solo se permiten rutas relativas de esta misma aplicación. Esto evita
+    // usar sessionStorage como un vector de redirección externa.
+    if (savedPath && /^\/(?!\/)/.test(savedPath)) {
+        return savedPath;
+    }
+
+    return 'index.html';
+}
+
 // ─── Tab / Form Toggling ───
 
 /**
@@ -426,7 +439,7 @@ loginForm.addEventListener('submit', async (e) => {
 
             // Redirect to home after a short delay
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = getPostLoginDestination();
             }, 1500);
         } else {
             // Show backend error message
@@ -878,7 +891,7 @@ async function handleGoogleCredential(response) {
             );
 
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = getPostLoginDestination();
             }, 1000);
 
         } else {

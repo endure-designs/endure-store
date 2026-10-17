@@ -16,7 +16,17 @@ function loadCart() {
 
         const cart = JSON.parse(savedCart);
 
-        setCart(Array.isArray(cart) ? cart : []);
+        // Los carritos creados antes de incorporar la selección para
+        // checkout no tenían isSelected. Se migran como seleccionados para
+        // que sigan siendo comprables sin una acción extra del usuario.
+        const normalizedCart = Array.isArray(cart)
+            ? cart.map(item => ({
+                ...item,
+                isSelected: item?.isSelected !== false
+            }))
+            : [];
+
+        setCart(normalizedCart);
 
     } catch (error) {
         console.warn("Error al cargar el carrito:", error);

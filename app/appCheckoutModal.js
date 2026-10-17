@@ -248,7 +248,48 @@ function closeCheckoutModal() {
 function handleCheckoutLogin() {
     sessionStorage.setItem('returnToCheckout', 'true');
 
-    window.location.href = 'auth.html?mode=login';
+    // Volver exactamente a la página desde donde se inició la compra. Esto
+    // conserva el detalle de producto y no obliga al usuario a buscarlo otra
+    // vez después de autenticarse.
+    sessionStorage.setItem(
+        'checkoutReturnUrl',
+        `${window.location.pathname}${window.location.search}${window.location.hash}`
+    );
+
+    window.location.href = '/auth.html?mode=login';
+}
+
+
+/* ==========================================================================
+   REANUDAR CHECKOUT DESPUÉS DE INICIAR SESIÓN
+   ========================================================================== */
+
+async function resumeCheckoutAfterLogin() {
+    if (
+        !window.currentUser ||
+        sessionStorage.getItem('returnToCheckout') !== 'true'
+    ) {
+        return false;
+    }
+
+    // Se elimina antes de abrir el modal para evitar que un error de red o
+    // una recarga inesperada cree un ciclo de aperturas.
+    sessionStorage.removeItem('returnToCheckout');
+    sessionStorage.removeItem('checkoutReturnUrl');
+
+    if (typeof window.syncCartFromBackend === 'function') {
+        try {
+            await window.syncCartFromBackend();
+        } catch (error) {
+            console.warn(
+                '⚠️ No se pudo sincronizar el carrito antes de reanudar checkout:',
+                error
+            );
+        }
+    }
+
+    await openCheckoutModal();
+    return true;
 }
 
 
@@ -291,3 +332,4 @@ function initCheckoutModal() {
 window.openCheckoutModal = openCheckoutModal;
 window.closeCheckoutModal = closeCheckoutModal;
 window.initCheckoutModal = initCheckoutModal;
+window.resumeCheckoutAfterLogin = resumeCheckoutAfterLogin;

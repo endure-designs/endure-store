@@ -151,6 +151,46 @@
 
 
 /* ==========================================================================
+   ACCIONES DE COMPRA
+   ========================================================================== */
+
+.product-page-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.product-page-actions .btn {
+    min-height: 52px;
+    padding-inline: 18px;
+}
+
+.product-page-add-button {
+    background-color: var(--white);
+    border: 1px solid var(--royal-blue);
+    color: var(--royal-blue);
+}
+
+.product-page-add-button:hover {
+    background-color: var(--gray-100);
+    border-color: var(--sapphire);
+    color: var(--sapphire);
+    transform: translateY(-2px);
+}
+
+.product-page-checkout-button {
+    box-shadow: 0 8px 18px rgba(17, 34, 80, 0.16);
+}
+
+.product-page-actions .btn:disabled {
+    cursor: wait;
+    opacity: 0.7;
+    transform: none;
+}
+
+
+/* ==========================================================================
    EXTRAS / FEATURES
    ========================================================================== */
 
@@ -313,6 +353,10 @@
     .product-page-extras {
         margin-top: 24px;
         padding-top: 20px;
+    }
+
+    .product-page-actions {
+        grid-template-columns: 1fr;
     }
 }
 

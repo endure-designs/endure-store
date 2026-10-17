@@ -977,9 +977,22 @@ async function initializeApp() {
                         accountCheckoutOrderSummary.init();
                     }
 
-                    if (window.checkout && typeof checkout.init === 'function') {
+                    if (
+                        window.currentUser &&
+                        window.checkout &&
+                        typeof checkout.init === 'function'
+                    ) {
                         checkout.init(window.currentUser).catch(err => {
                             console.warn('⚠️ Error inicializando pasarela Culqi diferida:', err);
+                        });
+                    }
+
+                    if (
+                        window.currentUser &&
+                        typeof window.resumeCheckoutAfterLogin === 'function'
+                    ) {
+                        window.resumeCheckoutAfterLogin().catch(err => {
+                            console.warn('⚠️ No se pudo reanudar el checkout tras iniciar sesión:', err);
                         });
                     }
                 })

@@ -401,6 +401,13 @@ async function handlePaymentStatusEvent(data) {
 async function init(user) {
     checkoutUser = user;
 
+    // La conexión SSE de pagos requiere una sesión autenticada. Además de la
+    // protección en los puntos que llaman a init(), este guard evita que una
+    // inicialización adelantada abra /payments/events para visitantes.
+    if (!checkoutUser) {
+        return;
+    }
+
     if (checkoutInitialized) {
         return;
     }
