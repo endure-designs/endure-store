@@ -1,6 +1,6 @@
 # Estructura del Proyecto
 **Carpeta principal:** `C:\Users\Ricardo\.gemini\antigravity\scratch\clothing-brand-store`
-**Fecha de generación:** 16/10/2026 21:36:21
+**Fecha de generación:** 20/10/2026 22:13:58
 
 ```text
 📄 404.html

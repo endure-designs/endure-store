@@ -164,6 +164,12 @@ function setupSelectListeners() {
 
         e.stopPropagation();
 
+        // Obtener los selectores una sola vez para todo el listener.
+        const categorySelect =
+            document.getElementById('categorySelect');
+
+        const collectionSelect =
+            document.getElementById('collectionSelect');
 
         const type =
             subfilter.dataset.type;
@@ -173,7 +179,6 @@ function setupSelectListeners() {
 
         const parentValue =
             subfilter.dataset.parent;
-
 
         // ==================================================================
         // CATEGORÍA
@@ -188,9 +193,6 @@ function setupSelectListeners() {
             // Categoría seleccionada
             appState.currentCategory =
                 value;
-
-            const categorySelect =
-                document.getElementById('categorySelect');
 
             if (categorySelect) {
 
@@ -235,9 +237,6 @@ function setupSelectListeners() {
 
             appState.currentSubtopic =
                 value;
-
-            const collectionSelect =
-                document.getElementById('collectionSelect');
 
             if (collectionSelect) {
 
