@@ -95,7 +95,18 @@ async function initializeAccountLogic() {
     }
 
     // ----------------------------------------------------------------------
-    // Inicializar centro de notificaciones
+    // Inicializar servicio de notificaciones del navegador y PUSH
+    // ----------------------------------------------------------------------
+
+    if (
+        window.endureNotifications &&
+        typeof endureNotifications.init === 'function'
+    ) {
+        await endureNotifications.init(user);
+    }
+
+    // ----------------------------------------------------------------------
+    // Inicializar centro de notificaciones (UI)
     // ----------------------------------------------------------------------
 
     if (

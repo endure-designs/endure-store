@@ -248,6 +248,13 @@
     function bindNotificationListener() {
 
         window.addEventListener(
+            'endure:notification-permission-changed',
+            function () {
+                renderPushStatus();
+            }
+        );
+
+        window.addEventListener(
             'endure:notification',
             async function (event) {
 

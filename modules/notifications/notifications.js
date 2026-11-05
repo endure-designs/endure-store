@@ -1,25 +1,17 @@
 // ==========================================================================
-// ENDURE - PUSH NOTIFICATIONS
-// Firebase Cloud Messaging
+// ENDURE - PUSH & BROWSER NOTIFICATIONS
+// Firebase Cloud Messaging & Web Notifications API
 // ==========================================================================
 //
 // Responsabilidades:
 //
-// - Inicializar Firebase Messaging.
-// - Consultar el estado del permiso PUSH.
-// - Solicitar permiso cuando appNotifications lo indique.
-// - Obtener el token FCM.
-// - Registrar el dispositivo en el backend.
-// - Escuchar mensajes FCM en primer plano.
-// - Comunicar nuevas notificaciones al sistema interno de Endure.
-//
-// Este módulo NO contiene:
-//
-// - UI.
-// - Botones.
-// - DOM del centro de notificaciones.
-// - Lógica de notificaciones IN_APP.
-// - Restricciones por rol.
+// - Comprobar compatibilidad del entorno (Notification API, ServiceWorker, contexto seguro).
+// - Consultar y monitorizar en tiempo real el estado del permiso (concedido, bloqueado, pendiente).
+// - Solicitar permiso nativo al usuario cuando se requiera.
+// - Inicializar Firebase Messaging y registrar el Service Worker.
+// - Obtener el token FCM y registrar el dispositivo en el backend.
+// - Mostrar notificaciones nativas en el navegador (primer plano y confirmación).
+// - Escuchar mensajes FCM y emitir eventos internos para la UI de Endure.
 //
 // ==========================================================================
 
@@ -36,6 +28,193 @@ window.endureNotifications = {
     initialized: false,
     firebaseReady: false,
     foregroundListenerRegistered: false,
+    permissionWatcherActive: false,
+    _loadingFirebasePromise: null,
+
+
+    // ======================================================================
+    // CONSULTA INTEGRAL DEL ESTADO DEL PERMISO
+    // ======================================================================
+    //
+    // Controla todos los casos posibles:
+    // - No soportado por el navegador
+    // - Contexto no seguro (HTTP en lugar de HTTPS / localhost)
+    // - Bloqueado por el navegador (denied)
+    // - Pendiente de decisión (default)
+    // - Concedido / Activado (granted)
+    // ======================================================================
+
+    getStatus() {
+
+        // 1. Verificación de Contexto Seguro
+        if (window.isSecureContext === false) {
+
+            return {
+                supported: false,
+                permission: 'unsupported',
+                state: 'unsupported',
+                enabled: false,
+                isBlocked: false,
+                isPending: false,
+                isGranted: false,
+                reason: 'INSECURE_CONTEXT',
+                message: 'Las notificaciones requieren una conexión segura (HTTPS o localhost).'
+            };
+
+        }
+
+        // 2. Soporte de la API Notification
+        if (!('Notification' in window)) {
+
+            return {
+                supported: false,
+                permission: 'unsupported',
+                state: 'unsupported',
+                enabled: false,
+                isBlocked: false,
+                isPending: false,
+                isGranted: false,
+                reason: 'NOTIFICATION_API_NOT_SUPPORTED',
+                message: 'Este navegador no soporta la API de notificaciones nativas.'
+            };
+
+        }
+
+        // 3. Soporte de Service Worker (indispensable para notificaciones Push)
+        if (!('serviceWorker' in navigator)) {
+
+            return {
+                supported: false,
+                permission: 'unsupported',
+                state: 'unsupported',
+                enabled: false,
+                isBlocked: false,
+                isPending: false,
+                isGranted: false,
+                reason: 'SERVICE_WORKER_NOT_SUPPORTED',
+                message: 'Este navegador no soporta Service Workers requeridos para notificaciones Push.'
+            };
+
+        }
+
+        const rawPermission = Notification.permission;
+
+        // Caso: Concedido
+        if (rawPermission === 'granted') {
+
+            return {
+                supported: true,
+                permission: 'granted',
+                state: 'granted',
+                enabled: true,
+                isBlocked: false,
+                isPending: false,
+                isGranted: true,
+                reason: null,
+                message: 'Las notificaciones del navegador están activadas y concedidas.'
+            };
+
+        }
+
+        // Caso: Bloqueado
+        if (rawPermission === 'denied') {
+
+            return {
+                supported: true,
+                permission: 'denied',
+                state: 'denied',
+                enabled: false,
+                isBlocked: true,
+                isPending: false,
+                isGranted: false,
+                reason: 'PERMISSION_DENIED',
+                message: 'Las notificaciones están bloqueadas en los ajustes de tu navegador.'
+            };
+
+        }
+
+        // Caso: Pendiente de solicitar (default)
+        return {
+            supported: true,
+            permission: 'default',
+            state: 'default',
+            enabled: false,
+            isBlocked: false,
+            isPending: true,
+            isGranted: false,
+            reason: 'PERMISSION_PENDING',
+            message: 'Las notificaciones están pendientes de autorización por el usuario.'
+        };
+
+    },
+
+
+    // ======================================================================
+    // MONITORIZACIÓN DE CAMBIOS DE PERMISOS EN TIEMPO REAL
+    // ======================================================================
+    //
+    // Detecta si el usuario cambia el permiso desde el candado o configuración
+    // del navegador sin necesidad de recargar la página.
+    // ======================================================================
+
+    async watchPermissionChanges() {
+
+        if (this.permissionWatcherActive) {
+            return;
+        }
+
+        if (!('permissions' in navigator) || !navigator.permissions.query) {
+            return;
+        }
+
+        try {
+
+            const permissionStatus =
+                await navigator.permissions.query({ name: 'notifications' });
+
+            this.permissionWatcherActive = true;
+
+            const handleStatusChange = () => {
+
+                const currentStatus = this.getStatus();
+
+                console.log(
+                    '🔄 Permiso de notificaciones del navegador actualizado:',
+                    currentStatus.permission
+                );
+
+                // Notificar a toda la aplicación para actualizar la UI
+                window.dispatchEvent(
+                    new CustomEvent('endure:notification-permission-changed', {
+                        detail: currentStatus
+                    })
+                );
+
+                // Si fue concedido externamente y no estaba preparado
+                if (currentStatus.isGranted && !this.firebaseReady) {
+
+                    this.preparePush().catch(err => {
+                        console.warn('⚠️ No fue posible preparar PUSH tras cambio de permiso:', err);
+                    });
+
+                }
+
+            };
+
+            if (typeof permissionStatus.addEventListener === 'function') {
+                permissionStatus.addEventListener('change', handleStatusChange);
+            } else {
+                permissionStatus.onchange = handleStatusChange;
+            }
+
+        } catch (error) {
+
+            // Algunos navegadores no implementan query con 'notifications', ignorar silenciosamente
+            console.debug('Permissions API query no soportada para notifications:', error);
+
+        }
+
+    },
 
 
     // ======================================================================
@@ -44,111 +223,91 @@ window.endureNotifications = {
 
     async init(user) {
 
-        console.log(
-            '🔔 Inicializando servicio PUSH de Endure...'
-        );
+        console.log('🔔 Inicializando servicio de notificaciones de Endure...');
 
-        this.currentUser = user || null;
+        this.currentUser = user || this.currentUser || null;
 
-        // --------------------------------------------------------------
-        // Debe existir un usuario autenticado
-        // --------------------------------------------------------------
-
-        if (!this.currentUser) {
-
-            console.log(
-                '👤 No hay usuario autenticado. PUSH omitido.'
-            );
-
-            return;
-        }
-
-
-        // --------------------------------------------------------------
-        // Compatibilidad del navegador
-        // --------------------------------------------------------------
-
-        if (!('Notification' in window)) {
-
-            console.warn(
-                '⚠️ Este navegador no soporta notificaciones.'
-            );
-
-            return;
-        }
-
-
-        if (!('serviceWorker' in navigator)) {
-
-            console.warn(
-                '⚠️ Este navegador no soporta Service Worker.'
-            );
-
-            return;
-        }
-
+        // Comprobación de compatibilidad y estado actual
+        const status = this.getStatus();
 
         this.initialized = true;
 
+        // Activar observador de cambios en permisos del navegador
+        this.watchPermissionChanges();
+
+        if (!status.supported) {
+
+            console.warn(
+                `⚠️ Notificaciones no compatibles: ${status.message}`
+            );
+
+            return status;
+
+        }
 
         // --------------------------------------------------------------
-        // Si el usuario ya concedió permiso anteriormente,
-        // podemos preparar FCM sin volver a preguntar.
+        // Caso: Ya concedido (granted)
         // --------------------------------------------------------------
+        if (status.isGranted) {
 
-        if (Notification.permission === 'granted') {
+            console.log(
+                '✅ Permiso de notificaciones ya concedido previamente.'
+            );
 
             try {
 
                 await this.preparePush();
 
                 console.log(
-                    '✅ Servicio PUSH preparado.'
+                    '🚀 Servicio PUSH preparado correctamente.'
                 );
 
             } catch (error) {
 
                 console.error(
-                    '❌ No fue posible preparar PUSH:',
+                    '❌ Error preparando el servicio PUSH:',
                     error
                 );
+
             }
 
-            return;
-        }
+            return status;
 
+        }
 
         // --------------------------------------------------------------
-        // default = todavía no decidió
-        // denied  = bloqueado
-        //
-        // En ambos casos NO solicitamos permiso automáticamente.
-        // appNotifications lo hará cuando el usuario pulse "Activar".
+        // Caso: Pendiente de activar (default)
         // --------------------------------------------------------------
-
-        if (Notification.permission === 'default') {
-
-            console.log(
-                '🔕 PUSH disponible pero todavía no autorizado.'
-            );
-
-            return;
-        }
-
-
-        if (Notification.permission === 'denied') {
+        if (status.isPending) {
 
             console.log(
-                '🚫 PUSH bloqueado por el navegador.'
+                '🔕 Notificaciones disponibles pero pendientes de activar por el usuario.'
             );
 
-            return;
+            return status;
+
         }
+
+        // --------------------------------------------------------------
+        // Caso: Bloqueado (denied)
+        // --------------------------------------------------------------
+        if (status.isBlocked) {
+
+            console.warn(
+                '🚫 Notificaciones bloqueadas en los ajustes del navegador.'
+            );
+
+            return status;
+
+        }
+
+        return status;
+
     },
 
 
     // ======================================================================
-    // PREPARAR FIREBASE
+    // PREPARAR FIREBASE Y SERVICE WORKER
     // ======================================================================
 
     async preparePush() {
@@ -157,256 +316,417 @@ window.endureNotifications = {
             return;
         }
 
-
         // --------------------------------------------------------------
         // Configuración
         // --------------------------------------------------------------
-
         if (!window.CONFIG || !CONFIG.FIREBASE) {
 
             throw new Error(
-                'No existe CONFIG.FIREBASE.'
+                'No existe CONFIG.FIREBASE en la configuración global.'
             );
+
         }
 
-
-        const firebaseConfig =
-            CONFIG.FIREBASE;
-
+        const firebaseConfig = CONFIG.FIREBASE;
 
         // --------------------------------------------------------------
-        // Cargar Firebase SDK
+        // Cargar Firebase SDK (App y Messaging)
         // --------------------------------------------------------------
-
-        if (!window.firebase) {
+        if (!window.firebase || typeof window.firebase.messaging !== 'function') {
 
             await this.loadFirebaseSDK();
-        }
 
+        }
 
         // --------------------------------------------------------------
         // Inicializar Firebase
         // --------------------------------------------------------------
+        if (!window.firebase.apps.length) {
 
-        if (!firebase.apps.length) {
+            window.firebase.initializeApp(firebaseConfig);
 
-            firebase.initializeApp(
-                firebaseConfig
-            );
-
-            console.log(
-                '🔥 Firebase inicializado correctamente.'
-            );
+            console.log('🔥 Firebase inicializado correctamente.');
 
         } else {
 
-            console.log(
-                '🔥 Firebase ya estaba inicializado.'
-            );
-        }
+            console.log('🔥 Firebase ya estaba inicializado.');
 
+        }
 
         // --------------------------------------------------------------
         // Messaging
         // --------------------------------------------------------------
+        this.messaging = window.firebase.messaging();
 
-        this.messaging =
-            firebase.messaging();
-
-        console.log(
-            '📨 Firebase Cloud Messaging disponible.'
-        );
-
+        console.log('📨 Firebase Cloud Messaging disponible.');
 
         // --------------------------------------------------------------
         // Service Worker
         // --------------------------------------------------------------
-
-        this.registration =
-            await navigator.serviceWorker.register(
-                './firebase-messaging-sw.js'
-            );
-
-        console.log(
-            '⚙️ Firebase Service Worker registrado:',
-            this.registration
+        this.registration = await navigator.serviceWorker.register(
+            './firebase-messaging-sw.js'
         );
 
+        // Esperar a que el Service Worker esté activo
+        await navigator.serviceWorker.ready;
+
+        console.log(
+            '⚙️ Firebase Service Worker registrado y activo:',
+            this.registration
+        );
 
         // --------------------------------------------------------------
         // Listener de primer plano
         // --------------------------------------------------------------
-
         this.setupForegroundMessageListener();
 
-
         this.firebaseReady = true;
+
     },
 
 
     // ======================================================================
-    // ACTIVAR PUSH
+    // ACTIVAR NOTIFICACIONES DEL NAVEGADOR (ENABLE PUSH)
+    // ======================================================================
+    //
+    // Este método gestiona todos los flujos de activación:
+    // 1. Si no está soportado -> lo detecta y aborta con razón clara.
+    // 2. Si ya está bloqueado (denied) -> informa que el navegador bloqueó y
+    //    guía al usuario (no se puede mostrar prompt si denied).
+    // 3. Si está pendiente (default) -> solicita el permiso nativo con compatibilidad.
+    // 4. Si el usuario acepta -> registra Service Worker, token FCM, backend y
+    //    muestra una notificación de bienvenida nativa.
     // ======================================================================
 
     async enablePush() {
 
+        // Auto-inicializar si aún no se había hecho
         if (!this.initialized) {
-
-            throw new Error(
-                'El servicio PUSH no está inicializado.'
-            );
+            await this.init(this.currentUser);
         }
 
+        const currentStatus = this.getStatus();
 
         // --------------------------------------------------------------
-        // Verificar soporte
+        // 1. Comprobar soporte
         // --------------------------------------------------------------
+        if (!currentStatus.supported) {
 
-        if (!('Notification' in window)) {
+            console.warn(`❌ No se pueden activar: ${currentStatus.message}`);
 
-            throw new Error(
-                'Este navegador no soporta notificaciones.'
-            );
+            return {
+                enabled: false,
+                permission: currentStatus.permission,
+                isBlocked: false,
+                isPending: false,
+                reason: currentStatus.reason,
+                message: currentStatus.message
+            };
+
         }
 
+        // --------------------------------------------------------------
+        // 2. Comprobar si ya están bloqueadas (denied)
+        // --------------------------------------------------------------
+        if (currentStatus.isBlocked) {
 
-        if (!('serviceWorker' in navigator)) {
-
-            throw new Error(
-                'Este navegador no soporta Service Worker.'
+            console.warn(
+                '🚫 Las notificaciones están bloqueadas en la configuración del navegador.'
             );
-        }
-
-
-        // --------------------------------------------------------------
-        // Ya bloqueado
-        // --------------------------------------------------------------
-
-        if (Notification.permission === 'denied') {
 
             return {
                 enabled: false,
                 permission: 'denied',
-                reason: 'PERMISSION_DENIED'
+                isBlocked: true,
+                isPending: false,
+                reason: 'PERMISSION_DENIED',
+                message: 'Las notificaciones están bloqueadas en tu navegador. Para activarlas, haz clic en el icono del candado junto a la URL y selecciona "Permitir".'
             };
+
         }
 
-
         // --------------------------------------------------------------
-        // Solicitar permiso
+        // 3. Solicitar permiso al navegador (compatible con Promise y Callback)
         // --------------------------------------------------------------
-
-        let permission =
-            Notification.permission;
-
+        let permission = currentStatus.permission;
 
         if (permission !== 'granted') {
 
-            permission =
-                await Notification.requestPermission();
+            try {
+
+                if (typeof Notification.requestPermission === 'function') {
+
+                    const result = Notification.requestPermission();
+
+                    // Soporte para navegadores modernos (Promise) y legacy (Callback)
+                    if (result && typeof result.then === 'function') {
+                        permission = await result;
+                    } else {
+                        permission = await new Promise(resolve => {
+                            Notification.requestPermission(resolve);
+                        });
+                    }
+
+                }
+
+            } catch (requestError) {
+
+                console.error(
+                    '❌ Error al invocar Notification.requestPermission:',
+                    requestError
+                );
+
+                permission = Notification.permission || 'denied';
+
+            }
+
         }
 
+        console.log('🔐 Resultado de solicitud de permiso:', permission);
 
-        console.log(
-            '🔐 Permiso PUSH:',
-            permission
+        // Notificar el nuevo estado a toda la aplicación
+        const updatedStatus = this.getStatus();
+
+        window.dispatchEvent(
+            new CustomEvent('endure:notification-permission-changed', {
+                detail: updatedStatus
+            })
         );
 
+        // --------------------------------------------------------------
+        // 4. Evaluar respuesta del usuario
+        // --------------------------------------------------------------
 
+        // Caso: Usuario bloqueó en el diálogo nativo
+        if (permission === 'denied') {
+
+            console.warn('🚫 El usuario denegó el permiso de notificaciones.');
+
+            return {
+                enabled: false,
+                permission: 'denied',
+                isBlocked: true,
+                isPending: false,
+                reason: 'PERMISSION_DENIED_BY_USER',
+                message: 'Has bloqueado las notificaciones. Puedes cambiarlas desde el candado de la barra de navegación.'
+            };
+
+        }
+
+        // Caso: Diálogo cerrado o ignorado sin responder (permanece en default)
+        if (permission === 'default') {
+
+            console.log('🔕 La solicitud de notificaciones fue descartada o sigue pendiente.');
+
+            return {
+                enabled: false,
+                permission: 'default',
+                isBlocked: false,
+                isPending: true,
+                reason: 'PERMISSION_DISMISSED',
+                message: 'La solicitud de notificaciones fue descartada o sigue pendiente.'
+            };
+
+        }
+
+        // Caso: No concedido
         if (permission !== 'granted') {
 
             return {
                 enabled: false,
                 permission,
-                reason: 'PERMISSION_NOT_GRANTED'
+                isBlocked: permission === 'denied',
+                isPending: permission === 'default',
+                reason: 'PERMISSION_NOT_GRANTED',
+                message: 'No se concedió el permiso para notificaciones.'
             };
+
         }
 
-
         // --------------------------------------------------------------
-        // Preparar Firebase
-        // --------------------------------------------------------------
-
-        await this.preparePush();
-
-
-        // --------------------------------------------------------------
-        // Obtener token FCM
+        // 5. Permiso concedido -> Preparar Firebase, FCM y Backend
         // --------------------------------------------------------------
 
-        const token =
-            await this.messaging.getToken({
-                vapidKey:
-                    CONFIG.FIREBASE.vapidKey,
+        try {
 
-                serviceWorkerRegistration:
-                    this.registration
+            await this.preparePush();
+
+            // Obtener token FCM
+            let token = null;
+
+            if (this.messaging && CONFIG.FIREBASE?.vapidKey) {
+
+                try {
+
+                    token = await this.messaging.getToken({
+                        vapidKey: CONFIG.FIREBASE.vapidKey,
+                        serviceWorkerRegistration: this.registration
+                    });
+
+                    console.log('🎫 Token FCM obtenido correctamente.');
+
+                } catch (tokenError) {
+
+                    console.warn(
+                        '⚠️ No se pudo obtener el token FCM de Firebase:',
+                        tokenError
+                    );
+
+                }
+
+            }
+
+            // Registrar dispositivo en el backend si hay token
+            let device = null;
+
+            if (token) {
+
+                try {
+
+                    device = await this.registerDeviceInBackend(token);
+
+                    console.log('📡 Dispositivo registrado en el backend.');
+
+                } catch (deviceError) {
+
+                    console.warn(
+                        '⚠️ No se pudo sincronizar el dispositivo con el backend:',
+                        deviceError
+                    );
+
+                }
+
+            }
+
+            // ----------------------------------------------------------
+            // 6. Activar y verificar notificación nativa en el navegador
+            // ----------------------------------------------------------
+
+            await this.showNotification('¡Notificaciones activadas!', {
+                body: 'Recibirás avisos en tiempo real sobre tus pedidos y promociones de Endure.',
+                icon: 'assets/ICONO_WEB.webp',
+                tag: 'endure-welcome'
             });
 
+            console.log('✅ Notificaciones del navegador activadas con éxito.');
 
-        if (!token) {
+            return {
+                enabled: true,
+                permission: 'granted',
+                isBlocked: false,
+                isPending: false,
+                isGranted: true,
+                tokenRegistered: !!device,
+                token,
+                device,
+                message: 'Notificaciones activadas exitosamente.'
+            };
 
-            throw new Error(
-                'Firebase no devolvió un token FCM.'
-            );
+        } catch (setupError) {
+
+            console.error('❌ Error configurando Push tras otorgar permiso:', setupError);
+
+            // Incluso si Firebase falla, las notificaciones locales del navegador ya están activas
+            await this.showNotification('¡Notificaciones activadas!', {
+                body: 'Las alertas del navegador de Endure están habilitadas.',
+                icon: 'assets/ICONO_WEB.webp'
+            });
+
+            return {
+                enabled: true,
+                permission: 'granted',
+                isGranted: true,
+                isBlocked: false,
+                isPending: false,
+                warning: 'Permiso concedido pero ocurrió un problema secundario con el servidor de mensajería.',
+                error: setupError.message
+            };
+
         }
 
-
-        console.log(
-            '🎫 Token FCM obtenido correctamente.'
-        );
-
-
-        // --------------------------------------------------------------
-        // Registrar dispositivo
-        // --------------------------------------------------------------
-
-        const device =
-            await this.registerDeviceInBackend(
-                token
-            );
-
-
-        console.log(
-            '✅ PUSH activado correctamente.'
-        );
-
-
-        return {
-            enabled: true,
-            permission: 'granted',
-            tokenRegistered: true,
-            device
-        };
     },
 
 
     // ======================================================================
-    // ESTADO DEL PUSH
+    // MOSTRAR NOTIFICACIÓN NATIVA EN EL NAVEGADOR
+    // ======================================================================
+    //
+    // Permite disparar notificaciones del sistema operativo / navegador
+    // usando Service Worker (PWA) o Notification API directa.
     // ======================================================================
 
-    getStatus() {
+    async showNotification(title, options = {}) {
 
-        if (!('Notification' in window)) {
+        const status = this.getStatus();
 
-            return {
-                supported: false,
-                permission: 'unsupported',
-                enabled: false
-            };
+        if (!status.isGranted) {
+
+            console.warn(
+                '⚠️ No se puede mostrar notificación: permiso no concedido.',
+                status.permission
+            );
+
+            return null;
+
         }
 
-
-        const permission =
-            Notification.permission;
-
-
-        return {
-            supported: true,
-            permission,
-            enabled:
-                permission === 'granted'
+        const notificationOptions = {
+            icon: 'assets/ICONO_WEB.webp',
+            badge: 'assets/ICONO_WEB.webp',
+            ...options
         };
+
+        // 1. Intentar mediante Service Worker Registration (estándar para PWA y Push)
+        if (
+            this.registration &&
+            typeof this.registration.showNotification === 'function'
+        ) {
+
+            try {
+
+                await this.registration.showNotification(
+                    title,
+                    notificationOptions
+                );
+
+                return true;
+
+            } catch (swError) {
+
+                console.warn(
+                    '⚠️ Error mostrando notificación vía Service Worker, recurriendo a API directa:',
+                    swError
+                );
+
+            }
+
+        }
+
+        // 2. Fallback: instanciar Notification directamente
+        if ('Notification' in window) {
+
+            try {
+
+                const nativeNotification = new Notification(
+                    title,
+                    notificationOptions
+                );
+
+                return nativeNotification;
+
+            } catch (notificationError) {
+
+                console.error(
+                    '❌ Error mostrando notificación con new Notification():',
+                    notificationError
+                );
+
+            }
+
+        }
+
+        return null;
+
     },
 
 
@@ -418,184 +738,144 @@ window.endureNotifications = {
 
         if (!this.messaging) {
 
-            console.warn(
-                '⚠️ Firebase Messaging no está disponible.'
-            );
+            console.warn('⚠️ Firebase Messaging no está disponible.');
 
             return;
-        }
 
+        }
 
         if (this.foregroundListenerRegistered) {
             return;
         }
 
+        this.foregroundListenerRegistered = true;
 
-        this.foregroundListenerRegistered =
-            true;
+        this.messaging.onMessage((payload) => {
 
+            console.log('🔔 Nueva notificación FCM en primer plano:', payload);
 
-        this.messaging.onMessage(
-            (payload) => {
+            // 1. Comunicar al sistema interno de Endure (UI, badges, lista in-app)
+            window.dispatchEvent(
+                new CustomEvent('endure:notification', {
+                    detail: payload
+                })
+            );
 
-                console.log(
-                    '🔔 Nueva notificación FCM en primer plano:',
-                    payload
-                );
+            // 2. Si las notificaciones del navegador están activadas,
+            // mostrar también la notificación nativa para no pasarla por alto
+            const title =
+                payload.notification?.title ||
+                payload.data?.title ||
+                'Endure';
 
+            const body =
+                payload.notification?.body ||
+                payload.data?.body ||
+                'Tienes una nueva notificación.';
 
-                window.dispatchEvent(
-                    new CustomEvent(
-                        'endure:notification',
-                        {
-                            detail: payload
-                        }
-                    )
-                );
-            }
-        );
+            const icon =
+                payload.notification?.icon ||
+                payload.data?.icon ||
+                'assets/ICONO_WEB.webp';
 
+            this.showNotification(title, {
+                body,
+                icon,
+                data: payload.data || payload
+            });
 
-        console.log(
-            '📡 Listener FCM de primer plano configurado.'
-        );
+        });
+
+        console.log('📡 Listener FCM de primer plano configurado.');
+
     },
 
 
     // ======================================================================
-    // REGISTRAR DISPOSITIVO
+    // REGISTRAR DISPOSITIVO EN EL BACKEND
     // ======================================================================
 
     async registerDeviceInBackend(token) {
 
         if (
             !window.notificationsApi ||
-            typeof notificationsApi.registerDevice !== 'function'
+            typeof window.notificationsApi.registerDevice !== 'function'
         ) {
 
-            throw new Error(
-                'Notifications API no está disponible.'
-            );
+            console.warn('⚠️ notificationsApi no disponible para registrar dispositivo.');
+
+            return null;
+
         }
 
-
         const data = {
-
             fcmToken: token,
-
             installationId: null,
-
-            deviceName:
-                navigator.platform ||
-                'Web',
-
-            browser:
-                navigator.userAgent,
-
-            browserVersion:
-                null,
-
-            operatingSystem:
-                navigator.platform ||
-                null,
-
-            operatingSystemVersion:
-                null,
-
-            userAgent:
-                navigator.userAgent ||
-                null,
-
-            language:
-                navigator.language ||
-                null,
-
-            timezone:
-                Intl.DateTimeFormat()
-                    .resolvedOptions()
-                    .timeZone ||
-                null
+            deviceName: navigator.userAgentData?.platform || navigator.platform || 'Web',
+            browser: navigator.userAgent,
+            browserVersion: null,
+            operatingSystem: navigator.userAgentData?.platform || navigator.platform || null,
+            operatingSystemVersion: null,
+            userAgent: navigator.userAgent || null,
+            language: navigator.language || null,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null
         };
 
+        console.log('📡 Registrando dispositivo PUSH en backend...');
 
-        console.log(
-            '📡 Registrando dispositivo PUSH en backend...'
-        );
+        return await window.notificationsApi.registerDevice(data);
 
-
-        return await notificationsApi.registerDevice(
-            data
-        );
     },
 
 
     // ======================================================================
-    // CARGAR FIREBASE SDK
+    // CARGAR FIREBASE SDK DINÁMICAMENTE
     // ======================================================================
 
     loadFirebaseSDK() {
 
-        return new Promise(
-            (resolve, reject) => {
+        if (this._loadingFirebasePromise) {
+            return this._loadingFirebasePromise;
+        }
 
-                const appScript =
-                    document.createElement(
-                        'script'
-                    );
+        this._loadingFirebasePromise = new Promise((resolve, reject) => {
 
-                const messagingScript =
-                    document.createElement(
-                        'script'
-                    );
+            const appScript = document.createElement('script');
+            const messagingScript = document.createElement('script');
 
+            appScript.src =
+                'https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js';
 
-                appScript.src =
-                    'https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js';
+            messagingScript.src =
+                'https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js';
 
+            appScript.onload = () => {
+                document.head.appendChild(messagingScript);
+            };
 
-                messagingScript.src =
-                    'https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js';
+            messagingScript.onload = () => {
+                resolve();
+            };
 
+            appScript.onerror = () => {
+                this._loadingFirebasePromise = null;
+                reject(new Error('No se pudo cargar Firebase App SDK.'));
+            };
 
-                appScript.onload = () => {
+            messagingScript.onerror = () => {
+                this._loadingFirebasePromise = null;
+                reject(new Error('No se pudo cargar Firebase Messaging SDK.'));
+            };
 
-                    document.head.appendChild(
-                        messagingScript
-                    );
-                };
+            document.head.appendChild(appScript);
 
+        });
 
-                messagingScript.onload = () => {
+        return this._loadingFirebasePromise;
 
-                    resolve();
-                };
-
-
-                appScript.onerror = () => {
-
-                    reject(
-                        new Error(
-                            'No se pudo cargar Firebase App SDK.'
-                        )
-                    );
-                };
-
-
-                messagingScript.onerror = () => {
-
-                    reject(
-                        new Error(
-                            'No se pudo cargar Firebase Messaging SDK.'
-                        )
-                    );
-                };
-
-
-                document.head.appendChild(
-                    appScript
-                );
-            }
-        );
     }
 
 };
+
+// Alias para compatibilidad con referencias previas
+window.notificationsModule = window.endureNotifications;
