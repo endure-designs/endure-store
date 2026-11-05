@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sin Conexión | ENDURE</title>
+    <meta name="theme-color" content="#112250">
+    <link rel="icon" type="image/webp" href="assets/ICONO_WEB.webp">
+    <style>
+        :root {
+            --dark-bg: #090e1a;
+            --royal-blue: #112250;
+            --quicksand: #E0C58F;
+            --swan-wing: #F5F0E9;
+            --text-muted: #9ca3af;
+            --card-bg: rgba(17, 34, 80, 0.4);
+            --border-color: rgba(224, 197, 143, 0.2);
+            --sat: env(safe-area-inset-top, 0px);
+            --sab: env(safe-area-inset-bottom, 0px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--swan-wing);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: calc(20px + var(--sat)) 20px calc(20px + var(--sab));
+            text-align: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Subtle streetwear background gradient */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(17, 34, 80, 0.45) 0%, rgba(9, 14, 26, 0.95) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .offline-container {
+            position: relative;
+            z-index: 1;
+            max-width: 480px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px 28px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-wrap {
+            margin-bottom: 24px;
+        }
+
+        .logo-wrap img {
+            max-width: 170px;
+            height: auto;
+            display: inline-block;
+        }
+
+        .icon-wrap {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: rgba(224, 197, 143, 0.1);
+            border: 1px solid rgba(224, 197, 143, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-wrap svg {
+            width: 34px;
+            height: 34px;
+            fill: var(--quicksand);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            color: var(--swan-wing);
+        }
+
+        p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            margin-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .status-badge.online {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: var(--quicksand);
+            color: var(--royal-blue);
+        }
+
+        .btn-primary:hover {
+            background-color: #ebd7ae;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--swan-wing);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="offline-container">
+        <div class="logo-wrap">
+            <img src="assets/ENDURE_LOGO.png" alt="ENDURE Logo">
+        </div>
+
+        <div class="icon-wrap">
+            <!-- Offline / Cloud-slash SVG -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 6.23 11.08 6 12 6c3.04 0 5.6 2.08 6.27 5.01l.24 1.05.99.16C20.67 12.39 22 13.56 22 15c0 .76-.32 1.47-.84 1.99l1.41 1.41C23.45 17.53 24 16.33 24 15c0-2.64-2.05-4.78-4.65-4.96zM3 5.27l2.75 2.74C2.56 8.93 0 11.66 0 15c0 3.31 2.69 6 6 6h11.73l2 2 1.41-1.41L4.41 3.86 3 5.27zM6.16 11.16l8.84 8.84H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l.6-.06V11.16z" />
+            </svg>
+        </div>
+
+        <h1>Sin conexión a internet</h1>
+        <p>Parece que has perdido la señal de red. Para navegar por la tienda, ver precios o realizar pedidos necesitas conexión.</p>
+
+        <div id="statusBadge" class="status-badge">
+            <span class="status-dot"></span>
+            <span id="statusText">Modo sin conexión</span>
+        </div>
+
+        <div class="actions">
+            <button id="retryBtn" class="btn btn-primary" type="button">
+                Reintentar conexión
+            </button>
+            <a href="index.html" class="btn btn-secondary">
+                Volver al inicio guardado
+            </a>
+        </div>
+
+        <div class="footer-note">
+            ENDURE &copy; 2026 &bull; Reconexión automática activa
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const retryBtn = document.getElementById('retryBtn');
+            const badge = document.getElementById('statusBadge');
+            const statusText = document.getElementById('statusText');
+
+            function handleOnline() {
+                if (badge && statusText) {
+                    badge.classList.add('online');
+                    statusText.textContent = '¡Conexión recuperada! Recargando...';
+                }
+                setTimeout(function () {
+                    window.location.reload();
+                }, 800);
+            }
+
+            function handleOffline() {
+                if (badge && statusText) {
+                    badge.classList.remove('online');
+                    statusText.textContent = 'Modo sin conexión';
+                }
+            }
+
+            if (retryBtn) {
+                retryBtn.addEventListener('click', function () {
+                    retryBtn.textContent = 'Comprobando...';
+                    retryBtn.disabled = true;
+                    if (navigator.onLine) {
+                        window.location.reload();
+                    } else {
+                        setTimeout(function () {
+                            retryBtn.textContent = 'Reintentar conexión';
+                            retryBtn.disabled = false;
+                        }, 800);
+                    }
+                });
+            }
+
+            window.addEventListener('online', handleOnline);
+            window.addEventListener('offline', handleOffline);
+
+            // Si por alguna razón al cargar ya hay conexión, intentar recargar
+            if (navigator.onLine) {
+                setTimeout(function () {
+                    fetch('manifest.webmanifest', { method: 'HEAD', cache: 'no-store' })
+                        .then(function (res) {
+                            if (res.ok) handleOnline();
+                        })
+                        .catch(function () {});
+                }, 1000);
+            }
+        })();
+    </script>
+</body>
+
+</html>
+

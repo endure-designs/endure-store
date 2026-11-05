@@ -361,11 +361,11 @@ window.endureNotifications = {
         console.log('📨 Firebase Cloud Messaging disponible.');
 
         // --------------------------------------------------------------
-        // Service Worker
+        // Service Worker (Unificado con PWA)
         // --------------------------------------------------------------
-        this.registration = await navigator.serviceWorker.register(
-            './firebase-messaging-sw.js'
-        );
+        this.registration =
+            (await navigator.serviceWorker.getRegistration()) ||
+            (await navigator.serviceWorker.register('./sw.js'));
 
         // Esperar a que el Service Worker esté activo
         await navigator.serviceWorker.ready;

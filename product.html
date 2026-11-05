@@ -3,7 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Endure">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 
     <!-- SEO: valores predeterminados reemplazados por Cloudflare Worker -->
     <title>Producto | ENDURE</title>
@@ -48,6 +54,7 @@
 
     <!-- Estilos globales -->
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/pwa.css">
 
     <!-- Estilos del catálogo y producto -->
     <link rel="stylesheet" href="/css/catalog/product-card-modal.css">
@@ -311,6 +318,7 @@
     <script src="/app/appCheckoutModal.js"></script>
     <script src="/router.js"></script>
     <script src="/catalog/productPage.js"></script>
+    <script src="/pwa.js" defer></script>
 </body>
 
 </html>

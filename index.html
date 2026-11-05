@@ -3,7 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#112250">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Endure">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     <title>ENDURE | Streetwear & Urban Archives</title>
     <meta name="description" content="ENDURE - Streetwear & Urban Archives. Diseño utilitario y siluetas oversized pensadas para la calle. Edición limitada.">
     <link rel="canonical" href="https://endure.com.pe/">
@@ -31,6 +38,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pwa.css">
 </head>
 
 <body>
@@ -67,6 +75,7 @@
                         </div>
                         <hr>
                         <a href="account.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
+                        <button id="pwaMenuInstallBtn" class="logout-item" style="display: none; color: var(--quicksand);"><i class="fa-solid fa-download"></i> Instalar App</button>
                         <button id="logoutBtn" class="logout-item">
                             <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
                         </button>
@@ -305,6 +314,7 @@
 
     <!-- Frontend -->
     <script src="./main.js"></script>
+    <script src="./pwa.js" defer></script>
 </body>
 
 </html>
